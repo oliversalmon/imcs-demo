@@ -16,7 +16,7 @@ public class Party implements Portable{
     ,               shortName
     ,               name
     ,               role;
-    public static final int FACTORY_ID = 0
+    public static final int FACTORY_ID = 1
     ,                       CLASS_ID = 3;
 
     public Party() {

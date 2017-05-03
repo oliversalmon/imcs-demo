@@ -17,7 +17,7 @@ public class Instrument implements Portable {
     ,               product
     ,               assetClass
     ,               issuer;
-    public static final int FACTORY_ID =0
+    public static final int FACTORY_ID =1
     ,                       CLASS_ID = 2;
 
 

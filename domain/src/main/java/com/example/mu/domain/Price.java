@@ -16,7 +16,7 @@ public class Price implements Portable{
     ,               instrumentId;
     private double  price;
     private long    timeStamp;
-    public static final int FACTORY_ID = 0
+    public static final int FACTORY_ID = 1
     ,                       CLASS_ID = 4;
 
 

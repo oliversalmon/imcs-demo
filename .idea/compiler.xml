@@ -14,12 +14,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cache" target="1.5" />
-      <module name="database" target="1.5" />
+      <module name="cache" target="1.8" />
+      <module name="database" target="1.8" />
       <module name="docker" target="1.5" />
-      <module name="domain" target="1.5" />
+      <module name="domain" target="1.8" />
       <module name="muparent" target="1.5" />
-      <module name="streamprocessor" target="1.5" />
+      <module name="streamprocessor" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

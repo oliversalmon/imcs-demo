@@ -34,7 +34,7 @@ public class Trade implements Portable {
     private String  currency;
     private Date    tradeDate
     ,               settlementDate;
-    public static final int FACTORY_ID = 0
+    public static final int FACTORY_ID = 1
     ,                       CLASS_ID =1;
 
 
