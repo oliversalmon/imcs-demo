@@ -343,7 +343,7 @@
         <merge-policy>com.hazelcast.map.merge.PutIfAbsentMapMergePolicy</merge-policy>
 
         <map-store enabled="true" initial-mode="LAZY">
-            <class-name>com.example.datagrid.mapstore.TradeMapStore</class-name>
+            <class-name>com.example.mu.cachemapstore.PartyMapStore</class-name>
             <write-delay-seconds>30</write-delay-seconds>
             <write-batch-size>1000</write-batch-size>
             <write-coalescing>false</write-coalescing>

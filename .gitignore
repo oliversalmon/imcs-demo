@@ -22,3 +22,4 @@ docker/src/
 docker/target/
 domain/target/
 streamprocessor/target/
+/muparent.iml
