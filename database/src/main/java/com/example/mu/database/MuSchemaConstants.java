@@ -13,7 +13,7 @@ public interface MuSchemaConstants {
 
     // TRADE Table
     public static final String TABLE_TRADE = "mu:trade";
-    public static final String CF_TRADE_DETAILS = "td";
+    public static final byte[] CF_TRADE_DETAILS = Bytes.toBytes("td");
     public static final byte[]  TRADE_ID = Bytes.toBytes("tradeId")
     ,                           SECONDARY_TRADE_ID = Bytes.toBytes("secondaryTradeId")
     ,                           FIRM_TRADE_ID_FK = Bytes.toBytes("firmTradeId")
@@ -36,7 +36,7 @@ public interface MuSchemaConstants {
 
     // PARTY Table
     public static final String TABLE_PARTY = "mu:party";
-    public static final String CF_PARTY_DETAILS = "pd";
+    public static final byte[] CF_PARTY_DETAILS = Bytes.toBytes("pd");
     public static final byte[]  PARTY_ID = Bytes.toBytes("partyId")
     ,                           SHORT_NAME = Bytes.toBytes("shortName")
     ,                           NAME = Bytes.toBytes("name")
@@ -44,7 +44,7 @@ public interface MuSchemaConstants {
 
     // INSTRUMENT Table
     public static final String TABLE_INSTRUMENT = "mu:instrument";
-    public static final String CF_INSTRUMENT_DETAILS = "id";
+    public static final byte[] CF_INSTRUMENT_DETAILS = Bytes.toBytes("id");
     public static final byte[]  INSTRUMENT_ID = Bytes.toBytes("instrumentId")
     ,                           SYMBOL = Bytes.toBytes("symbol")
     ,                           PRODUCT = Bytes.toBytes("product")
@@ -53,7 +53,7 @@ public interface MuSchemaConstants {
 
     // INSTRUMENT Table
     public static final String TABLE_PRICE = "mu:price";
-    public static final String CF_PRICE_DETAILS = "pxd";
+    public static final byte[] CF_PRICE_DETAILS = Bytes.toBytes("pxd");
     public static final byte[]  PRICE_ID = Bytes.toBytes("priceId")
     ,                           PRICE_INSTRUMENT_ID = Bytes.toBytes("instrumentId")
     ,                           PRICE = Bytes.toBytes("price")
