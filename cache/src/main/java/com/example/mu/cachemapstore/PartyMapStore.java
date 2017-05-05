@@ -54,6 +54,7 @@ public class PartyMapStore implements MapStore<String, Party>{
         put.addImmutable(CF_PARTY_DETAILS, SHORT_NAME,Bytes.toBytes(party.getShortName()));
         put.addImmutable(CF_PARTY_DETAILS, NAME,Bytes.toBytes(party.getName()));
         put.addImmutable(CF_PARTY_DETAILS, ROLE,Bytes.toBytes(party.getRole()));
+        put.addImmutable(CF_PARTY_DETAILS, POSTION_ACC_FK,Bytes.toBytes(party.getPositionAccountId()));
 
         logger.info("Created immutable record " + party.toJSON());
         try {
@@ -96,6 +97,7 @@ public class PartyMapStore implements MapStore<String, Party>{
             result.setShortName(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,SHORT_NAME)));
             result.setName(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,NAME)));
             result.setRole(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,ROLE)));
+            result.setPositionAccountId(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,POSTION_ACC_FK)));
 
         }
         catch(IOException e){

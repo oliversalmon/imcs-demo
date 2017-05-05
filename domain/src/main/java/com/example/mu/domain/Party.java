@@ -15,18 +15,20 @@ public class Party implements Portable{
     private String partyId
     ,               shortName
     ,               name
-    ,               role;
+    ,               role
+    ,               positionAccountId;
     public static final int FACTORY_ID = 1
     ,                       CLASS_ID = 3;
 
     public Party() {
     }
 
-    public Party(String partyId, String shortName, String name, String role) {
+    public Party(String partyId, String shortName, String name, String role, String positionAccountId) {
         this.partyId = partyId;
         this.shortName = shortName;
         this.name = name;
         this.role = role;
+        this.positionAccountId = positionAccountId;
     }
 
     public String getPartyId() {
@@ -69,19 +71,37 @@ public class Party implements Portable{
         return CLASS_ID;
     }
 
+    public String getPositionAccountId() {
+        return positionAccountId;
+    }
+
+    public void setPositionAccountId(String positionAccountId) {
+        this.positionAccountId = positionAccountId;
+    }
+
+
+
+    public String toJSON(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    @Override
     public void writePortable(PortableWriter out) throws IOException {
         out.writeUTF("partyId", partyId);
         out.writeUTF("shortName", shortName);
         out.writeUTF("name", name);
         out.writeUTF("role", role);
+        out.writeUTF("positionAccountId", positionAccountId);
     }
 
-
+    @Override
     public void readPortable(PortableReader in) throws IOException {
         this.partyId = in.readUTF("partyId");
         this.shortName = in.readUTF("shortName");
         this.name = in.readUTF("name");
         this.role = in.readUTF("role");
+        this.positionAccountId = in.readUTF("positionAccountId");
     }
 
     @Override
@@ -94,7 +114,8 @@ public class Party implements Portable{
         if (!partyId.equals(party.partyId)) return false;
         if (!shortName.equals(party.shortName)) return false;
         if (name != null ? !name.equals(party.name) : party.name != null) return false;
-        return role != null ? role.equals(party.role) : party.role == null;
+        if (role != null ? !role.equals(party.role) : party.role != null) return false;
+        return positionAccountId.equals(party.positionAccountId);
     }
 
     @Override
@@ -103,11 +124,7 @@ public class Party implements Portable{
         result = 31 * result + shortName.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + positionAccountId.hashCode();
         return result;
-    }
-
-    public String toJSON(){
-        Gson gson = new Gson();
-        return gson.toJson(this);
     }
 }

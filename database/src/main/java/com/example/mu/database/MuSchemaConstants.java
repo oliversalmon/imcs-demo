@@ -40,7 +40,8 @@ public interface MuSchemaConstants {
     public static final byte[]  PARTY_ID = Bytes.toBytes("partyId")
     ,                           SHORT_NAME = Bytes.toBytes("shortName")
     ,                           NAME = Bytes.toBytes("name")
-    ,                           ROLE = Bytes.toBytes("role");
+    ,                           ROLE = Bytes.toBytes("role")
+    ,                           POSTION_ACC_FK = Bytes.toBytes("positionAccId");
 
     // INSTRUMENT Table
     public static final String TABLE_INSTRUMENT = "mu:instrument";
