@@ -51,7 +51,7 @@ public interface MuSchemaConstants {
     ,                           ASSET_CLASS = Bytes.toBytes("assetClass")
     ,                           ISSUER = Bytes.toBytes("issuer");
 
-    // INSTRUMENT Table
+    // PRICE Table
     public static final String TABLE_PRICE = "mu:price";
     public static final byte[] CF_PRICE_DETAILS = Bytes.toBytes("pxd");
     public static final byte[]  PRICE_ID = Bytes.toBytes("priceId")
@@ -59,7 +59,13 @@ public interface MuSchemaConstants {
     ,                           PRICE = Bytes.toBytes("price")
     ,                           TIMESTAMP = Bytes.toBytes("timeStamp");
 
-
+    // POSITION_ACCOUNT Table
+    public static final String TABLE_POSITION_ACCOUNT = "mu:account";
+    public static final byte[] CF_ACCOUNT_DETAILS = Bytes.toBytes("pad");
+    public static final byte[]  ACCOUNT_ID = Bytes.toBytes("accountId")
+    ,                           ACC_INSTRUMENT_ID = Bytes.toBytes("instrumentId")
+    ,                           SIZE = Bytes.toBytes("size")
+    ,                           PNL = Bytes.toBytes("pnl");
 
 
 }

@@ -1,10 +1,7 @@
 package com.example.mu.database;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
@@ -33,6 +30,10 @@ public class Schema {
     public static void createSchemaTables(Configuration config) throws IOException {
         try (Connection connection = ConnectionFactory.createConnection(config);
              Admin admin = connection.getAdmin()) {
+            // Create the namespace
+            NamespaceDescriptor namespace = NamespaceDescriptor.create("mu").build();
+            admin.createNamespace(namespace);
+
             // Create the TRADE table
             HTableDescriptor tableTrade = new HTableDescriptor(TableName.valueOf(TABLE_TRADE));
             tableTrade.addFamily(new HColumnDescriptor(CF_TRADE_DETAILS).setCompressionType(Algorithm.NONE));
@@ -60,6 +61,15 @@ public class Schema {
             System.out.print("Creating table PRICE. ");
             createOrOverwrite(admin, tablePrice);
             System.out.println(" Done.");
+
+            // Create the POSITION ACCOUNT table
+            HTableDescriptor tablePositionAccount = new HTableDescriptor(TableName.valueOf(TABLE_POSITION_ACCOUNT));
+            tableTrade.addFamily(new HColumnDescriptor(CF_ACCOUNT_DETAILS).setCompressionType(Algorithm.NONE));
+            System.out.print("Creating table POSITION ACCOUNT. ");
+            createOrOverwrite(admin, tablePositionAccount);
+            System.out.println(" Done.");
+
+
         }
     }
 

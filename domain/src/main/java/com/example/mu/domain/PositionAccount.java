@@ -14,8 +14,8 @@ public class PositionAccount implements Portable{
 
     private String  accountId
     ,               instrumentid;
-    private long    size;
-    private double  pnl;
+    private long    size = 0;
+    private double  pnl = 0.0;
 
     public static final int FACTORY_ID = 1
     ,                       CLASS_ID = 5;

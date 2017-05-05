@@ -22,7 +22,7 @@
 
 -->
 <hazelcast xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://www.hazelcast.com/schema/config hazelcast-config-3.7.xsd"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config hazelcast-config-3.8.xsd"
            xmlns="http://www.hazelcast.com/schema/config">
     <group>
         <name>kappa-serving-layer</name>
@@ -255,7 +255,7 @@
         <merge-policy>com.hazelcast.map.merge.PutIfAbsentMapMergePolicy</merge-policy>
 
         <map-store enabled="true" initial-mode="LAZY">
-            <class-name>com.example.datagrid.mapstore.TradeMapStore</class-name>
+            <class-name>com.example.mu.cachemapstore.InstrumentMapStore</class-name>
             <write-delay-seconds>30</write-delay-seconds>
             <write-batch-size>1000</write-batch-size>
             <write-coalescing>false</write-coalescing>
@@ -431,7 +431,7 @@
         <merge-policy>com.hazelcast.map.merge.PutIfAbsentMapMergePolicy</merge-policy>
 
         <map-store enabled="true" initial-mode="LAZY">
-            <class-name>com.example.datagrid.mapstore.TradeMapStore</class-name>
+            <class-name>com.example.mu.cachemapstore.PriceMapStore</class-name>
             <write-delay-seconds>30</write-delay-seconds>
             <write-batch-size>1000</write-batch-size>
             <write-coalescing>false</write-coalescing>
@@ -519,7 +519,7 @@
         <merge-policy>com.hazelcast.map.merge.PutIfAbsentMapMergePolicy</merge-policy>
 
         <map-store enabled="true" initial-mode="LAZY">
-            <class-name>com.example.datagrid.mapstore.TradeMapStore</class-name>
+            <class-name>com.example.mu.cachemapstore.PositionAccountMapStore</class-name>
             <write-delay-seconds>30</write-delay-seconds>
             <write-batch-size>1000</write-batch-size>
             <write-coalescing>false</write-coalescing>

@@ -1,7 +1,6 @@
 package com.example.mu.cachemapstore;
 
-import com.example.mu.domain.Party;
-import com.hazelcast.core.MapStore;
+import com.example.mu.domain.PositionAccount;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -18,17 +17,17 @@ import java.util.Map;
 import static com.example.mu.database.MuSchemaConstants.*;
 
 /**
- * Created by oliverbuckley-salmon on 04/05/2017.
+ * Created by oliverbuckley-salmon on 05/05/2017.
  */
-public class PartyMapStore implements MapStore<String, Party>{
+public class PositionAccountMapStore {
 
     Configuration config;
     Admin admin;
     Table table;
 
-    private Logger logger = Logger.getLogger(PartyMapStore.class);
+    private Logger logger = Logger.getLogger(PositionAccountMapStore.class);
 
-    public PartyMapStore() {
+    public PositionAccountMapStore() {
         try{
             config =  HBaseConfiguration.create();
             config.setInt("timeout", 120000);
@@ -38,7 +37,7 @@ public class PartyMapStore implements MapStore<String, Party>{
 
             logger.info("Trying to connect to HBase");
             Connection connection = ConnectionFactory.createConnection(config);
-            TableName tname = TableName.valueOf(TABLE_PARTY);
+            TableName tname = TableName.valueOf(TABLE_POSITION_ACCOUNT);
             table = connection.getTable(tname);
             logger.info("Connected to HBase");
 
@@ -48,26 +47,26 @@ public class PartyMapStore implements MapStore<String, Party>{
         }
     }
 
-    public void store(String s, Party party) {
+    public void store(String s, PositionAccount account) {
         Put put = new Put(Bytes.toBytes(s));
-        put.addImmutable(CF_PARTY_DETAILS, PARTY_ID,Bytes.toBytes(party.getPartyId()));
-        put.addImmutable(CF_PARTY_DETAILS, SHORT_NAME,Bytes.toBytes(party.getShortName()));
-        put.addImmutable(CF_PARTY_DETAILS, NAME,Bytes.toBytes(party.getName()));
-        put.addImmutable(CF_PARTY_DETAILS, ROLE,Bytes.toBytes(party.getRole()));
+        put.addImmutable(CF_ACCOUNT_DETAILS, ACCOUNT_ID,Bytes.toBytes(account.getAccountId()));
+        put.addImmutable(CF_ACCOUNT_DETAILS, ACC_INSTRUMENT_ID,Bytes.toBytes(account.getInstrumentid()));
+        put.addImmutable(CF_ACCOUNT_DETAILS, SIZE,Bytes.toBytes(account.getSize()));
+        put.addImmutable(CF_ACCOUNT_DETAILS, PNL,Bytes.toBytes(account.getPnl()));
 
-        logger.info("Created immutable record " + party.toJSON());
+        logger.info("Created immutable record " + account.toJSON());
         try {
             table.put(put);
         }
         catch(IOException e){
-            logger.error("Error writing to PARTY table" + e.toString());
+            logger.error("Error writing to POSITION_ACCOUNT table" + e.toString());
         }
-        logger.info("Inserted immutable record" + party.toJSON());
+        logger.info("Inserted immutable record" + account.toJSON());
 
     }
 
-    public void storeAll(Map<String, Party> map) {
-        for (Map.Entry<String, Party> entry : map.entrySet())
+    public void storeAll(Map<String, PositionAccount> map) {
+        for (Map.Entry<String, PositionAccount> entry : map.entrySet())
             store(entry.getKey(), entry.getValue());
 
     }
@@ -80,36 +79,36 @@ public class PartyMapStore implements MapStore<String, Party>{
 
     }
 
-    public Party load(String s) {
+    public PositionAccount load(String s) {
 
-        Party result = new Party();
+        PositionAccount result = new PositionAccount();
         byte[] pk = Bytes.toBytes(s);
 
         Get get = new Get(pk);
         Result getResult;
         try {
             get.setMaxVersions(1);
-            logger.info("Getting party with key "+s+" from HBase");
+            logger.info("Getting account with key "+s+" from HBase");
             getResult = table.get(get);
-            logger.info("Got party with key "+s+" from HBase");
-            result.setPartyId(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,PARTY_ID)));
-            result.setShortName(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,SHORT_NAME)));
-            result.setName(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,NAME)));
-            result.setRole(Bytes.toString(getResult.getValue(CF_PARTY_DETAILS,ROLE)));
+            logger.info("Got account with key "+s+" from HBase");
+            result.setAccountId(Bytes.toString(getResult.getValue(CF_ACCOUNT_DETAILS,ACCOUNT_ID)));
+            result.setInstrumentid(Bytes.toString(getResult.getValue(CF_ACCOUNT_DETAILS,ACC_INSTRUMENT_ID)));
+            result.setSize(Bytes.toLong(getResult.getValue(CF_ACCOUNT_DETAILS,SIZE)));
+            result.setPnl(Bytes.toDouble(getResult.getValue(CF_ACCOUNT_DETAILS,PNL)));
 
         }
         catch(IOException e){
-            logger.error("Error reading from PARTY table" + e.toString());
+            logger.error("Error reading from POSITION_ACCOUNT table" + e.toString());
         }
         return result;
     }
 
-    public Map<String, Party> loadAll(Collection<String> keys) {
+    public Map<String, PositionAccount> loadAll(Collection<String> keys) {
 
-        Map<String, Party> result = new HashMap<>();
-        logger.info("loadAll loading "+keys.size()+" Parties from HBase");
+        Map<String, PositionAccount> result = new HashMap<>();
+        logger.info("loadAll loading "+keys.size()+" Accounts from HBase");
         for (String key : keys) result.put(key, load(key));
-        logger.info("Got "+result.size()+" Parties from HBase");
+        logger.info("Got "+result.size()+" Accounts from HBase");
         return result;
     }
 
@@ -127,7 +126,7 @@ public class PartyMapStore implements MapStore<String, Party>{
             }
         }
         catch(IOException e){
-            logger.error("Error reading all keys from PARTY table" + e.toString());
+            logger.error("Error reading all keys from POSITION_ACCOUNT table" + e.toString());
         }
         return keys;
     }
