@@ -2,11 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3eb1be5-e707-4cf1-94bc-ca77a5717eac" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PartyMapStore.java" afterPath="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PartyMapStore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/src/main/java/com/example/mu/database/MuSchemaConstants.java" afterPath="$PROJECT_DIR$/database/src/main/java/com/example/mu/database/MuSchemaConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Party.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Party.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain/src/test/java/com/example/mu/domain/InstrumentTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_101tec_zkclient_0_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hazelcast_hazelcast_3_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hazelcast_hazelcast_client_3_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hazelcast_jet_hazelcast_jet_0_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hazelcast_jet_hazelcast_jet_client_protocol_0_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hazelcast_jet_hazelcast_jet_core_0_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hazelcast_jet_hazelcast_jet_kafka_0_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_yammer_metrics_metrics_core_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_3_7_0_Final.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_mail_mail_1_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jline_jline_0_9_94.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_15.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_jpountz_lz4_lz4_1_3_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_4_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_kafka_kafka_2_11_0_10_0_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_kafka_kafka_clients_0_10_0_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_zookeeper_zookeeper_3_4_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_scala_lang_modules_scala_parser_combinators_2_11_1_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_scala_lang_scala_library_2_11_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_snappy_snappy_java_1_1_2_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/cache.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/database/database.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/domain/domain.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/muparent.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/pom.xml" afterPath="$PROJECT_DIR$/cache/pom.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -44,119 +73,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PositionAccountMapStore.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PositionAccountMapStore.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="39" column="48" lean-forward="false" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mu-cache-config.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cache/src/main/resources/mu-cache-config.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="441" column="32" lean-forward="false" selection-start-line="441" selection-start-column="32" selection-end-line="441" selection-end-column="32" />
-              <folding>
-                <element signature="e#39#681#0" expanded="false" />
-                <element signature="e#683#787#0" expanded="false" />
-                <element signature="n#group#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#properties#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#network#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#join#0;n#network#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#discovery-strategies#0;n#join#0;n#network#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#discovery-strategy#0;n#discovery-strategies#0;n#join#0;n#network#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#properties#0;n#discovery-strategy#0;n#discovery-strategies#0;n#join#0;n#network#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#1662#1899#0" expanded="false" />
-                <element signature="n#executor-service#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#queue#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#2803#3146#0" expanded="false" />
-                <element signature="e#3186#3396#0" expanded="false" />
-                <element signature="e#3445#3517#0" expanded="false" />
-                <element signature="n#map#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#3661#3974#0" expanded="false" />
-                <element signature="e#4036#4246#0" expanded="false" />
-                <element signature="e#4294#4366#0" expanded="false" />
-                <element signature="e#4426#4725#0" expanded="false" />
-                <element signature="e#4794#5127#0" expanded="false" />
-                <element signature="e#5183#5374#0" expanded="false" />
-                <element signature="e#5430#5675#0" expanded="false" />
-                <element signature="e#5739#5973#0" expanded="false" />
-                <element signature="e#6036#6228#0" expanded="false" />
-                <element signature="e#6304#7354#0" expanded="false" />
-                <element signature="n#map#1;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#7815#8128#0" expanded="false" />
-                <element signature="e#8190#8400#0" expanded="false" />
-                <element signature="e#8448#8520#0" expanded="false" />
-                <element signature="e#8580#8879#0" expanded="false" />
-                <element signature="e#8948#9281#0" expanded="false" />
-                <element signature="e#9337#9528#0" expanded="false" />
-                <element signature="e#9584#9829#0" expanded="false" />
-                <element signature="e#9893#10127#0" expanded="false" />
-                <element signature="e#10190#10382#0" expanded="false" />
-                <element signature="e#10458#11508#0" expanded="false" />
-                <element signature="n#map#2;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#11969#12282#0" expanded="false" />
-                <element signature="e#12344#12554#0" expanded="false" />
-                <element signature="e#12602#12674#0" expanded="false" />
-                <element signature="e#12734#13033#0" expanded="false" />
-                <element signature="e#13102#13435#0" expanded="false" />
-                <element signature="e#13491#13682#0" expanded="false" />
-                <element signature="e#13738#13983#0" expanded="false" />
-                <element signature="e#14047#14281#0" expanded="false" />
-                <element signature="e#14344#14536#0" expanded="false" />
-                <element signature="e#14612#15662#0" expanded="false" />
-                <element signature="n#map#3;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#16118#16431#0" expanded="false" />
-                <element signature="e#16493#16703#0" expanded="false" />
-                <element signature="e#16751#16823#0" expanded="false" />
-                <element signature="e#16883#17182#0" expanded="false" />
-                <element signature="e#17251#17584#0" expanded="false" />
-                <element signature="e#17640#17831#0" expanded="false" />
-                <element signature="e#17887#18132#0" expanded="false" />
-                <element signature="e#18196#18430#0" expanded="false" />
-                <element signature="e#18493#18685#0" expanded="false" />
-                <element signature="e#18761#19811#0" expanded="false" />
-                <element signature="n#map#4;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#20278#20591#0" expanded="false" />
-                <element signature="e#20653#20863#0" expanded="false" />
-                <element signature="e#20911#20983#0" expanded="false" />
-                <element signature="e#21043#21342#0" expanded="false" />
-                <element signature="e#21411#21744#0" expanded="false" />
-                <element signature="e#21800#21991#0" expanded="false" />
-                <element signature="e#22047#22292#0" expanded="false" />
-                <element signature="e#22356#22590#0" expanded="false" />
-                <element signature="e#22653#22845#0" expanded="false" />
-                <element signature="e#22921#23971#0" expanded="false" />
-                <element signature="n#map#5;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="e#24441#24754#0" expanded="false" />
-                <element signature="e#24816#25026#0" expanded="false" />
-                <element signature="e#25074#25146#0" expanded="false" />
-                <element signature="e#25206#25505#0" expanded="false" />
-                <element signature="e#25569#25902#0" expanded="false" />
-                <element signature="e#25958#26149#0" expanded="false" />
-                <element signature="e#26206#26451#0" expanded="false" />
-                <element signature="e#26509#26743#0" expanded="false" />
-                <element signature="e#26806#26998#0" expanded="false" />
-                <element signature="e#27074#28124#0" expanded="false" />
-                <element signature="n#multimap#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#list#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#set#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#jobtracker#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#semaphore#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#reliable-topic#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#ringbuffer#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#serialization#0;n#hazelcast#0;n#!!top" expanded="false" />
-                <element signature="n#portable-factories#0;n#serialization#0;n#hazelcast#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MuSchemaConstants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/src/main/java/com/example/mu/database/MuSchemaConstants.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -177,59 +93,52 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PartyMapStore.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PartyMapStore.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PartyMapStore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-822">
-              <caret line="56" column="100" lean-forward="false" selection-start-line="56" selection-start-column="100" selection-end-line="56" selection-end-column="100" />
+            <state relative-caret-position="1620">
+              <caret line="123" column="27" lean-forward="false" selection-start-line="123" selection-start-column="27" selection-end-line="123" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JAVA/com.example.mu.domain" pinned="false" current-in-tab="false">
-        <entry file="uml://JAVA/com.example.mu.domain">
-          <provider selected="true" editor-type-id="UmlEditorProvider">
-            <state>
-              <ID>JAVA</ID>
-              <OriginalElement>com.example.mu.domain</OriginalElement>
-              <nodes>
-                <node x="-1.5" y="65.5">com.example.mu.domain.Trade</node>
-                <node x="121.0" y="225.5">com.example.mu.domain.Price</node>
-                <node x="-35.0" y="-14.5">com.example.mu.domain.PositionAccount</node>
-                <node x="-17.5" y="145.5">com.example.mu.domain.Instrument</node>
-                <node x="0.0" y="225.5">com.example.mu.domain.Party</node>
-              </nodes>
-              <notes />
-              <edges />
-              <settings layout="Hierarchic Group" zoom="1.0" x="-14.5" y="192.0" />
-              <SelectedNodes>
-                <node>com.example.mu.domain.PositionAccount</node>
-              </SelectedNodes>
-              <Categories />
-              <SCOPE>All</SCOPE>
-              <VISIBILITY>private</VISIBILITY>
+      <file leaf-file-name="Instrument.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Instrument.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JAVA/com.example.mu.database" pinned="false" current-in-tab="false">
-        <entry file="uml://JAVA/com.example.mu.database">
-          <provider selected="true" editor-type-id="UmlEditorProvider">
-            <state>
-              <ID>JAVA</ID>
-              <OriginalElement>com.example.mu.database</OriginalElement>
-              <nodes>
-                <node x="0.0" y="74.0">com.example.mu.database.Schema</node>
-                <node x="0.0" y="0.0">com.example.mu.database.MuSchemaConstants</node>
-              </nodes>
-              <notes />
-              <edges />
-              <settings layout="Hierarchic Group" zoom="1.0" x="-44.0" y="118.0" />
-              <SelectedNodes />
-              <Categories />
-              <SCOPE>All</SCOPE>
-              <VISIBILITY>private</VISIBILITY>
+      <file leaf-file-name="InstrumentTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/domain/src/test/java/com/example/mu/domain/InstrumentTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="39" lean-forward="false" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cache/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="71" column="66" lean-forward="false" selection-start-line="71" selection-start-column="66" selection-end-line="71" selection-end-column="66" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cache/target/docker/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -266,8 +175,8 @@
       <list>
         <option value="Concept" />
         <option value="Interface" />
-        <option value="JUnit3 Test Class" />
         <option value="Class" />
+        <option value="JUnit3 Test Class" />
       </list>
     </option>
   </component>
@@ -313,7 +222,6 @@
         <option value="$PROJECT_DIR$/cache/src/main/resources/mu-client-config.xml" />
         <option value="$PROJECT_DIR$/cache/src/test/java/com/example/mu/cachefactory/MuCacheFactoryTest.java" />
         <option value="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/TradeMapStore.java" />
-        <option value="$PROJECT_DIR$/cache/pom.xml" />
         <option value="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/InstrumentMapStore.java" />
         <option value="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PriceMapStore.java" />
         <option value="$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/PositionAccount.java" />
@@ -324,6 +232,8 @@
         <option value="$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Party.java" />
         <option value="$PROJECT_DIR$/database/src/main/java/com/example/mu/database/MuSchemaConstants.java" />
         <option value="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PartyMapStore.java" />
+        <option value="$PROJECT_DIR$/domain/src/test/java/com/example/mu/domain/InstrumentTest.java" />
+        <option value="$PROJECT_DIR$/cache/pom.xml" />
       </list>
     </option>
   </component>
@@ -651,6 +561,76 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="target" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="muparent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="muparent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="target" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="muparent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="muparent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="target" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="opt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hazelcast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="muparent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="muparent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -702,48 +682,6 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mu" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cachemapstore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="muparent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="muparent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cache" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mu" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -764,22 +702,23 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="ToolWindowOpenShift Origin.ShowToolbar" value="false" />
     <property name="ToolWindowSBT Console.ShowToolbar" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/cache/target/docker/Dockerfile" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.example.mu.cachefactory" />
       <recent name="com.example.mu.domain" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/streamprocessor/src/main" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="junit.framework.TestCase" />
+      <recent name="com.example.mu.cachefactory" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore" />
       <recent name="$PROJECT_DIR$/cache/src/main/resources" />
       <recent name="$PROJECT_DIR$/streamprocessor/src/main/resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="junit.framework.TestCase" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/streamprocessor/src/main" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1431,10 +1370,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Maven.mu-parent [clean install]" />
-        <item index="1" class="java.lang.String" itemvalue="Maven.cache [clean install]" />
-        <item index="2" class="java.lang.String" itemvalue="Maven.cache [clean]" />
-        <item index="3" class="java.lang.String" itemvalue="Maven.cache [docker build]" />
+        <item index="0" class="java.lang.String" itemvalue="Maven.cache [docker build]" />
+        <item index="1" class="java.lang.String" itemvalue="Maven.mu-parent [clean install]" />
+        <item index="2" class="java.lang.String" itemvalue="Maven.cache [clean install]" />
+        <item index="3" class="java.lang.String" itemvalue="Maven.cache [clean]" />
         <item index="4" class="java.lang.String" itemvalue="Maven.database [ -U clean install]" />
       </list>
     </recent_temporary>
@@ -1462,7 +1401,7 @@
       <workItem from="1493759591708" duration="555000" />
       <workItem from="1493819093795" duration="6924000" />
       <workItem from="1493826959719" duration="7101000" />
-      <workItem from="1493877960844" duration="10668000" />
+      <workItem from="1493877960844" duration="13632000" />
     </task>
     <task id="LOCAL-00001" summary="cleanup">
       <created>1493725631187</created>
@@ -1527,19 +1466,26 @@
       <option name="project" value="LOCAL" />
       <updated>1493969232812</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added positionAccountId to Party with required adjustments to the Schema constants and PartyMapStore">
+      <created>1493994572578</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1493994572578</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40520000" />
+    <option name="totallyTimeSpent" value="43484000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1366" height="691" extended-state="6" />
+    <frame x="0" y="23" width="1366" height="691" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1925982" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1925982" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1616,7 +1562,8 @@
     <MESSAGE value="Created TradeMapStore and registered it in the cache configuration file" />
     <MESSAGE value="Created PartyMapStore and registered it in the cache configuration file" />
     <MESSAGE value="Added Price, PositionAccount &amp; Party MapStores and registered them with Hz in the cache config&#10;Added PositionAccount table to HBase schema&#10;Added PositionAccount schema constants&#10;Updated cache pom to include docker image build" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Price, PositionAccount &amp; Party MapStores and registered them with Hz in the cache config&#10;Added PositionAccount table to HBase schema&#10;Added PositionAccount schema constants&#10;Updated cache pom to include docker image build" />
+    <MESSAGE value="Added positionAccountId to Party with required adjustments to the Schema constants and PartyMapStore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added positionAccountId to Party with required adjustments to the Schema constants and PartyMapStore" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1628,13 +1575,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docker/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2044,30 +1984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cache/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="60" column="39" lean-forward="false" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cache/target/docker/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Instrument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="19" column="41" lean-forward="false" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/InstrumentMapStore.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
@@ -2303,8 +2219,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PartyMapStore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-822">
-          <caret line="56" column="100" lean-forward="false" selection-start-line="56" selection-start-column="100" selection-end-line="56" selection-end-column="100" />
+        <state relative-caret-position="1620">
+          <caret line="123" column="27" lean-forward="false" selection-start-line="123" selection-start-column="27" selection-end-line="123" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Instrument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/src/test/java/com/example/mu/domain/InstrumentTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="39" lean-forward="false" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="71" column="66" lean-forward="false" selection-start-line="71" selection-start-column="66" selection-end-line="71" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cache/target/docker/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>

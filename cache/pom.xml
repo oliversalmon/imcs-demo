@@ -59,14 +59,18 @@
                 <version>0.4.13</version>
                 <configuration>
                     <imageName>mu-cache</imageName>
-                    <baseImage>java</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <baseImage>hazelcast/hazelcast</baseImage>
                     <!-- copy the service's jar file from target into the root directory of the image -->
                     <resources>
                         <resource>
-                            <targetPath>/</targetPath>
+                            <targetPath>/opt/hazelcast</targetPath>
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
+                        </resource>
+                        <resource>
+                            <targetPath>/opt/hazelcast</targetPath>
+                            <directory>${project.basedir}/src/main/resources</directory>
+                            <include>*.xml</include>
                         </resource>
                     </resources>
                 </configuration>
