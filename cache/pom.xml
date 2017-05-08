@@ -59,7 +59,7 @@
                 <version>0.4.13</version>
                 <configuration>
                     <imageName>mu-cache</imageName>
-                    <baseImage>hazelcast/hazelcast</baseImage>
+                    <baseImage>hazelcast/hazelcast:latest</baseImage>
                     <!-- copy the service's jar file from target into the root directory of the image -->
                     <resources>
                         <resource>
