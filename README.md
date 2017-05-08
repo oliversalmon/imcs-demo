@@ -1,3 +1,3 @@
 **Demo Implementation of the Mu Architecture**
 
-Will write it up when I get a chance.
+Please the [wiki](https://github.com/oliversalmon/imcc-demo/wiki) for an overview of the architecture

@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3eb1be5-e707-4cf1-94bc-ca77a5717eac" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wiki-images/IMCC Demo Architecture.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu-parent.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/pom.xml" afterPath="$PROJECT_DIR$/cache/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/streamprocessor/pom.xml" afterPath="$PROJECT_DIR$/streamprocessor/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/streamprocessor/streamprocessor.iml" afterPath="$PROJECT_DIR$/streamprocessor/streamprocessor.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -87,10 +83,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IMCC Demo Architecture.png" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IMCC Demo Architecture.png" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wiki-images/IMCC Demo Architecture.png">
           <provider selected="true" editor-type-id="images">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="30">
+                <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
           </provider>
         </entry>
       </file>
@@ -158,9 +167,9 @@
         <option value="$PROJECT_DIR$/database/src/main/java/com/example/mu/database/MuSchemaConstants.java" />
         <option value="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PartyMapStore.java" />
         <option value="$PROJECT_DIR$/domain/src/test/java/com/example/mu/domain/InstrumentTest.java" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/cache/pom.xml" />
         <option value="$PROJECT_DIR$/streamprocessor/pom.xml" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -1079,7 +1088,7 @@
       <workItem from="1493826959719" duration="7101000" />
       <workItem from="1493877960844" duration="14609000" />
       <workItem from="1494002859998" duration="1645000" />
-      <workItem from="1494221829475" duration="729000" />
+      <workItem from="1494221829475" duration="1453000" />
     </task>
     <task id="LOCAL-00001" summary="cleanup">
       <created>1493725631187</created>
@@ -1165,11 +1174,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494003023705</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added architecure overview diagram to wiki-images directory">
+      <created>1494233783379</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1494233783379</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46835000" />
+    <option name="totallyTimeSpent" value="47559000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1366" height="691" extended-state="6" />
@@ -1257,7 +1273,8 @@
     <MESSAGE value="Added Price, PositionAccount &amp; Party MapStores and registered them with Hz in the cache config&#10;Added PositionAccount table to HBase schema&#10;Added PositionAccount schema constants&#10;Updated cache pom to include docker image build" />
     <MESSAGE value="Added positionAccountId to Party with required adjustments to the Schema constants and PartyMapStore" />
     <MESSAGE value="Updated Cache POM to generate the docker file from the hazlecast/hazelcast image" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Cache POM to generate the docker file from the hazlecast/hazelcast image" />
+    <MESSAGE value="Added architecure overview diagram to wiki-images directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added architecure overview diagram to wiki-images directory" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1608,16 +1625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cache/target/docker/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1670,6 +1677,17 @@
     <entry file="file://$PROJECT_DIR$/wiki-images/IMCC Demo Architecture.png">
       <provider selected="true" editor-type-id="images">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="30">
+            <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
       </provider>
     </entry>
   </component>
