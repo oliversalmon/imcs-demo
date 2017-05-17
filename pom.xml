@@ -11,6 +11,7 @@
     <module>docker</module>
     <module>cache</module>
     <module>streamprocessor</module>
+    <module>tradequerymicroservice</module>
   </modules>
   <packaging>pom</packaging>
 
