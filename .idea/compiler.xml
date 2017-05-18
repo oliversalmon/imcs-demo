@@ -10,6 +10,7 @@
         <module name="database" />
         <module name="docker" />
         <module name="domain" />
+        <module name="microservices-trade" />
         <module name="streamprocessor" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="database" target="1.8" />
       <module name="docker" target="1.5" />
       <module name="domain" target="1.8" />
+      <module name="microservices-trade" target="1.8" />
       <module name="mu-parent" target="1.5" />
       <module name="muparent" target="1.5" />
       <module name="streamprocessor" target="1.8" />

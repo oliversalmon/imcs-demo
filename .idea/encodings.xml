@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/database" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/docker" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/domain" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices-trade" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/streamprocessor" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
