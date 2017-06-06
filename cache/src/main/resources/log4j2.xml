@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n}"/>
+    	</Console>
+    	<Console name="ConsoleCyan" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %cyan{%msg%n}"/>
+    	</Console>
+    	<Console name="ConsoleWhite" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %white{%msg%n}"/>
+    	</Console>
+    	<Console name="ConsoleYellow" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %yellow{%msg%n}"/>
+    	</Console>
+  	</Appenders>
+
+  	<Loggers>
+    	<Logger name="com.example.mu" level="debug" additivity="false">
+      		<AppenderRef ref="ConsoleWhite"/>
+    	</Logger>
+    	<Logger name="com.hazelcast" level="info" additivity="false">
+     		<AppenderRef ref="ConsoleCyan"/>
+    	</Logger>
+    	<Logger name="com.hazelcast.jet" level="info" additivity="false">
+      		<AppenderRef ref="ConsoleYellow"/>
+    	</Logger>
+    
+    	<Root level="error">
+      		<AppenderRef ref="Console"/>
+    	</Root>
+  	</Loggers>
+</Configuration>
