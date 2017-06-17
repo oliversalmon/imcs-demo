@@ -53,6 +53,7 @@ public class PositionAccountMapStore {
         put.addImmutable(CF_ACCOUNT_DETAILS, ACC_INSTRUMENT_ID,Bytes.toBytes(account.getInstrumentid()));
         put.addImmutable(CF_ACCOUNT_DETAILS, SIZE,Bytes.toBytes(account.getSize()));
         put.addImmutable(CF_ACCOUNT_DETAILS, PNL,Bytes.toBytes(account.getPnl()));
+        put.addImmutable(CF_ACCOUNT_DETAILS, AVERAGE_TRADED_PRICE,Bytes.toBytes(account.getAverageTradedPrice()));
 
         logger.info("Created immutable record " + account.toJSON());
         try {
@@ -95,6 +96,7 @@ public class PositionAccountMapStore {
             result.setInstrumentid(Bytes.toString(getResult.getValue(CF_ACCOUNT_DETAILS,ACC_INSTRUMENT_ID)));
             result.setSize(Bytes.toLong(getResult.getValue(CF_ACCOUNT_DETAILS,SIZE)));
             result.setPnl(Bytes.toDouble(getResult.getValue(CF_ACCOUNT_DETAILS,PNL)));
+            result.setAverageTradedPrice(Bytes.toDouble(getResult.getValue(CF_ACCOUNT_DETAILS,AVERAGE_TRADED_PRICE)));
 
         }
         catch(IOException e){
