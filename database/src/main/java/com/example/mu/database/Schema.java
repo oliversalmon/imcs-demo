@@ -57,14 +57,14 @@ public class Schema {
 
             // Create the PRICE table
             HTableDescriptor tablePrice = new HTableDescriptor(TableName.valueOf(TABLE_PRICE));
-            tableTrade.addFamily(new HColumnDescriptor(CF_PRICE_DETAILS).setCompressionType(Algorithm.NONE));
+            tablePrice.addFamily(new HColumnDescriptor(CF_PRICE_DETAILS).setCompressionType(Algorithm.NONE));
             System.out.print("Creating table PRICE. ");
             createOrOverwrite(admin, tablePrice);
             System.out.println(" Done.");
 
             // Create the POSITION ACCOUNT table
             HTableDescriptor tablePositionAccount = new HTableDescriptor(TableName.valueOf(TABLE_POSITION_ACCOUNT));
-            tableTrade.addFamily(new HColumnDescriptor(CF_ACCOUNT_DETAILS).setCompressionType(Algorithm.NONE));
+            tablePositionAccount.addFamily(new HColumnDescriptor(CF_ACCOUNT_DETAILS).setCompressionType(Algorithm.NONE));
             System.out.print("Creating table POSITION ACCOUNT. ");
             createOrOverwrite(admin, tablePositionAccount);
             System.out.println(" Done.");

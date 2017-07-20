@@ -8,8 +8,8 @@ import org.apache.hadoop.hbase.util.Bytes;
  */
 public interface MuSchemaConstants {
     // HBASE connectivity
-    public static final String HBASE_HOST = "138.68.147.208";
-    public static final String ZK_HOST = "138.68.147.208";
+    public static final String HBASE_HOST = "138.68.176.187";
+    public static final String ZK_HOST = "138.68.176.187";
 
     // TRADE Table
     public static final String TABLE_TRADE = "mu:trade";
