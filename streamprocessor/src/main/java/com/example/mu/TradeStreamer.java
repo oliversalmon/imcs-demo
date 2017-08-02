@@ -46,7 +46,7 @@ public class TradeStreamer {
 
 	private static Properties getKafkaProperties() throws Exception {
 		Properties properties = new Properties();
-		properties.setProperty("group.id", "mu");
+		properties.setProperty("group.id", "group-" + Math.random());
 		// TODO: need to pass this as an environment variable
 		properties.setProperty("bootstrap.servers", "178.62.124.180:9092");
 		properties.setProperty("key.deserializer", StringDeserializer.class.getCanonicalName());
@@ -62,6 +62,7 @@ public class TradeStreamer {
 		try {
 
 			JetInstance jet = Jet.newJetInstance();
+			//JetInstance jet = Jet.newJetClient();
 			Job job = jet.newJob(getDAG());
 			long start = System.nanoTime();
 			job.execute();
@@ -73,7 +74,7 @@ public class TradeStreamer {
 				int mapSize = sinkMap.size();
 				System.out.format("Received %d entries in %d milliseconds.%n", mapSize,
 						NANOSECONDS.toMillis(System.nanoTime() - start));
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 			}
 
 		}
@@ -93,8 +94,8 @@ public class TradeStreamer {
 						gson.fromJson(f.getValue(), Trade.class))));
 		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP));
 
-		source.localParallelism(1);
-		tradeMapper.localParallelism(1);
+		//source.localParallelism(1);
+		//tradeMapper.localParallelism(1);
 
 		// connect the vertices
 		dag.edge(between(source, tradeMapper));
