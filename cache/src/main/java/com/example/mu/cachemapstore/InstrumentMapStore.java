@@ -1,6 +1,8 @@
 package com.example.mu.cachemapstore;
 
 import com.example.mu.domain.Instrument;
+import com.hazelcast.core.MapStore;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -19,7 +21,7 @@ import static com.example.mu.database.MuSchemaConstants.*;
 /**
  * Created by oliverbuckley-salmon on 05/05/2017.
  */
-public class InstrumentMapStore {
+public class InstrumentMapStore implements MapStore<String, Instrument>{
 
     Configuration config;
     Admin admin;
@@ -90,9 +92,9 @@ public class InstrumentMapStore {
         Result getResult;
         try {
             get.setMaxVersions(1);
-            logger.info("Getting party with key "+s+" from HBase");
+            logger.info("Getting instrument with key "+s+" from HBase");
             getResult = table.get(get);
-            logger.info("Got party with key "+s+" from HBase");
+            logger.info("Got instrument with key "+s+" from HBase");
             result.setInstrumentId(Bytes.toString(getResult.getValue(CF_INSTRUMENT_DETAILS,INSTRUMENT_ID)));
             result.setSymbol(Bytes.toString(getResult.getValue(CF_INSTRUMENT_DETAILS,SYMBOL)));
             result.setProduct(Bytes.toString(getResult.getValue(CF_INSTRUMENT_DETAILS,PRODUCT)));

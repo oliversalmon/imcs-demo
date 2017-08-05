@@ -1,6 +1,8 @@
 package com.example.mu.cachemapstore;
 
 import com.example.mu.domain.Price;
+import com.hazelcast.core.MapStore;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -19,13 +21,13 @@ import static com.example.mu.database.MuSchemaConstants.*;
 /**
  * Created by oliverbuckley-salmon on 05/05/2017.
  */
-public class PriceMapStore {
+public class PriceMapStore implements MapStore<String, Price> {
 
     Configuration config;
     Admin admin;
     Table table;
 
-    private Logger logger = Logger.getLogger(PartyMapStore.class);
+    private Logger logger = Logger.getLogger(PriceMapStore.class);
 
     public PriceMapStore() {
         try{

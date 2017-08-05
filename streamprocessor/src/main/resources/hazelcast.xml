@@ -49,9 +49,9 @@
                         -->
                         <property name="zookeeper_url">localhost:2181</property>
                         <!--Path in ZooKeeper Hazelcast will useDefault: /discovery/hazelcast -->
-                        <property name="zookeeper_path">/discovery/hazelcast-jet</property>
+                        <property name="zookeeper_path">/discovery/hazelcast</property>
                         <!--Name of this Hazelcast cluster. You can have multiple distinct clusters to use the same ZooKeeper installation.-->
-                        <property name="group">kappa-serving-layer-jet</property>
+                        <property name="group">kappa-serving-layer</property>
                     </properties>
                 </discovery-strategy>
             </discovery-strategies>

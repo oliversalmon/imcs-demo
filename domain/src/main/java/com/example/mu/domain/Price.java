@@ -6,6 +6,7 @@ import com.hazelcast.nio.serialization.PortableReader;
 import com.hazelcast.nio.serialization.PortableWriter;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Created by oliverbuckley-salmon on 28/04/2017.
