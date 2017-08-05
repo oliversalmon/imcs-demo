@@ -94,8 +94,8 @@ public class TradeStreamer {
 						gson.fromJson(f.getValue(), Trade.class))));
 		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP));
 
-		//source.localParallelism(1);
-		//tradeMapper.localParallelism(1);
+		source.localParallelism(1);
+		tradeMapper.localParallelism(1);
 
 		// connect the vertices
 		dag.edge(between(source, tradeMapper));
