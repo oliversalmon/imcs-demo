@@ -34,6 +34,7 @@ public class Trade implements Portable {
     private String  currency;
     private Date    tradeDate
     ,               settlementDate;
+   
     public static final int FACTORY_ID = 1
     ,                       CLASS_ID =1;
 
@@ -225,7 +226,7 @@ public class Trade implements Portable {
     }
 
 
-    public void writePortable(PortableWriter out) throws IOException {
+	public void writePortable(PortableWriter out) throws IOException {
         out.writeUTF("tradeId", tradeId);
         out.writeUTF("secondaryTradeId", secondaryTradeId);
         out.writeUTF("firmTradeId", firmTradeId);

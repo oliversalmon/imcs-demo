@@ -3,6 +3,7 @@ package com.example.mu;
 import static com.hazelcast.jet.Edge.between;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
+import java.io.InputStream;
 import java.util.AbstractMap;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -15,6 +16,10 @@ import com.example.mu.domain.Price;
 import com.example.mu.domain.Trade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.config.ClientConfig;
+import com.hazelcast.client.config.XmlClientConfigBuilder;
+import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.jet.DAG;
 import com.hazelcast.jet.Jet;
 import com.hazelcast.jet.JetInstance;
@@ -32,6 +37,7 @@ public class PriceStreamer {
 
 	private static Gson gson = new GsonBuilder().create();
 	final Logger LOG = LoggerFactory.getLogger(PriceStreamer.class);
+	
 
 	private static Properties getKafkaProperties(String url) throws Exception {
 		Properties properties = new Properties();
@@ -45,6 +51,8 @@ public class PriceStreamer {
 		return properties;
 
 	}
+	
+	
 
 	public static void connectAndStreamToMap(String url) throws Exception {
 
@@ -77,11 +85,13 @@ public class PriceStreamer {
 		DAG dag = new DAG();
 
 		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), PRICE_QUEUE));
-
+		
+		
+		
 		Vertex priceMapper = dag.newVertex("toPrice",
 				Processors.map((Entry<String, String> f) -> new AbstractMap.SimpleEntry<>(f.getKey(),
 						gson.fromJson(f.getValue(), Price.class))));
-		Vertex sink = dag.newVertex("sink", Sinks.writeMap(PRICE_MAP));
+		Vertex sink = dag.newVertex("sink", Sinks.writeMap(PRICE_MAP, HzClientConfig.getClientConfig()));
 
 		source.localParallelism(1);
 		priceMapper.localParallelism(1);

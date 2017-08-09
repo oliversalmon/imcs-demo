@@ -1,6 +1,9 @@
 package com.example.mu.cachemapstore;
 
 import com.example.mu.domain.PositionAccount;
+import com.example.mu.domain.Price;
+import com.hazelcast.core.MapStore;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -19,7 +22,7 @@ import static com.example.mu.database.MuSchemaConstants.*;
 /**
  * Created by oliverbuckley-salmon on 05/05/2017.
  */
-public class PositionAccountMapStore {
+public class PositionAccountMapStore implements MapStore<String, PositionAccount> {
 
     Configuration config;
     Admin admin;

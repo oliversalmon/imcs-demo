@@ -44,11 +44,11 @@ public class TradeStreamer {
 	private static Gson gson = new GsonBuilder().create();
 	final Logger LOG = LoggerFactory.getLogger(TradeStreamer.class);
 
-	private static Properties getKafkaProperties() throws Exception {
+	private static Properties getKafkaProperties(String url) throws Exception {
 		Properties properties = new Properties();
 		properties.setProperty("group.id", "group-" + Math.random());
 		// TODO: need to pass this as an environment variable
-		properties.setProperty("bootstrap.servers", "178.62.124.180:9092");
+		properties.setProperty("bootstrap.servers", url);
 		properties.setProperty("key.deserializer", StringDeserializer.class.getCanonicalName());
 		properties.setProperty("value.deserializer", StringDeserializer.class.getCanonicalName());
 		properties.setProperty("auto.offset.reset", "earliest");
@@ -57,13 +57,13 @@ public class TradeStreamer {
 
 	}
 
-	public static void connectAndStreamToMap() throws Exception {
+	public static void connectAndStreamToMap(String url) throws Exception {
 
 		try {
 
 			JetInstance jet = Jet.newJetInstance();
 			//JetInstance jet = Jet.newJetClient();
-			Job job = jet.newJob(getDAG());
+			Job job = jet.newJob(getDAG(url));
 			long start = System.nanoTime();
 			job.execute();
 			// Thread.sleep(SECONDS.toMillis(JOB_DURATION));
@@ -84,15 +84,15 @@ public class TradeStreamer {
 		}
 	}
 
-	private static DAG getDAG() throws Exception {
+	private static DAG getDAG(String url) throws Exception {
 		DAG dag = new DAG();
 
-		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(), TRADE_QUEUE));
+		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), TRADE_QUEUE));
 
 		Vertex tradeMapper = dag.newVertex("toTrade",
 				Processors.map((Entry<String, String> f) -> new AbstractMap.SimpleEntry<>(f.getKey(),
 						gson.fromJson(f.getValue(), Trade.class))));
-		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP));
+		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP, HzClientConfig.getClientConfig()));
 
 		source.localParallelism(1);
 		tradeMapper.localParallelism(1);
@@ -107,7 +107,7 @@ public class TradeStreamer {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		TradeStreamer.connectAndStreamToMap();
+		TradeStreamer.connectAndStreamToMap(System.getProperty("kafka_url"));
 
 	}
 

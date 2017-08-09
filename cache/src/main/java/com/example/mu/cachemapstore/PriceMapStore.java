@@ -74,10 +74,27 @@ public class PriceMapStore implements MapStore<String, Price> {
     }
 
     public void delete(String s) {
+    	
+    	try {
+
+			logger.info("Deleting  price with key " + s + " from HBase");
+
+			Delete delete = new Delete(Bytes.toBytes(s));
+			table.delete(delete);
+
+		} catch (IOException e) {
+			logger.error("Error deleting from TRADE table" + e.toString());
+		}
+    		
 
     }
 
     public void deleteAll(Collection<String> collection) {
+    	
+    	for (String key : collection) {
+
+			delete(key);
+		}
 
     }
 
@@ -90,9 +107,9 @@ public class PriceMapStore implements MapStore<String, Price> {
         Result getResult;
         try {
             get.setMaxVersions(1);
-            logger.info("Getting party with key "+s+" from HBase");
+            logger.info("Getting price with key "+s+" from HBase");
             getResult = table.get(get);
-            logger.info("Got party with key "+s+" from HBase");
+            logger.info("Got price with key "+s+" from HBase");
             result.setPriceId(Bytes.toString(getResult.getValue(CF_PRICE_DETAILS,PRICE_ID)));
             result.setInstrumentId(Bytes.toString(getResult.getValue(CF_PRICE_DETAILS,PRICE_INSTRUMENT_ID)));
             result.setPrice(Bytes.toDouble(getResult.getValue(CF_PRICE_DETAILS,PRICE)));

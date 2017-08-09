@@ -86,5 +86,18 @@ public class PriceStreamerTest extends TestCase {
 		
 		
 	}
+	
+	/**
+	 * Comment out before running all tests
+	 */
+	
+	public void testDeleteAll() throws Exception{
+		
+		PriceMapStore pms = new PriceMapStore();
+		Iterable<String> keys = pms.loadAllKeys();
+		//keys.forEach(a->pms.delete(a));
+		pms.delete("11111");
+		
+	}
 
 }
