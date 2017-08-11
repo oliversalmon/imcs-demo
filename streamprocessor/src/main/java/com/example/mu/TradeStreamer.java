@@ -92,7 +92,7 @@ public class TradeStreamer {
 		Vertex tradeMapper = dag.newVertex("toTrade",
 				Processors.map((Entry<String, String> f) -> new AbstractMap.SimpleEntry<>(f.getKey(),
 						gson.fromJson(f.getValue(), Trade.class))));
-		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP, HzClientConfig.getClientConfig()));
+		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP));
 
 		source.localParallelism(1);
 		tradeMapper.localParallelism(1);

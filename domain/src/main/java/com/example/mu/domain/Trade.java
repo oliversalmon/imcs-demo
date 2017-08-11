@@ -204,6 +204,9 @@ public class Trade implements Portable {
         return tradeDate;
     }
 
+    public long getTradeTime() {
+        return tradeDate.getTime();
+    }
     public void setTradeDate(Date tradeDate) {
         this.tradeDate = tradeDate;
     }
