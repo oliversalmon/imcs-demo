@@ -163,6 +163,10 @@ public class Trade implements Portable {
     public String getPositionAccountId() {
         return positionAccountId;
     }
+    
+    public String getPositionAccountInstrumentKey() {
+        return positionAccountId+"&"+instrumentId;
+    }
 
     public void setPositionAccountId(String positionAccountId) {
         this.positionAccountId = positionAccountId;
