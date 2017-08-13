@@ -41,12 +41,12 @@ public class PriceStreamer {
 
 	private static Properties getKafkaProperties(String url) throws Exception {
 		Properties properties = new Properties();
-		properties.setProperty("group.id", "group-" + Math.random());
+		properties.setProperty("group.id", "group-mu");
 		// TODO: need to pass this as an environment variable
 		properties.setProperty("bootstrap.servers", url);
 		properties.setProperty("key.deserializer", StringDeserializer.class.getCanonicalName());
 		properties.setProperty("value.deserializer", StringDeserializer.class.getCanonicalName());
-		properties.setProperty("auto.offset.reset", "earliest");
+		properties.setProperty("auto.offset.reset", "latest");
 
 		return properties;
 

@@ -1,6 +1,7 @@
 package com.example.mu;
 
 import java.util.Properties;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.apache.hadoop.util.StringUtils;
@@ -25,7 +26,10 @@ import com.hazelcast.jet.WindowDefinition;
 //import com.hazelcast.jet.connector.kafka.ReadKafkaP;
 import com.hazelcast.jet.processor.Processors;
 import com.hazelcast.jet.processor.Sinks;
+import com.hazelcast.jet.server.JetBootstrap;
 import com.hazelcast.jet.stream.IStreamMap;
+import com.hazelcast.query.Predicate;
+import static com.hazelcast.query.Predicates.*;
 
 import static com.hazelcast.jet.AggregateOperations.allOf;
 import static com.hazelcast.jet.AggregateOperations.mapping;
@@ -46,6 +50,7 @@ import com.hazelcast.jet.processor.KafkaProcessors;
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
@@ -66,14 +71,15 @@ public class TradeStreamer {
 	private static final int SLIDING_WINDOW_LENGTH_MILLIS = 1000;
 	private static final int SLIDE_STEP_MILLIS = 10;
 	private static final int SESSION_TIMEOUT = 5000;
+	private static JetInstance jet = Jet.newJetInstance();
 
 	private static Gson gson = new GsonBuilder().create();
-	final Logger LOG = LoggerFactory.getLogger(TradeStreamer.class);
+	final static Logger LOG = LoggerFactory.getLogger(TradeStreamer.class);
 
 	private static Properties getKafkaProperties(String url) throws Exception {
 		Properties properties = new Properties();
 		properties.setProperty("group.id", "group-mu");
-		// TODO: need to pass this as an environment variable
+
 		properties.setProperty("bootstrap.servers", url);
 		properties.setProperty("key.deserializer", StringDeserializer.class.getCanonicalName());
 		properties.setProperty("value.deserializer", StringDeserializer.class.getCanonicalName());
@@ -87,7 +93,6 @@ public class TradeStreamer {
 
 		try {
 
-			JetInstance jet = Jet.newJetInstance();
 			// JetInstance jet = Jet.newJetClient();
 			Job job = jet.newJob(getDAG(url));
 			long start = System.nanoTime();
@@ -140,7 +145,9 @@ public class TradeStreamer {
 		Vertex createPosition = dag.newVertex("create-position", Processors.map(TradeStreamer::createPositionMapEntry));
 
 		// sink to Position map
-		Vertex sinkToPosition = dag.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP)).localParallelism(1);
+		Vertex sinkToPosition = dag
+				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, HzClientConfig.getClientConfig()))
+				.localParallelism(1);
 
 		// print out
 		// Vertex sinkToPosition = dag.newVertex("sinkPosition",
@@ -159,8 +166,7 @@ public class TradeStreamer {
 
 		// connect the vertices to aggregate to Positions
 		dag.edge(from(tradeMapper, 1).to(tradeProcessor)).edge(between(tradeProcessor, insertWatermarks).isolated())
-				// This edge needs to be partitioned+distributed. It is not possible
-				// to calculate session windows in a two-stage fashion.
+				// This edge needs to be partitioned+distributed.
 				.edge(between(insertWatermarks, aggregateSessions).partitioned(Trade::getTradeId).distributed())
 				.edge(between(aggregateSessions, createPosition)).edge(between(createPosition, sinkToPosition));
 
@@ -169,19 +175,50 @@ public class TradeStreamer {
 
 	private static SimpleEntry<String, PositionAccount> createPositionMapEntry(Session<String, List<Long>> s) {
 
-		PositionAccount aPosition = new PositionAccount();
-		aPosition.setAccountId(s.getKey().split("&")[0]);
-		aPosition.setInstrumentid(s.getKey().split("&")[1]);
-		aPosition.setSize(s.getResult().get(0));
-		System.out.println("Position created is " + aPosition.toJSON());
-		return new AbstractMap.SimpleEntry<>(aPosition.getAccountId(), aPosition);
+		// check to see if the record exists in the Position
+		PositionAccount aPosition;
+		IStreamMap<String, PositionAccount> posMap = jet.getMap(POSITION_ACCOUNT_MAP);
+		LOG.info("Size of Position Map is "+posMap.size());
+		String accountId = s.getKey().split("&")[0];
+		String instrumnetId = s.getKey().split("&")[1];
+
+		Set<PositionAccount> resultSet = getPositionAccountWithMatchingInstrumentAndAccount(accountId, instrumnetId,
+				posMap);
+		if (!resultSet.isEmpty()) {
+			PositionAccount[] positionAccounts = new PositionAccount[resultSet.size()];
+			if (resultSet.size() > 1)
+				LOG.warn("Too many rows returned for account and instrument " + accountId + " " + instrumnetId
+						+ " taking the most recent record");
+
+			aPosition = resultSet.toArray(positionAccounts)[positionAccounts.length - 1];
+
+		} else {
+			LOG.warn("Creating a new position record " + accountId + " " + instrumnetId);
+			aPosition = new PositionAccount();
+		}
+
+		aPosition.setAccountId(accountId);
+		aPosition.setInstrumentid(instrumnetId);
+		aPosition.setSize(aPosition.getSize()+s.getResult().get(0));
+		LOG.info("Position created is " + aPosition.toJSON());
+		return new AbstractMap.SimpleEntry<>(aPosition.getAccountId()+aPosition.getInstrumentid(), aPosition);
 	}
 
-	
+	private static Set<PositionAccount> getPositionAccountWithMatchingInstrumentAndAccount(String account,
+			String instrument, IStreamMap<String, PositionAccount> positionMap) {
+
+		Predicate accountPredicate = equal("accountId", account);
+		Predicate instrumentPredicate = equal("instrumentid", instrument);
+		Predicate predicate = and(accountPredicate, instrumentPredicate);
+		return (Set<PositionAccount>) positionMap.values(predicate);
+
+	}
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		TradeStreamer.connectAndStreamToMap(System.getProperty("kafka_url"));
+		// JetInstance jet = JetBootstrap.getInstance();
+		// jet.newJob(getDAG(System.getProperty("kafka_url"))).execute().get();
 
 	}
 

@@ -12,6 +12,7 @@
     <module>cache</module>
     <module>streamprocessor</module>
     <module>tradequerymicroservice</module>
+    <module>positionqueryservice</module>
   </modules>
   <packaging>pom</packaging>
 
