@@ -126,19 +126,24 @@ public class TradeMapStore implements MapStore<String, Trade> {
 			result.setTradeType(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, TRADE_TYPE)));
 			result.setSecondaryTradeType(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, SECONDARY_TRADE_TYPE)));
 			result.setExecutionId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, EXECUTION_ID)));
-			result.setOriginalTradeDate(
-					new Date(Bytes.toLong(getResult.getValue(CF_TRADE_DETAILS, ORIGINAL_TRADE_DATE))));
+			if (getResult.getValue(CF_TRADE_DETAILS, ORIGINAL_TRADE_DATE) != null)
+				result.setOriginalTradeDate(
+						new Date(Bytes.toLong(getResult.getValue(CF_TRADE_DETAILS, ORIGINAL_TRADE_DATE))));
 			result.setExecutingFirmId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, EXECUTING_FIRM_ID_FK)));
 			result.setClientId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, CLIENT_ID_FK)));
 			result.setExecutionVenueId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, EXECUTION_VENUE_ID_FK)));
 			result.setExecutingTraderId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, EXECUTING_TRADER_ID_FK)));
 			result.setPositionAccountId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, POSITION_ACCOUNT_ID_FK)));
 			result.setInstrumentId(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, INSTRUMENT_ID_FK)));
-			result.setPrice(Bytes.toDouble(getResult.getValue(CF_TRADE_DETAILS, TRADE_PRICE)));
-			result.setQuantity(Bytes.toInt(getResult.getValue(CF_TRADE_DETAILS, QUANTITY)));
+			if (getResult.getValue(CF_TRADE_DETAILS, TRADE_PRICE) != null)
+				result.setPrice(Bytes.toDouble(getResult.getValue(CF_TRADE_DETAILS, TRADE_PRICE)));
+			if (getResult.getValue(CF_TRADE_DETAILS, QUANTITY) != null)
+				result.setQuantity(Bytes.toInt(getResult.getValue(CF_TRADE_DETAILS, QUANTITY)));
 			result.setCurrency(Bytes.toString(getResult.getValue(CF_TRADE_DETAILS, CURRENCY)));
-			result.setTradeDate(new Date(Bytes.toLong(getResult.getValue(CF_TRADE_DETAILS, TRADE_DATE))));
-			result.setSettlementDate(new Date(Bytes.toLong(getResult.getValue(CF_TRADE_DETAILS, SETTLEMENT_DATE))));
+			if (getResult.getValue(CF_TRADE_DETAILS, TRADE_DATE) != null)
+				result.setTradeDate(new Date(Bytes.toLong(getResult.getValue(CF_TRADE_DETAILS, TRADE_DATE))));
+			if (getResult.getValue(CF_TRADE_DETAILS, SETTLEMENT_DATE) != null)
+				result.setSettlementDate(new Date(Bytes.toLong(getResult.getValue(CF_TRADE_DETAILS, SETTLEMENT_DATE))));
 
 		} catch (IOException e) {
 			logger.error("Error reading from TRADE table" + e.toString());

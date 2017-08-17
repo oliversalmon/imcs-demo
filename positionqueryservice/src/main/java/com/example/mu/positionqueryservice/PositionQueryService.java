@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,9 @@ import static com.hazelcast.query.Predicates.*;
 @SpringBootApplication(scanBasePackages = "com.example.mu.positionqueryservice")
 @EnableCaching
 @RestController
-public class Main {
+public class PositionQueryService {
 
-	public final Logger LOG = LoggerFactory.getLogger(Main.class);
+	public final Logger LOG = LoggerFactory.getLogger(PositionQueryService.class);
 	private final static String POSITION_ACCOUNT_MAP = "position-account";
 
 	@Bean
@@ -44,6 +45,7 @@ public class Main {
 	@Autowired
 	private HazelcastInstance hazelcastInstance;
 
+	@CrossOrigin(origins = "http://localhost:8090")
 	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
 	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
 
@@ -73,7 +75,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
+		SpringApplication.run(PositionQueryService.class, args);
 
 	}
 

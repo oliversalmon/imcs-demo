@@ -96,7 +96,9 @@ public class PositionAccountMapStore implements MapStore<String, PositionAccount
             logger.info("Got account with key "+s+" from HBase");
             result.setAccountId(Bytes.toString(getResult.getValue(CF_ACCOUNT_DETAILS,ACCOUNT_ID)));
             result.setInstrumentid(Bytes.toString(getResult.getValue(CF_ACCOUNT_DETAILS,ACC_INSTRUMENT_ID)));
+            if(getResult.getValue(CF_ACCOUNT_DETAILS,SIZE) != null)
             result.setSize(Bytes.toLong(getResult.getValue(CF_ACCOUNT_DETAILS,SIZE)));
+            if(getResult.getValue(CF_ACCOUNT_DETAILS,PNL) != null)
             result.setPnl(Bytes.toDouble(getResult.getValue(CF_ACCOUNT_DETAILS,PNL)));
 
         }
