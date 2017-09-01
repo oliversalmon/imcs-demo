@@ -1,4 +1,5 @@
 .idea
+.idea/misc.xml
 docker/src/
 **/.classpath
 **/.factorypath
