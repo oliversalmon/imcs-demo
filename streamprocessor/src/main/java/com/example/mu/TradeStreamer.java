@@ -77,7 +77,7 @@ public class TradeStreamer {
 	private final static String TRADE_MAP = "trade";
 	private final static String POSITION_ACCOUNT_MAP = "position-account";
 	public static final int MAX_LAG = 1000;
-	private static final int SLIDING_WINDOW_LENGTH_MILLIS = 10000;
+	private static final int SLIDING_WINDOW_LENGTH_MILLIS = 5000;
 	private static final int SLIDE_STEP_MILLIS = 10;
 	private static final int SESSION_TIMEOUT = 5000;
 	private static JetInstance jet = Jet.newJetInstance();
@@ -133,10 +133,10 @@ public class TradeStreamer {
 	private static DAG getDAG(String url) throws Exception {
 		DAG dag = new DAG();
 
-		AggregateOperation<Trade, List<Object>, List<Object>> aggrOp = allOf(summingLong(e -> e.getQuantity()),
-				mapping(e -> e.getPositionAccountInstrumentKey(), toSet()));
+		//AggregateOperation<Trade, List<Long>> aggrOp = allOf(summingLong(e -> e.getValue()));
 
-		WindowDefinition windowDef = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS, SLIDE_STEP_MILLIS);
+		WindowDefinition windowDef = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS+5000, SLIDE_STEP_MILLIS);
+		WindowDefinition windowDefForCombining = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS+25000, SLIDE_STEP_MILLIS);
 
 		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), TRADE_QUEUE));
 
@@ -153,10 +153,10 @@ public class TradeStreamer {
 				insertWatermarks(Trade::getTradeTime,  limitingLagAndDelay(MAX_LAG, 100), 	emitByFrame(windowDef)));
 
 		Vertex accumulatebyframe = dag.newVertex("accumulate-by-frame", accumulateByFrame(
-				Trade::getPositionAccountInstrumentKey, Trade::getTradeTime, TimestampKind.EVENT, windowDef, aggrOp));
+				Trade::getPositionAccountInstrumentKey, Trade::getTradeTime, TimestampKind.EVENT, windowDef, summingLong(Trade::getQuantity)));
 
 		// combine to sliding window
-		Vertex combineToSlidingWin = dag.newVertex("combine-to-sliding-win", combineToSlidingWindow(windowDef, aggrOp));
+		Vertex combineToSlidingWin = dag.newVertex("combine-to-sliding-win", combineToSlidingWindow(windowDefForCombining, summingLong(TimestampedEntry<String, Long>::getValue)));
 
 		// convert the aggregations to positions
 		Vertex createPosition = dag.newVertex("create-position",
@@ -171,6 +171,9 @@ public class TradeStreamer {
 
 		source.localParallelism(1);
 		tradeMapper.localParallelism(1);
+		combineToSlidingWin.localParallelism(1);
+		createPosition.localParallelism(1);
+		sinkToPosition.localParallelism(1);
 
 		// connect the vertices to sink to Map
 		dag.edge(between(source, tradeMapper));
@@ -223,7 +226,7 @@ public class TradeStreamer {
 	}
 
 	private static SimpleEntry<String, PositionAccount> createPositionMapForTimeStampedEntry(
-			TimestampedEntry<String, List<Long>> s) {
+			TimestampedEntry<String, Long> s) {
 
 		// check to see if the record exists in the Position
 		PositionAccount aPosition;
@@ -243,7 +246,7 @@ public class TradeStreamer {
 		}
 
 		long size = 0;
-		size = s.getValue().get(0);
+		size = s.getValue();
 		
 
 		aPosition.setAccountId(accountId.trim());
