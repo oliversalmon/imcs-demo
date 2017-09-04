@@ -347,4 +347,11 @@ public class Trade implements Portable {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
+    
+    @Override
+    public String toString() {
+    	
+    	return this.toJSON();
+    	
+    }
 }

@@ -15,6 +15,9 @@ import com.example.mu.domain.Trade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import com.hazelcast.jet.AggregateOperation;
 import com.hazelcast.jet.DAG;
 import com.hazelcast.jet.Jet;
@@ -32,6 +35,7 @@ import com.hazelcast.jet.server.JetBootstrap;
 import com.hazelcast.jet.stream.IStreamMap;
 import com.hazelcast.query.Predicate;
 import static com.hazelcast.query.Predicates.*;
+import com.hazelcast.jet.processor.DiagnosticProcessors;
 
 import static com.hazelcast.jet.AggregateOperations.allOf;
 import static com.hazelcast.jet.AggregateOperations.counting;
@@ -40,7 +44,7 @@ import static com.hazelcast.jet.AggregateOperations.summingLong;
 import static com.hazelcast.jet.AggregateOperations.toSet;
 import static com.hazelcast.jet.Edge.between;
 import static com.hazelcast.jet.Edge.from;
-
+import static com.hazelcast.jet.Partitioner.HASH_CODE;
 import static com.hazelcast.jet.WatermarkEmissionPolicy.emitByFrame;
 import static com.hazelcast.jet.WatermarkEmissionPolicy.emitByMinStep;
 import static com.hazelcast.jet.WatermarkPolicies.limitingLagAndDelay;
@@ -52,7 +56,6 @@ import static com.hazelcast.jet.processor.Processors.aggregateToSessionWindow;
 import static com.hazelcast.jet.processor.Processors.combineToSlidingWindow;
 import static com.hazelcast.jet.processor.Processors.accumulateByFrame;
 import static com.hazelcast.jet.processor.Processors.insertWatermarks;
-
 
 import com.hazelcast.jet.processor.KafkaProcessors;
 
@@ -81,6 +84,7 @@ public class TradeStreamer {
 	private static final int SLIDE_STEP_MILLIS = 10;
 	private static final int SESSION_TIMEOUT = 5000;
 	private static JetInstance jet = Jet.newJetInstance();
+	private static HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 
 	private static Gson gson = new GsonBuilder().create();
 	final static Logger LOG = LoggerFactory.getLogger(TradeStreamer.class);
@@ -133,10 +137,12 @@ public class TradeStreamer {
 	private static DAG getDAG(String url) throws Exception {
 		DAG dag = new DAG();
 
-		//AggregateOperation<Trade, List<Long>> aggrOp = allOf(summingLong(e -> e.getValue()));
+		AggregateOperation<Trade, List<Object>, List<Object>> aggrOp = allOf(summingLong(e -> e.getQuantity()),
+				mapping(e -> e.getPositionAccountInstrumentKey(), toSet()));
 
-		WindowDefinition windowDef = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS+5000, SLIDE_STEP_MILLIS);
-		WindowDefinition windowDefForCombining = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS+25000, SLIDE_STEP_MILLIS);
+		WindowDefinition windowDef = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS, SLIDE_STEP_MILLIS);
+		WindowDefinition windowDefForCombining = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS + 25000,
+				SLIDE_STEP_MILLIS);
 
 		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), TRADE_QUEUE));
 
@@ -149,19 +155,27 @@ public class TradeStreamer {
 				Processors.map((Entry<String, Trade> f) -> f.getValue()));
 
 		// create a watermark based on the Trade Timestamp (trade date)
-		Vertex insertWatermarks = dag.newVertex("insert-watermarks",
-				insertWatermarks(Trade::getTradeTime,  limitingLagAndDelay(MAX_LAG, 100), 	emitByFrame(windowDef)));
+		Vertex insertWatermarks = dag.newVertex("insert-watermarks", DiagnosticProcessors.peekOutput(
+				insertWatermarks(Trade::getTradeTime, limitingLagAndDelay(MAX_LAG, 100), emitByFrame(windowDef))));
 
-		Vertex accumulatebyframe = dag.newVertex("accumulate-by-frame", accumulateByFrame(
-				Trade::getPositionAccountInstrumentKey, Trade::getTradeTime, TimestampKind.EVENT, windowDef, summingLong(Trade::getQuantity)));
+		Vertex accumulatebyframe = dag.newVertex("accumulate-by-frame",
+				DiagnosticProcessors.peekOutput(accumulateByFrame(Trade::getPositionAccountInstrumentKey,
+						Trade::getTradeTime, TimestampKind.EVENT, windowDef, summingLong(Trade::getQuantity))));
+		
+		Vertex aggregateSessions = dag.newVertex("aggregateSessions", DiagnosticProcessors.peekOutput(aggregateToSessionWindow(SESSION_TIMEOUT,
+				Trade::getTradeTime, Trade::getPositionAccountInstrumentKey, aggrOp)));
 
 		// combine to sliding window
-		Vertex combineToSlidingWin = dag.newVertex("combine-to-sliding-win", combineToSlidingWindow(windowDefForCombining, summingLong(TimestampedEntry<String, Long>::getValue)));
+		Vertex combineToSlidingWin = dag.newVertex("combine-to-sliding-win", DiagnosticProcessors.peekOutput(
+				combineToSlidingWindow(windowDefForCombining, summingLong(TimestampedEntry<String, Long>::getValue))));
 
 		// convert the aggregations to positions
-		Vertex createPosition = dag.newVertex("create-position",
-				Processors.map(TradeStreamer::createPositionMapForTimeStampedEntry));
+		//Vertex createPosition = dag.newVertex("create-position",DiagnosticProcessors.peekOutput(
+				//Processors.map(TradeStreamer::createPositionMapForTimeStampedEntry)));
 
+		Vertex createPosition = dag.newVertex("create-position",DiagnosticProcessors.peekOutput(
+				Processors.map(TradeStreamer::createPositionMapEntry)));
+		
 		// sink to Position map
 		Vertex sinkToPosition = dag
 				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, HzClientConfig.getClientConfig()))
@@ -183,12 +197,13 @@ public class TradeStreamer {
 		// connect the vertices to aggregate to Positions
 		dag.edge(from(tradeMapper, 1).to(tradeProcessor)).edge(between(tradeProcessor, insertWatermarks).isolated())
 				// This edge needs to be partitioned+distributed.
-				.edge(between(insertWatermarks, accumulatebyframe).partitioned(Trade::getTradeId).distributed())
-				// .edge(between(insertWatermarks, aggregateSessions))
-				// .edge(between(aggregateSessions,
-				// createPosition)).edge(between(createPosition, sinkToPosition));
-				.edge(between(accumulatebyframe, combineToSlidingWin))
-				.edge(between(combineToSlidingWin, createPosition)).edge(between(createPosition, sinkToPosition));
+				//.edge(between(insertWatermarks, accumulatebyframe).partitioned(Trade::getPositionAccountInstrumentKey).distributed())
+				 .edge(between(insertWatermarks, aggregateSessions).partitioned(Trade::getPositionAccountInstrumentKey).distributed())
+				 .edge(between(aggregateSessions,
+				 createPosition)).edge(between(createPosition, sinkToPosition));
+				//.edge(between(accumulatebyframe, combineToSlidingWin).partitioned(TimestampedEntry<String, Long>::getKey, HASH_CODE)
+                       // .distributed())
+				//.edge(between(combineToSlidingWin, createPosition)).edge(between(createPosition, sinkToPosition));
 
 		return dag;
 	}
@@ -197,7 +212,7 @@ public class TradeStreamer {
 
 		// check to see if the record exists in the Position
 		PositionAccount aPosition;
-		IStreamMap<String, PositionAccount> posMap = jet.getMap(POSITION_ACCOUNT_MAP);
+		IMap<String, PositionAccount> posMap = hzClient.getMap(POSITION_ACCOUNT_MAP);
 		LOG.info("Size of Position Map is " + posMap.size());
 		String accountId = s.getKey().split("&")[0];
 		String instrumnetId = s.getKey().split("&")[1];
@@ -211,6 +226,8 @@ public class TradeStreamer {
 					"Creating a new position account with the following key " + accountId.trim() + instrumnetId.trim());
 
 		}
+		
+		LOG.info("Position before amendment is " + aPosition.toJSON());
 
 		aPosition.setAccountId(accountId.trim());
 		aPosition.setInstrumentid(instrumnetId.trim());
@@ -231,7 +248,7 @@ public class TradeStreamer {
 		// check to see if the record exists in the Position
 		PositionAccount aPosition;
 		IStreamMap<String, PositionAccount> posMap = jet.getMap(POSITION_ACCOUNT_MAP);
-		LOG.info("Size of Position Map is " + posMap.size());
+		// LOG.info("Size of Position Map is " + posMap.size());
 		String accountId = s.getKey().split("&")[0];
 		String instrumnetId = s.getKey().split("&")[1];
 
@@ -240,25 +257,28 @@ public class TradeStreamer {
 		if (aPosition == null) {
 
 			aPosition = new PositionAccount();
-			LOG.info(
-					"Creating a new position account with the following key " + accountId.trim() + instrumnetId.trim());
+			// LOG.info(
+			// "Creating a new position account with the following key " + accountId.trim()
+			// + instrumnetId.trim());
 
 		}
 
 		long size = 0;
 		size = s.getValue();
-		
 
 		aPosition.setAccountId(accountId.trim());
 		aPosition.setInstrumentid(instrumnetId.trim());
-		LOG.info("aPosition.size for account and instrument is " + aPosition.getAccountId()
-				+ aPosition.getInstrumentid() + "=" + aPosition.getSize());
-		LOG.info("aPosition.result for account and instrument is " + aPosition.getAccountId()
-				+ aPosition.getInstrumentid() + "=" + size);
+		// LOG.info("aPosition.size for account and instrument is " +
+		// aPosition.getAccountId()
+		// + aPosition.getInstrumentid() + "=" + aPosition.getSize());
+		// LOG.info("aPosition.result for account and instrument is " +
+		// aPosition.getAccountId()
+		// + aPosition.getInstrumentid() + "=" + size);
 		aPosition.setSize(aPosition.getSize() + size);
-		LOG.info("final position of size is for account and instrument is " + aPosition.getAccountId()
-				+ aPosition.getInstrumentid() + "= " + aPosition.getSize());
-		LOG.info("Position created is " + aPosition.toJSON());
+		// LOG.info("final position of size is for account and instrument is " +
+		// aPosition.getAccountId()
+		// + aPosition.getInstrumentid() + "= " + aPosition.getSize());
+		// LOG.info("Position created is " + aPosition.toJSON());
 		return new AbstractMap.SimpleEntry<>(aPosition.getAccountId() + aPosition.getInstrumentid(), aPosition);
 	}
 
@@ -292,7 +312,7 @@ public class TradeStreamer {
 
 		// create a watermark based on the Trade Timestamp (trade date)
 		Vertex insertWatermarks = dag.newVertex("insert-watermarks",
-				insertWatermarks(Trade::getTradeTime, limitingLagAndDelay(MAX_LAG, 100), emitByFrame(windowDef)));
+				(insertWatermarks(Trade::getTradeTime, limitingLagAndDelay(MAX_LAG, 100), emitByFrame(windowDef))));
 
 		// aggregate quantity based on key
 		Vertex aggregateSessions = dag.newVertex("aggregateSessions", aggregateToSessionWindow(SESSION_TIMEOUT,
@@ -321,7 +341,7 @@ public class TradeStreamer {
 	public static void main(String[] args) throws Exception {
 		// run the position aggregation to ensure all trades are mapped to Positions
 		// correctly
-		//TradeStreamer.runPositionAggregation();
+		// TradeStreamer.runPositionAggregation();
 
 		// now stream trades from Kafka to Positions and Trades
 		TradeStreamer.connectAndStreamToMap(System.getProperty("kafka_url"));
