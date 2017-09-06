@@ -82,8 +82,8 @@ public class PostionAccountCreateStreamer {
 		WindowDefinition windowDef = slidingWindowDef(SLIDING_WINDOW_LENGTH_MILLIS, SLIDE_STEP_MILLIS);
 
 		// source is the Trade Map from remote Hz cluster
-		//Vertex source = dag.newVertex("trade-source", readMap(TRADE_MAP, HzClientConfig.getClientConfig()));
-		Vertex source = dag.newVertex("trade-source", readMap(TRADE_MAP));
+		Vertex source = dag.newVertex("trade-source", readMap(TRADE_MAP, HzClientConfig.getClientConfig()));
+		//Vertex source = dag.newVertex("trade-source", readMap(TRADE_MAP));
 
 		// emit each trade
 		Vertex tradeProcessor = dag.newVertex("trade-processor",
@@ -95,7 +95,7 @@ public class PostionAccountCreateStreamer {
 
 		// aggregate
 		Vertex aggregateSessions = dag.newVertex("aggregateSessions",
-				aggregateToSessionWindow(SESSION_TIMEOUT, Trade::getTradeTime, Trade::getPositionAccountId, aggrOp));
+				aggregateToSessionWindow(SESSION_TIMEOUT, Trade::getTradeTime, Trade::getPositionAccountInstrumentKey, aggrOp));
 
 		// print out
 		Vertex sink = dag.newVertex("sink", writeLogger(PostionAccountCreateStreamer::sessionToString)).localParallelism(1);
@@ -109,7 +109,7 @@ public class PostionAccountCreateStreamer {
             //This edge needs to be partitioned+distributed. It is not possible
            // to calculate session windows in a two-stage fashion.
            .edge(between(insertWatermarks, aggregateSessions)
-                   .partitioned(Trade::getTradeId)
+                   .partitioned(Trade::getPositionAccountInstrumentKey)
                    .distributed())
            .edge(between(aggregateSessions, sink));
 		 //dag.edge(between(tradeMapper, sink));
