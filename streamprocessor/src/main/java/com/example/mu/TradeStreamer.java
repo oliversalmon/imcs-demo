@@ -78,6 +78,7 @@ public class TradeStreamer {
 	private final static String TRADE_QUEUE = "trade";
 	private final static String TRADE_MAP = "trade";
 	private final static String POSITION_ACCOUNT_MAP = "position-account";
+	private final static String PRICE_MAP = "price";
 	public static final int MAX_LAG = 1000;
 	private static final int SLIDING_WINDOW_LENGTH_MILLIS = 5000;
 	private static final int SLIDE_STEP_MILLIS = 10;
@@ -137,9 +138,7 @@ public class TradeStreamer {
 		DAG dag = new DAG();
 
 		AggregateOperation<Trade, List<Object>, List<Object>> aggrOp = allOf(summingLong(e -> e.getQuantity()),
-				mapping(e -> e.getPositionAccountInstrumentKey(), toSet()));
-
-	
+				summingLong(e -> e.getTradeValue()), mapping(e -> e.getPositionAccountInstrumentKey(), toSet()));
 
 		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), TRADE_QUEUE));
 
@@ -213,6 +212,8 @@ public class TradeStreamer {
 
 		aPosition.setAccountId(accountId.trim());
 		aPosition.setInstrumentid(instrumnetId.trim());
+
+		// set the position quantity
 		LOG.info("aPosition.size for account and instrument is " + aPosition.getAccountId()
 				+ aPosition.getInstrumentid() + "=" + aPosition.getSize());
 		LOG.info("aPosition.result for account and instrument is " + aPosition.getAccountId()
@@ -220,6 +221,25 @@ public class TradeStreamer {
 		aPosition.setSize(aPosition.getSize() + s.getResult().get(0));
 		LOG.info("final position of size is for account and instrument is " + aPosition.getAccountId()
 				+ aPosition.getInstrumentid() + "= " + aPosition.getSize());
+
+		// now do the P&L calculation
+		LOG.info("aPosition.tradeValue result for account and instrument is " + aPosition.getAccountId()
+				+ aPosition.getInstrumentid() + "=" + s.getResult().get(1));
+		IMap<String, Price> pxMap = hzClient.getMap(PRICE_MAP);
+		Price spotPx = pxMap.get(instrumnetId.trim());
+		if (spotPx == null) {
+			LOG.warn("spot px for instrument id is not available defaulting to 1 " + aPosition.getInstrumentid());
+			spotPx = new Price();
+			spotPx.setPrice(1.00);
+		}
+
+		// PNL = qty * spot Px - Traded Value
+		double Pnl = s.getResult().get(0) * spotPx.getPrice() - s.getResult().get(1);
+		LOG.info("aPosition.spot*qty value for account and instrument is " + aPosition.getAccountId()
+				+ aPosition.getInstrumentid() + "=" + s.getResult().get(0) * spotPx.getPrice()+" spot px applied "+spotPx.getPrice());
+		aPosition.setPnl(aPosition.getPnl()+Pnl);
+		LOG.info("aPosition.final p&l result for account and instrument is " + aPosition.getAccountId()
+				+ aPosition.getInstrumentid() + "=" + Pnl);
 		LOG.info("Position created is " + aPosition.toJSON());
 		return new AbstractMap.SimpleEntry<>(aPosition.getAccountId() + aPosition.getInstrumentid(), aPosition);
 	}

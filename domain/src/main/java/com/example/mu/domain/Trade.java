@@ -191,6 +191,10 @@ public class Trade implements Portable {
     public int getQuantity() {
         return quantity;
     }
+    
+    public long getTradeValue() {
+    		return (long) (price*quantity);
+    }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
