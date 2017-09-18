@@ -50,6 +50,7 @@ public class PositionQueryService {
 	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
 
 		IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
+		//posMap.loadAll(false);
 		return ResponseEntity.ok(posMap.values().stream().collect(Collectors.toList()));
 
 	}
