@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.example.mu.cachefactory.MuCacheFactory;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
@@ -19,6 +22,7 @@ import com.hazelcast.nio.serialization.PortableFactory;
 public class HzClientConfig {
 
 	private static ClientConfig clientConfig;
+	final static Logger LOG = LoggerFactory.getLogger(HzClientConfig.class);
 
 	public static ClientConfig getClientConfig() {
 
@@ -35,6 +39,9 @@ public class HzClientConfig {
 			}
 
 		}
+		
+		//log to see if Zookeeper is set
+		//LOG.info("ZOOKEEPER for hzClient is "+clientConfig.ge);
 
 		return clientConfig;
 
@@ -42,6 +49,8 @@ public class HzClientConfig {
 
 	public static ClientConfig buildClientConfig(String hzZooHost) {
 		if (clientConfig == null) {
+			
+			LOG.info("BUILDING CLIENT CONFIG FOR HZ");
 			clientConfig = new ClientConfig();
 			clientConfig.setProperty("hazelcast.discovery.enabled", "true");
 
@@ -74,6 +83,8 @@ public class HzClientConfig {
 			clientConfig.setGroupConfig(gpcfg);
 			clientConfig.setNetworkConfig(cnc);
 			clientConfig.setSerializationConfig(serializationConfig);
+			LOG.info("DONE");
+			
 		}
 
 		return clientConfig;

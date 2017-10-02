@@ -22,7 +22,7 @@
                       Default: There is no default, this is a required property.
                       Example: 127.0.0.1:2181
                     -->
-                    <property name="zookeeper_url">localhost:2181</property>
+                    <property name="zookeeper_url">192.168.1.176:2181</property>
                     <!--Path in ZooKeeper Hazelcast will useDefault: /discovery/hazelcast -->
                     <property name="zookeeper_path">/discovery/hazelcast</property>
                     <!--Name of this Hazelcast cluster. You can have multiple distinct clusters to use the same ZooKeeper installation.-->
@@ -31,7 +31,7 @@
             </discovery-strategy>
         </discovery-strategies>
     </network>
-	 
+
     <near-cache name="trade">
         <max-size>2000</max-size>
         <time-to-live-seconds>0</time-to-live-seconds>
@@ -83,5 +83,5 @@
             <portable-factory factory-id="1">com.example.mu.cachefactory.MuCacheFactory</portable-factory>
         </portable-factories>
     </serialization>
-	 
+
 </hazelcast-client>

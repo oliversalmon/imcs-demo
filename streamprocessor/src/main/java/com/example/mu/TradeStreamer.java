@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.impl.HazelcastClientInstanceImpl;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.jet.AggregateOperation;
@@ -60,6 +61,7 @@ import com.hazelcast.jet.processor.KafkaProcessors;
 
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -85,6 +87,10 @@ public class TradeStreamer {
 	private static final int SESSION_TIMEOUT = 5000;
 	private static JetInstance jet = Jet.newJetInstance();
 	private static HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
+	
+	
+	
+
 
 	private static Gson gson = new GsonBuilder().create();
 	final static Logger LOG = LoggerFactory.getLogger(TradeStreamer.class);
@@ -161,12 +167,25 @@ public class TradeStreamer {
 		Vertex createPosition = dag.newVertex("create-position",
 				DiagnosticProcessors.peekOutput(Processors.map(TradeStreamer::createPositionMapEntry)));
 
-		// sink to Position map
+		// sink to Position map 
+		//HzClientConfig.buildClientConfig("192.168.1.176:2181");
+		com.hazelcast.client.impl.HazelcastClientProxy impl = (com.hazelcast.client.impl.HazelcastClientProxy)hzClient;
+
+		impl.getClientConfig().getAddresses().forEach(a->LOG.info("THE FOLLOWING ADDRESSES HAVE BEEN ESTABLISHED "+a));
+		
+		//Hack to work around Zookeeper and Curator not doing its job with ClientConfig
+		
+		List<String> addresses = new ArrayList();
+		addresses.add("172.19.0.3");
+		addresses.add("172.19.0.4");
+		
+		impl.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
+		
 		Vertex sinkToPosition = dag
-				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, HzClientConfig.getClientConfig()))
+				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, impl.getClientConfig()))
 				.localParallelism(1);
 
-		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP, HzClientConfig.getClientConfig()));
+		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP, impl.getClientConfig()));
 
 		source.localParallelism(1);
 		tradeMapper.localParallelism(1);

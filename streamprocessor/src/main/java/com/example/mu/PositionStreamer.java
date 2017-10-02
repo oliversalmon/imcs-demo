@@ -54,6 +54,14 @@ public class PositionStreamer {
 		// for each price go through positions with the same instrument and update P&L
 		Vertex positionUpdater = dag.newVertex("position-update",
 				DiagnosticProcessors.peekOutput(Processors.map(PositionStreamer::updatePositionValue)));
+		
+		//Hack to work around Zookeeper and Curator not doing its job with ClientConfig
+		
+		List<String> addresses = new ArrayList();
+		addresses.add("172.19.0.3");
+		addresses.add("172.19.0.4");
+		
+		HzClientConfig.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
 
 		// sink to Position map
 		Vertex sinkToPosition = dag

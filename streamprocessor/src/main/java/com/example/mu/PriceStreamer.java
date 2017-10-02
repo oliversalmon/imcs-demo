@@ -82,6 +82,15 @@ public class PriceStreamer {
 
 	private static DAG getDAG(String url) throws Exception {
 		DAG dag = new DAG();
+		
+		
+		//Hack to work around Zookeeper and Curator not doing its job with ClientConfig
+		
+		List<String> addresses = new ArrayList();
+		addresses.add("172.19.0.3");
+		addresses.add("172.19.0.4");
+		
+		HzClientConfig.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
 
 		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), PRICE_QUEUE));
 
