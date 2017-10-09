@@ -26,6 +26,7 @@ import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 import static com.hazelcast.query.Predicates.*;
 
+@CrossOrigin(origins = "http://localhost:8090")
 @SpringBootApplication(scanBasePackages = "com.example.mu.positionqueryservice")
 @EnableCaching
 @RestController
@@ -45,7 +46,7 @@ public class PositionQueryService {
 	@Autowired
 	private HazelcastInstance hazelcastInstance;
 
-	@CrossOrigin(origins = "http://localhost:8090")
+	//@CrossOrigin(origins = "http://localhost:8090")
 	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
 	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
 

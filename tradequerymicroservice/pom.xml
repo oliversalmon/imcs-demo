@@ -74,7 +74,7 @@
 	</dependencies>
 	<properties>
 		<java.version>1.8</java.version>
-		<start-class>com.example.tradequeryservice.Main</start-class>
+		<start-class>com.example.mu.tradequeryservice.TradeQueryService</start-class>
 		<docker.skip>false</docker.skip>
 		<docker.repository>docker.io</docker.repository>
 		<docker.image.prefix>dineshpillai</docker.image.prefix>

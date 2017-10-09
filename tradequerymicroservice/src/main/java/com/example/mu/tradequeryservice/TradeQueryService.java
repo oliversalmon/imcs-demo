@@ -27,6 +27,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 
+@CrossOrigin
 @SpringBootApplication(scanBasePackages = "com.example.mu.tradequeryservice")
 @EnableCaching
 @RestController
@@ -54,7 +55,7 @@ public class TradeQueryService {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:8090")
+	//@CrossOrigin(origins = "http://localhost:8090")
 	@RequestMapping(value = "/getAllTrades", method = RequestMethod.GET)
 	public ResponseEntity<List<Object>> getAllTrades() throws Exception {
 
@@ -73,7 +74,7 @@ public class TradeQueryService {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:8090")
+	//@CrossOrigin(origins = "http://localhost:8090")
 	@RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Object>> getTradesForPositionAccountAndInstrument(@PathVariable String positionAccountId,
 			@PathVariable String instrumentId) throws Exception {
