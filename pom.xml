@@ -13,6 +13,7 @@
     <module>streamprocessor</module>
     <module>tradequerymicroservice</module>
     <module>positionqueryservice</module>
+    <module>pricequeryservice</module>
   </modules>
   <packaging>pom</packaging>
 
