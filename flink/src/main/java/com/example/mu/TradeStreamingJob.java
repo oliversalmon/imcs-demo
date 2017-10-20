@@ -20,6 +20,7 @@ package com.example.mu;
 
 import com.example.mu.domain.Trade;
 import com.example.mu.kafka.schemas.TradeSchema;
+import com.example.mu.util.TradeTSAssigner;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.time.Time;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -27,7 +28,7 @@ import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer082;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -83,11 +84,12 @@ public class TradeStreamingJob {
         kafkaProps.setProperty("group.id", MU_GROUP);
 
         //Create the stream source
-        DataStream<Trade> tradeStream = env.addSource(new FlinkKafkaConsumer082<Trade>(
+        DataStream<Trade> tradeStream = env.addSource(new FlinkKafkaConsumer010<Trade>(
                 INPUT_TOPIC,
                 new TradeSchema(),
                 kafkaProps
         ));
+        tradeStream.assignTimestampsAndWatermarks(new TradeTSAssigner());
 
 
         // execute program
