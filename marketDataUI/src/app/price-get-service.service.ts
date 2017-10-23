@@ -1,4 +1,4 @@
-import { Injectable, NgZone, OnInit} from '@angular/core';
+import { Injectable, NgZone, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -13,15 +13,15 @@ import 'rxjs/add/operator/toPromise';
 
 class Price {
 
- priceId: string;
- instrumentId: string;
- price: number;
- timeStamp:  number;
+  priceId: string;
+  instrumentId: string;
+  price: number;
+  timeStamp: number;
 
 
-   constructor(jsonData) {
-       Object.assign(this, jsonData);
-     }
+  constructor(jsonData) {
+    Object.assign(this, jsonData);
+  }
 
 };
 
@@ -29,21 +29,18 @@ class Price {
 export class PriceGetServiceService {
 
 
-    private priceURL = '/pricequeryservice/pricestream';
-    price: Observable<Price> ;
-    private _priceSource: EventSource;
-    private _prices: BehaviorSubject<Price> = new BehaviorSubject<Price>(null)
+  private priceURL = '/pricequeryservice/pricestream';
+  price: Observable<Price>;
+  private _priceSource: EventSource;
+  private _prices: BehaviorSubject<Price> = new BehaviorSubject<Price>(null)
 
 
-    constructor(private http: Http, private _zone: NgZone) {
+  constructor(private http: Http, private _zone: NgZone) {
 
-      this._priceSource = this.createPriceSource();
-      this.price = this.createPriceObservable();
+    this._priceSource = this.createPriceSource();
+    this.price = this.createPriceObservable();
 
-    }
-
-
-
+  }
 
 
 
@@ -51,28 +48,31 @@ export class PriceGetServiceService {
 
 
 
-        getPrice(): Observable<Price> {
-          return this.price;
-        }
-
-        private createPriceObservable(): Observable<Price> {
-          return this._prices.asObservable();
-        }
-
-        private createPriceSource(): EventSource {
-          const priceSource = new EventSource(this.priceURL);
-          priceSource.onmessage = sse => {
-            const price: Price = new Price(JSON.parse(sse.data));
-            this._zone.run(()=>this._prices.next(price));
-          };
-          priceSource.onerror = err => this._prices.error(err);
-          priceSource.oncomplete = comp => this.createPriceSource();
-
-          return priceSource;
 
 
 
-        }
+  getPrice(): Observable<Price> {
+    return this.price;
+  }
+
+  private createPriceObservable(): Observable<Price> {
+    return this._prices.asObservable();
+  }
+
+  private createPriceSource(): EventSource {
+    const priceSource = new EventSource(this.priceURL);
+    priceSource.onmessage = sse => {
+      const price: Price = new Price(JSON.parse(sse.data));
+      this._zone.run(() => this._prices.next(price));
+    };
+    priceSource.onerror = err => this._prices.error(err);
+    priceSource.oncomplete = comp => this.createPriceSource();
+
+    return priceSource;
+
+
+
+  }
 
 
 }

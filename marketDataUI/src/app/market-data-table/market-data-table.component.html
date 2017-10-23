@@ -2,20 +2,20 @@
   <table class="table table-inverse">
     <thead>
       <tr>
-        <th>Price Id</th>
+        
         <th>Symbol</th>
         <th>Price</th>
-        <th>Price time</th>
+        
 
       </tr>
     </thead>
 
     <tbody *ngIf="(prices | async); let price; else loading">
       <tr>
-          <td>{{price.priceId}}</td>
+         
           <td>{{price.instrumentId}}</td>
           <td>{{price.price}}</td>
-          <td>{{price.timestamp}}</td>
+         
       </tr>
     </tbody>
 
