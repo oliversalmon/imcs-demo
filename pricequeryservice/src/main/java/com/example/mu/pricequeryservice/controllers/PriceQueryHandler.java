@@ -4,6 +4,7 @@ import com.example.mu.domain.Price;
 import com.example.mu.pricequeryservice.repository.PriceRepository;
 import com.hazelcast.core.IMap;
 
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
@@ -52,7 +53,11 @@ public class PriceQueryHandler {
 		LOG.info("In pricestream...");
 	
 		Flux<Price> prices =  priceRepo.getAllPrices();
-		Flux<Long> duration = Flux.interval(Duration.ofSeconds(1));
+		
+		
+		Flux<Long> duration = Flux.interval(Duration.ofMillis(200));
+		//Disposable disp = prices.subscribe();
+		
 		
 		LOG.info("returning flux prices...");
 			return Flux.zip(prices, duration).map(Tuple2::getT1);

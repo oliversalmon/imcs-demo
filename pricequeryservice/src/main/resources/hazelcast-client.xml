@@ -4,6 +4,7 @@
 
     <properties>
         <property name="hazelcast.discovery.enabled">true</property>
+        <property name="hazelcast.client.max.concurrent.invocations">100</property>
     </properties>
     <group>
         <name>kappa-serving-layer</name>
