@@ -4,13 +4,13 @@
       <tr>
         
         <th>Symbol</th>
-        <th>Price</th>
+        <th></th>
         
 
       </tr>
     </thead>
 
-    <tbody *ngIf="(prices | async); let price; else loading">
+    <tbody  *ngIf="(prices | async); let price; else loading">
       <tr>
          
           <td>{{price.instrumentId}}</td>
@@ -21,4 +21,5 @@
 
   </table>
   <ng-template #loading>Waiting...</ng-template>
+  
 </div>

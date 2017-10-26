@@ -3,11 +3,16 @@ package com.example.mu.pricequeryservice.repository;
 import static com.hazelcast.query.Predicates.equal;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +33,7 @@ public class PriceRepository {
 
 	final Logger LOG = LoggerFactory.getLogger(PriceRepository.class);
 	private final static String PRICE_MAP = "price";
+	private static ConcurrentLinkedQueue<Price> listOfPrices = new ConcurrentLinkedQueue<Price>();
 
 	@Bean
 	// @Profile("client")
@@ -44,21 +50,34 @@ public class PriceRepository {
 
 		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
 
-		return Flux.fromStream(priceMap.values().stream());
+		if (listOfPrices.size() < 1)
+			priceMap.values().stream().forEach(a -> listOfPrices.add(a));
+
+		return Flux.fromStream(listOfPrices.stream()
+		// .sorted((Price p1, Price p2) ->
+		// p1.getInstrumentId().compareTo(p2.getInstrumentId()))
+		).delayElements(Duration.ofMillis(100)).log();
 
 	}
 
-	public Flux<Price> getIntermittentPrices() {
+	@Scheduled(fixedDelay = 10000)
+	private void updatePrices() {
 
-		LOG.info("In intermittent prices...");
+		LOG.info("Updating Price Stream...; current price count is " + listOfPrices.size());
+
 		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
+		priceMap.values().stream().sorted((Price p1, Price p2) -> p1.getInstrumentId().compareTo(p2.getInstrumentId()))
+				.forEach(listOfPrices::add);
 
-		Flux<Price> prices =  Flux.fromStream(priceMap.values().stream());
-		Flux<Long> duration = Flux.interval(Duration.ofSeconds(1));
-			return Flux.zip(prices, duration).map(Tuple2::getT1);
+		if (listOfPrices.size() > priceMap.size() * 5) {
+			// remove the first badge
+			for (int i = 0; i < priceMap.size(); i++)
+				listOfPrices.remove(i);
+		}
 
+		LOG.info("Done");
 	}
-	
+
 	public Mono<Price> getPrice(String instrumentId) {
 		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
 		Predicate priceFilter = equal("instrumentId", instrumentId);

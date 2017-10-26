@@ -56,17 +56,17 @@ export class PriceGetServiceService {
   }
 
   private createPriceObservable(): Observable<Price> {
-    return this._prices.asObservable();
+    return this._prices.asObservable().throttleTime(1000);
   }
 
   private createPriceSource(): EventSource {
     const priceSource = new EventSource(this.priceURL);
     priceSource.onmessage = sse => {
       const price: Price = new Price(JSON.parse(sse.data));
-      this._zone.run(() => this._prices.next(price));
+      this._zone.run(() => this._prices.next(price))
     };
     priceSource.onerror = err => this._prices.error(err);
-    priceSource.oncomplete = comp => this.createPriceSource();
+    priceSource.oncomplete = comp => console.log('completed...');
 
     return priceSource;
 

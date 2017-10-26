@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { MarketDataAppComponent } from './market-data-app/market-data-app.component';
@@ -15,6 +16,7 @@ import { MarketDataTableComponent } from './market-data-table/market-data-table.
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule
   ],
   providers: [PriceGetServiceService],

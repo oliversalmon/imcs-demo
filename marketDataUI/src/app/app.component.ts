@@ -9,7 +9,7 @@ import { PriceGetServiceService } from './price-get-service.service';
 })
 export class AppComponent {
 
-title:string='Market Data UI';
+title:string='MU Report UI';
  constructor(private dataService:PriceGetServiceService){
 
  }

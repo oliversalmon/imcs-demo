@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-
-
 @RestController
 public class PriceQueryHandler {
 
@@ -46,22 +44,18 @@ public class PriceQueryHandler {
 				.flatMap(price -> ServerResponse.ok().contentType(APPLICATION_JSON).body(Mono.just(price), Price.class))
 				.switchIfEmpty(ServerResponse.notFound().build());
 	}
-	
-	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE, value="pricequeryservice/pricestream")
-	public Flux<Price> getFluxPrices(){
-		
+
+	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE, value = "pricequeryservice/pricestream")
+	public Flux<Price> getFluxPrices() {
+
 		LOG.info("In pricestream...");
-	
-		Flux<Price> prices =  priceRepo.getAllPrices();
-		
-		
-		Flux<Long> duration = Flux.interval(Duration.ofMillis(200));
-		//Disposable disp = prices.subscribe();
-		
-		
+
+		Flux<Price> prices = priceRepo.getAllPrices();
+
 		LOG.info("returning flux prices...");
-			return Flux.zip(prices, duration).map(Tuple2::getT1);
-		
+
+		return prices;
+
 	}
 
 	public static void main(String[] args) {
