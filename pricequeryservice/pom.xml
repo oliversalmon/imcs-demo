@@ -22,7 +22,25 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<start-class>com.example.mu.pricequeryservice.controllers.StartUp</start-class>
+		<docker.skip>false</docker.skip>
+		<docker.repository>docker.io</docker.repository>
+		<docker.image.prefix>dineshpillai</docker.image.prefix>
+		<docker.artifact.id>mu-pricequery-service</docker.artifact.id>
 	</properties>
+	<scm>
+		<connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
+		<developerConnection>scm:git:https://github.com/dineshgpillai/innovation.git</developerConnection>
+		<tag>spanners-4.1</tag>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
+	
 
 	<dependencies>
 		
@@ -76,6 +94,84 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.4.10</version>
+					<configuration>
+						<imageName>${docker.image.prefix}/${docker.artifact.id}</imageName>
+						<baseImage>java:openjdk-8-jdk-alpine</baseImage>
+						<entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+						<imageTags>
+							<imageTag>${project.version}</imageTag>
+							<imageTag>latest</imageTag>
+						</imageTags>
+						<serverId>docker-hub</serverId>
+						<skipDockerBuild>${docker.skip}</skipDockerBuild>
+						<resources>
+							<!-- copy the service's jar file from target into the root directory 
+								of the image -->
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.build.directory}</directory>
+								<include>${project.build.finalName}.jar</include>
+							</resource>
+							<!-- Copy contents of project's docker directory, if it exists. Used 
+								to pull in docker build specific application.properties settings -->
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.basedir}</directory>
+								<include>*</include>
+							</resource>
+						</resources>
+					</configuration>
+					<executions>
+						<execution>
+							<id>build-image</id>
+							<phase>package</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>tag-image-version</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>tag</goal>
+							</goals>
+							<configuration>
+								<image>${docker.image.prefix}/${docker.artifact.id}</image>
+								<newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:${project.version}</newName>
+								<pushImage>true</pushImage>
+							</configuration>
+						</execution>
+						<execution>
+							<id>tag-image-latest</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>tag</goal>
+							</goals>
+							<configuration>
+								<image>${docker.image.prefix}/${docker.artifact.id}</image>
+								<newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:latest</newName>
+								<pushImage>true</pushImage>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<extensions>
+			<!-- Enabling the use of FTP -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>2.9</version>
+			</extension>
+		</extensions>
 	</build>
 
 	<repositories>

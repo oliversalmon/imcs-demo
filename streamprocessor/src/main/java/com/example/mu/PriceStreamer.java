@@ -90,7 +90,7 @@ public class PriceStreamer {
 		addresses.add("172.19.0.3");
 		addresses.add("172.19.0.4");
 		
-		HzClientConfig.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
+		//HzClientConfig.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
 
 		Vertex source = dag.newVertex("source", KafkaProcessors.streamKafka(getKafkaProperties(url), PRICE_QUEUE));
 

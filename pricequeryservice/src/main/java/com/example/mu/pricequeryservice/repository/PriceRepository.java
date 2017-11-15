@@ -56,11 +56,12 @@ public class PriceRepository {
 		return Flux.fromStream(listOfPrices.stream()
 		// .sorted((Price p1, Price p2) ->
 		// p1.getInstrumentId().compareTo(p2.getInstrumentId()))
-		).delayElements(Duration.ofMillis(100)).log();
+		).delayElements(Duration.ofMillis(1000))
+				.log();
 
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 100000)
 	private void updatePrices() {
 
 		LOG.info("Updating Price Stream...; current price count is " + listOfPrices.size());
@@ -69,10 +70,10 @@ public class PriceRepository {
 		priceMap.values().stream().sorted((Price p1, Price p2) -> p1.getInstrumentId().compareTo(p2.getInstrumentId()))
 				.forEach(listOfPrices::add);
 
-		if (listOfPrices.size() > priceMap.size() * 5) {
-			// remove the first badge
+		if (listOfPrices.size() > priceMap.size() * 2) {
+			//remove the first badge
 			for (int i = 0; i < priceMap.size(); i++)
-				listOfPrices.remove(i);
+				listOfPrices.remove();
 		}
 
 		LOG.info("Done");

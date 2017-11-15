@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 import { MarketDataAppComponent } from './market-data-app/market-data-app.component';
 import { PriceGetServiceService } from './price-get-service.service';
 import { MarketDataTableComponent } from './market-data-table/market-data-table.component';
+import { PositionTableComponent } from './position-table/position-table.component';
+import { TradeCounterComponent } from './trade-counter/trade-counter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MarketDataAppComponent,
-    MarketDataTableComponent
+    MarketDataTableComponent,
+    PositionTableComponent,
+    TradeCounterComponent
   ],
   imports: [
     BrowserModule,

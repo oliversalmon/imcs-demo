@@ -7,7 +7,8 @@ import {
   state,
   style,
   animate,
-  transition
+  transition,
+  group
 } from '@angular/animations';
 
 
@@ -21,11 +22,23 @@ import {
   animations: [
     trigger('visibilityChanged', [
      
-      state('visible',   
-      style({ scrollLeft: '0' })),
-      transition('visible => visible', animate('600ms ease-out')),
-      transition('void => visible', animate(300))
-    ])
+      state('left',   
+      style({ scrollLeft: '+=300' })),
+      state('right',   
+      style({ scrollRight: '-=300' })),
+      transition('left <=> right', animate('600ms ease-out'))
+    ]),
+  
+    trigger('dummyAnimation',[
+      state('small', style({
+        transform: 'scale(1)',
+      })),
+      state('large', style({
+        transform: 'scale(1.5)',
+      })),
+      transition('small<=>large', animate('300ms ease-in'))
+    ]),
+      
   ]
 })
 
@@ -34,6 +47,12 @@ import {
 export class MarketDataTableComponent implements OnInit {
 
   prices: Observable<Price>;
+  priceMove: Observable<Number>;
+  state: string = 'active';
+  
+
+  
+  prevPrice:Observable<Price>;
   private visible:string="visible";
   constructor(private priceService:PriceGetServiceService) { }
 
@@ -45,12 +64,19 @@ export class MarketDataTableComponent implements OnInit {
     //console.log('Prices are '+this.prices[0]);
     //this.priceService.requestPrices();
     this.prices = this.priceService.getPrice();
+    this.priceMove = this.priceService.getPriceMove();
+    this.prevPrice = this.priceService.getPrevPrices();
     this.visibility = this.visible; 
 
   }
 
-  get changeOfState(){
-    return this.visible? 'visible':'';
+ changeOfState(){
+    this.visible = (this.visible==='visible' ? 'left' : 'right');
+    
+  }
+
+  doAnimate(){
+    this.state = (this.state === 'active' ? 'inactive': 'activate');
   }
 
 }

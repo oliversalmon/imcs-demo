@@ -5,21 +5,37 @@
         
         <th>Symbol</th>
         <th></th>
+        <th>Move</th>
         
 
       </tr>
     </thead>
 
     <tbody  *ngIf="(prices | async); let price; else loading">
-      <tr>
+       
+      <tr [@visibilityChanged] = 'visible' (click)="changeOfState()">
          
           <td>{{price.instrumentId}}</td>
           <td>{{price.price}}</td>
+          <td *ngIf="(priceMove | async); let pv; else default0">
+             
+              <div *ngIf="pv > 0 "><i class="fa fa-sort-asc" aria-hidden="true"></i> {{pv}}</div>
+              <div *ngIf="pv < 0 "><i class="fa fa-sort-desc" aria-hidden="true"></i> {{pv*-1}}</div>
+              <div *ngIf="pv === 0 ">
+                <i class="fa fa-sort-asc" aria-hidden="true">
+                  </i><i class="fa fa-sort-desc" aria-hidden="true"></i>
+                 {{pv}}</div>
+          </td>
+          
          
       </tr>
     </tbody>
 
   </table>
+  
+  
   <ng-template #loading>Waiting...</ng-template>
+  <ng-template #default0><td>0</td></ng-template>
+
   
 </div>

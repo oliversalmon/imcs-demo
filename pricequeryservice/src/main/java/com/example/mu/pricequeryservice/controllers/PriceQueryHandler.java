@@ -23,10 +23,12 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 @RestController
+@EnableWebFlux
 public class PriceQueryHandler {
 
 	final Logger LOG = LoggerFactory.getLogger(PriceQueryHandler.class);
