@@ -13,9 +13,17 @@
     <name>database</name>
     <url>http://maven.apache.org</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+   <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<java.version>1.8</java.version>
+		<start-class>com.example.mu.database.Schema</start-class>
+		<docker.skip>false</docker.skip>
+		<docker.repository>docker.io</docker.repository>
+		<docker.image.prefix>dineshpillai</docker.image.prefix>
+		<docker.artifact.id>innovation-mu-database-utility</docker.artifact.id>
+
+	</properties>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
@@ -35,15 +43,154 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<manifest>
+
+							<addClasspath>true</addClasspath>
+							<classpathLayoutType>custom</classpathLayoutType>
+							<customClasspathLayout>lib/$${artifact.artifactId}-$${artifact.version}$${dashClassifier?}.$${artifact.extension}</customClasspathLayout>
+
+							<mainClass>${start-class}</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+					</archive>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<useBaseVersion>false</useBaseVersion>
+					<overWriteReleases>false</overWriteReleases>
+					<overWriteSnapshots>true</overWriteSnapshots>
+					<includeScope>runtime</includeScope>
+					<outputDirectory>${project.build.directory}/lib</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${start-class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-my-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            
         </plugins>
+        <pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.4.10</version>
+					<configuration>
+						<imageName>${docker.image.prefix}/${docker.artifact.id}</imageName>
+						<baseImage>java:openjdk-8-jdk-alpine</baseImage>
+						<entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+						<imageTags>
+							<imageTag>${project.version}</imageTag>
+							<imageTag>latest</imageTag>
+						</imageTags>
+						<serverId>docker-hub</serverId>
+						<skipDockerBuild>${docker.skip}</skipDockerBuild>
+						<resources>
+							<!-- copy the service's jar file from target into the root directory 
+								of the image -->
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.build.directory}</directory>
+								<include>${project.build.finalName}.jar</include>
+							</resource>
+							<!-- Copy contents of project's docker directory, if it exists. Used 
+								to pull in docker build specific application.properties settings -->
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.build.directory}</directory>
+								<include>*</include>
+								<include>/lib/*.*</include>
+								<!-- <exclude>hbasecreatelogging*.*</exclude> <exclude>*.classpath</exclude> 
+									<exclude>*.project</exclude> -->
+							</resource>
+						</resources>
+					</configuration>
+					<executions>
+						<execution>
+							<id>build-image</id>
+							<phase>package</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>tag-image-version</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>tag</goal>
+							</goals>
+							<configuration>
+								<image>${docker.image.prefix}/${docker.artifact.id}</image>
+								<newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:${project.version}</newName>
+								<pushImage>true</pushImage>
+							</configuration>
+						</execution>
+						<execution>
+							<id>tag-image-latest</id>
+							<phase>deploy</phase>
+							<goals>
+								<goal>tag</goal>
+							</goals>
+							<configuration>
+								<image>${docker.image.prefix}/${docker.artifact.id}</image>
+								<newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:latest</newName>
+								<pushImage>true</pushImage>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
     </build>
 
 </project>
