@@ -1,0 +1,36 @@
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-injector-controller
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-injector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trade-injector
+  template:
+    metadata:
+      labels:
+        app: trade-injector
+    spec:
+      containers:
+      - name: trade-injector
+        image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8090
+        env:
+        - name: kafka.bootstrap-servers
+          value: kafka:9092
+        - name: spring.data.mongodb.host
+          value: db
+        - name: spring.hazelcast.client.config
+          value: mu1-client-config.xml
+        - name: spring.cloud.zookeeper.connectString
+          value: zoo1:2181
+        
+          
