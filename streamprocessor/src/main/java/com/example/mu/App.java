@@ -24,7 +24,7 @@ public class App {
 		String clusterProfile = args[0].substring(args[0].indexOf('=')+1, args[0].length());
 		
 		try {
-			MuCuratorClient.initiate(null);
+			//MuCuratorClient.initiate(null);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
