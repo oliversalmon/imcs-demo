@@ -171,15 +171,15 @@ public class TradeStreamer {
 		//HzClientConfig.buildClientConfig("192.168.1.176:2181");
 		com.hazelcast.client.impl.HazelcastClientProxy impl = (com.hazelcast.client.impl.HazelcastClientProxy)hzClient;
 
-		impl.getClientConfig().getAddresses().forEach(a->LOG.info("THE FOLLOWING ADDRESSES HAVE BEEN ESTABLISHED "+a));
+		//impl.getClientConfig().getAddresses().forEach(a->LOG.info("THE FOLLOWING ADDRESSES HAVE BEEN ESTABLISHED "+a));
 		
 		//Hack to work around Zookeeper and Curator not doing its job with ClientConfig
 		
-		List<String> addresses = new ArrayList();
-		addresses.add("172.19.0.3");
-		addresses.add("172.19.0.4");
+		//List<String> addresses = new ArrayList();
+		//addresses.add("172.19.0.3");
+		//addresses.add("172.19.0.4");
 		
-		impl.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
+		//impl.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
 		
 		Vertex sinkToPosition = dag
 				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, impl.getClientConfig()))

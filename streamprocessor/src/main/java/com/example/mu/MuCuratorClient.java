@@ -28,7 +28,7 @@ public class MuCuratorClient {
 	  //HazelcastInstance hzClient = HazelcastClient.newHazelcastClient(HzClientConfig.getClientConfig());
 		//System.out.println(hzClient.getConfig().getNetworkConfig().getPublicAddress());
 		
-		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient("zookeeper-1.vnet:2181",
+		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient("localhost:2181",
 				new RetryNTimes(5, 1000));
 		curatorFramework.start();
 		
