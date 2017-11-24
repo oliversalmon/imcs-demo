@@ -97,7 +97,7 @@ public class PriceStreamer {
 		Vertex priceMapper = dag.newVertex("toPrice",
 				Processors.map((Entry<String, String> f) -> new AbstractMap.SimpleEntry<>(f.getKey(),
 						gson.fromJson(f.getValue(), Price.class))));
-		Vertex sink = dag.newVertex("sink", Sinks.writeMap(PRICE_MAP, HzClientConfig.getClientConfig()));
+		Vertex sink = dag.newVertex("sink", Sinks.writeMap(PRICE_MAP));
 
 		source.localParallelism(1);
 		priceMapper.localParallelism(1);
