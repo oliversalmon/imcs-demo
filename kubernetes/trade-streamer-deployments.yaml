@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-streamer
+  namespace: mu-architecture-demo
+  labels:
+    name: trade-streamer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: trade-streamer
+    spec:
+      hostAliases:
+      - ip: "138.68.176.187"
+        hostnames:
+        - "1524d2683b90"
+      containers:
+      - image: dineshpillai/innovation-mu-streamers:1.0-SNAPSHOT
+        name: trade-streamer
+        imagePullPolicy: Always
+        args: ["hzJetClusterProfile=tradeStreamer=1,priceStreamer=0,positionStreamer=0", "kafka_url=kafka:9092", "hzHost=trade-imdg.vnet", "runs=1000", "delay=6000"]
+        ports:
+        - name: trade-streamer
+          containerPort: 6701
+        resources: {}
+      
+
