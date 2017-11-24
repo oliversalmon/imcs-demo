@@ -169,7 +169,7 @@ public class TradeStreamer {
 
 		// sink to Position map 
 		//HzClientConfig.buildClientConfig("192.168.1.176:2181");
-		com.hazelcast.client.impl.HazelcastClientProxy impl = (com.hazelcast.client.impl.HazelcastClientProxy)hzClient;
+		//com.hazelcast.client.impl.HazelcastClientProxy impl = (com.hazelcast.client.impl.HazelcastClientProxy)hzClient;
 
 		//impl.getClientConfig().getAddresses().forEach(a->LOG.info("THE FOLLOWING ADDRESSES HAVE BEEN ESTABLISHED "+a));
 		
@@ -182,10 +182,10 @@ public class TradeStreamer {
 		//impl.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
 		
 		Vertex sinkToPosition = dag
-				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, impl.getClientConfig()))
+				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP))
 				.localParallelism(1);
 
-		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP, impl.getClientConfig()));
+		Vertex sink = dag.newVertex("sink", Sinks.writeMap(TRADE_MAP));
 
 		source.localParallelism(1);
 		tradeMapper.localParallelism(1);
