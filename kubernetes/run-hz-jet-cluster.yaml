@@ -14,9 +14,9 @@ spec:
         name: trade-imdg
     spec:
       hostAliases:
-      - ip: "138.68.176.187"
+      - ip: "178.62.124.180"
         hostnames:
-        - "1524d2683b90"
+        - "a8bceadb696d"
       containers:
       - image: dineshpillai/innovation-trade-imdg:0.0.1-SNAPSHOT
         name: trade-imdg
@@ -56,9 +56,9 @@ spec:
         name: trade-streamer
     spec:
       hostAliases:
-      - ip: "138.68.176.187"
+      - ip: "178.62.124.180"
         hostnames:
-        - "1524d2683b90"
+        - "a8bceadb696d"
       containers:
       - image: dineshpillai/innovation-mu-streamers:1.0-SNAPSHOT
         name: trade-streamer
@@ -86,9 +86,9 @@ spec:
         name: price-streamer
     spec:
       hostAliases:
-      - ip: "138.68.176.187"
+      - ip: "178.62.124.180"
         hostnames:
-        - "1524d2683b90"
+        - "a8bceadb696d"
       containers:
       - image: dineshpillai/innovation-mu-streamers:1.0-SNAPSHOT
         name: price-streamer
