@@ -1,0 +1,7 @@
+before_script:
+
+mvn-compile-core:
+  script:
+    - mvn -version
+    - mvn clean package install -DskipTests
+
