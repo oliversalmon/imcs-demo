@@ -1,0 +1,29 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-imdg
+  namespace: mu-architecture-demo
+  labels:
+    name: trade-imdg
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: trade-imdg
+    spec:
+      hostAliases:
+      - ip: "138.68.176.187"
+        hostnames:
+        - "1524d2683b90"
+      containers:
+      - image: dineshpillai/innovation-trade-imdg:0.0.1-SNAPSHOT
+        name: trade-imdg
+        imagePullPolicy: Always
+        ports:
+        - name: trade-imdg
+          containerPort: 5701
+        resources: {}
+      
+

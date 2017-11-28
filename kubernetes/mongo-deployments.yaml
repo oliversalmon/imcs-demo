@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db
+  namespace: mu-architecture-demo
+  labels:
+    name: mongo
+    app: mongo
+spec:
+      containers:
+      - image: dineshpillai/mongo-db-repo
+        name: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+          - name: mongo-storage
+            mountPath: /data/db-mongo
+      volumes:
+          - name: mongo-storage
+            hostPath:
+              path: /data/db-mongo

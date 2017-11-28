@@ -1,0 +1,88 @@
+<hazelcast-client xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.hazelcast.com/schema/client-config hazelcast-client-config-3.6.xsd"
+                  xmlns="http://www.hazelcast.com/schema/client-config">
+
+    <properties>
+        <property name="hazelcast.discovery.enabled">true</property>
+        <property name="hazelcast.client.max.concurrent.invocations">100</property>
+    </properties>
+    <group>
+        <name>kappa-serving-layer</name>
+        <password>kappa-password</password>
+    </group>
+
+    <network>
+        <aws enabled="false"/>
+        <smart-routing>true</smart-routing>
+        <redo-operation>true</redo-operation>
+        <discovery-strategies>
+            <discovery-strategy enabled="true" class="com.hazelcast.zookeeper.ZookeeperDiscoveryStrategy">
+                <properties>
+                    <!--
+                      Connection string to your ZooKeeper server.
+                      Default: There is no default, this is a required property.
+                      Example: 127.0.0.1:2181
+                    -->
+                    <property name="zookeeper_url">zookeeper-1.vnet:2181</property>
+                    <!--Path in ZooKeeper Hazelcast will useDefault: /discovery/hazelcast -->
+                    <property name="zookeeper_path">/discovery/hazelcast</property>
+                    <!--Name of this Hazelcast cluster. You can have multiple distinct clusters to use the same ZooKeeper installation.-->
+                    <property name="group">kappa-serving-layer</property>
+                </properties>
+            </discovery-strategy>
+        </discovery-strategies>
+    </network>
+	 
+    <near-cache name="trade">
+        <max-size>2000</max-size>
+        <time-to-live-seconds>0</time-to-live-seconds>
+        <max-idle-seconds>0</max-idle-seconds>
+        <eviction-policy>LFU</eviction-policy>
+        <invalidate-on-change>true</invalidate-on-change>
+        <in-memory-format>OBJECT</in-memory-format>
+    </near-cache>
+
+    <near-cache name="party">
+        <max-size>2000</max-size>
+        <time-to-live-seconds>0</time-to-live-seconds>
+        <max-idle-seconds>0</max-idle-seconds>
+        <eviction-policy>LFU</eviction-policy>
+        <invalidate-on-change>true</invalidate-on-change>
+        <in-memory-format>OBJECT</in-memory-format>
+    </near-cache>
+
+    <near-cache name="instrument">
+        <max-size>2000</max-size>
+        <time-to-live-seconds>0</time-to-live-seconds>
+        <max-idle-seconds>0</max-idle-seconds>
+        <eviction-policy>LFU</eviction-policy>
+        <invalidate-on-change>true</invalidate-on-change>
+        <in-memory-format>OBJECT</in-memory-format>
+    </near-cache>
+
+    <near-cache name="postion-account">
+        <max-size>2000</max-size>
+        <time-to-live-seconds>0</time-to-live-seconds>
+        <max-idle-seconds>0</max-idle-seconds>
+        <eviction-policy>LFU</eviction-policy>
+        <invalidate-on-change>true</invalidate-on-change>
+        <in-memory-format>OBJECT</in-memory-format>
+    </near-cache>
+
+    <near-cache name="price">
+        <max-size>2000</max-size>
+        <time-to-live-seconds>0</time-to-live-seconds>
+        <max-idle-seconds>0</max-idle-seconds>
+        <eviction-policy>LFU</eviction-policy>
+        <invalidate-on-change>true</invalidate-on-change>
+        <in-memory-format>OBJECT</in-memory-format>
+    </near-cache>
+
+    <serialization>
+        <portable-version>0</portable-version>
+        <portable-factories>
+            <portable-factory factory-id="1">com.example.mu.cachefactory.MuCacheFactory</portable-factory>
+        </portable-factories>
+    </serialization>
+	 
+</hazelcast-client>
