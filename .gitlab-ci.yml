@@ -32,5 +32,5 @@ deploy:
   script:
     - cd ../kubernetes	
     - kubectl apply -f run-mzk.yaml
-   dependencies:
+  dependencies:
     - build 
