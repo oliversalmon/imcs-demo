@@ -30,7 +30,7 @@ createNameSpace:
 deploy:
   stage: deploy
   script:
-    - cd ../kubernetes	
+    - cd kubernetes	
     - kubectl apply -f run-mzk.yaml
   dependencies:
     - build 
