@@ -3,11 +3,11 @@ image: docker:latest
 before_script:
 - docker login -u dineshpillai -p Pill2017
 - export KUBECONFIG=/etc/kubernetes/admin.conf
-- kubectl delete namespace mu-architecture-demo
 
 stages:
  - build
  - test
+ - deletenamespace
  - createnamespace
  - deploy
 
@@ -21,11 +21,19 @@ build:
     - mvn docker:build	
     - docker push dineshpillai/innovation-mu-streamers
 
+deleteNameSpace:
+  stage: deletenamespace
+  script:
+   - kubectl delete namespace mu-architecture-demo
+  allow_failure: true
+
 createNameSpace:
   stage: createnamespace
   script: 
    - kubectl create namespace mu-architecture-demo
   allow_failure: true
+  dependencies:
+    - deletenamespace
 
 deploy:
   stage: deploy
