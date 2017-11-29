@@ -2,6 +2,7 @@ image: docker:latest
 
 before_script:
 - docker login -u dineshpillai -p Pill2017
+- export KUBECONFIG=/etc/kubernetes/admin.conf
 
 build:
   script:
@@ -10,3 +11,7 @@ build:
     - cd streamprocessor
     - mvn docker:build	
     - docker push dineshpillai/innovation-mu-streamers
+
+deploy
+  script:
+    - kubectl apply -f https://gitlab.com/dineshpillai/mu-architecture-core/raw/master/kubernetes/run-mzk.yaml
