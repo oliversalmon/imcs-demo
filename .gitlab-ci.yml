@@ -33,7 +33,7 @@ createNameSpace:
    - kubectl create namespace mu-architecture-demo
   allow_failure: true
   dependencies:
-    - deletenamespace
+    - deleteNameSpace
 
 deploy:
   stage: deploy
