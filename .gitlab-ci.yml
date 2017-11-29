@@ -1,7 +1,12 @@
-before_script:
+image: docker:latest
 
-mvn-compile-core:
+before_script:
+- docker login -u dineshpillai -p Pill2017
+
+build:
   script:
     - mvn -version
     - mvn clean package install -DskipTests
-
+    - cd streamprocessor
+    - mvn docker:build	
+    - docker push dineshpillai/innovation-mu-streamers
