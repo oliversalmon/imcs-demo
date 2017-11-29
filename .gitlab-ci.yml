@@ -3,7 +3,7 @@ image: docker:latest
 before_script:
 - docker login -u dineshpillai -p Pill2017
 - export KUBECONFIG=/etc/kubernetes/admin.conf
-
+- kubectl delete namespace mu-architecture-demo
 
 stages:
  - build
