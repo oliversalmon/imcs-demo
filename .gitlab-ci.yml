@@ -12,6 +12,6 @@ build:
     - mvn docker:build	
     - docker push dineshpillai/innovation-mu-streamers
 
-deploy
+deploy:
   script:
     - kubectl apply -f https://gitlab.com/dineshpillai/mu-architecture-core/raw/master/kubernetes/run-mzk.yaml
