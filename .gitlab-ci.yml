@@ -4,20 +4,33 @@ before_script:
 - docker login -u dineshpillai -p Pill2017
 - export KUBECONFIG=/etc/kubernetes/admin.conf
 
+
 stages:
  - build
  - test
+ - createnamespace
  - deploy
 
+
 build:
-  script:
+ stage: build 
+ script:
     - mvn -version
     - mvn clean package install -DskipTests
     - cd streamprocessor
     - mvn docker:build	
     - docker push dineshpillai/innovation-mu-streamers
 
+createNameSpace:
+  stage: createnamespace
+  script: 
+   - kubectl create namespace mu-architecture-demo
+  allow_failure: true
+
 deploy:
+  stage: deploy
   script:
     - cd ../kubernetes	
     - kubectl apply -f run-mzk.yaml
+   dependencies:
+    - build 
