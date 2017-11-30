@@ -41,5 +41,6 @@ deploy:
   script:
     - cd kubernetes	
     - kubectl apply -f run-mzk.yaml
+    - kubectl apply -f run-hz-jet-cluster.yaml
   dependencies:
     - build 
