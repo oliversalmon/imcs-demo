@@ -1,0 +1,2 @@
+kafka.topic.marketData: market_data
+kafka.topic.trade: trade
