@@ -11,6 +11,11 @@ stages:
  - createnamespace
  - deploy
 
+deleteNameSpace:
+  stage: deletenamespace
+  script:
+   - kubectl delete namespace mu-architecture-demo
+  allow_failure: true
 
 build:
  stage: build 
@@ -20,20 +25,16 @@ build:
     - cd streamprocessor
     - mvn docker:build	
     - docker push dineshpillai/innovation-mu-streamers
-
-deleteNameSpace:
-  stage: deletenamespace
-  script:
-   - kubectl delete namespace mu-architecture-demo
-  allow_failure: true
-
+ dependencies:
+    - deleteNameSpace
+   
 createNameSpace:
   stage: createnamespace
   script: 
    - kubectl create namespace mu-architecture-demo
   allow_failure: true
   dependencies:
-    - deleteNameSpace
+    - build
 
 deploy:
   stage: deploy
