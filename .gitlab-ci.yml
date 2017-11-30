@@ -5,9 +5,9 @@ before_script:
 - export KUBECONFIG=/etc/kubernetes/admin.conf
 
 stages:
+ - deletenamespace
  - build
  - test
- - deletenamespace
  - createnamespace
  - deploy
 
