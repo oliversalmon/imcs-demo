@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--link rel="icon" href="../../favicon.ico"-->
+
+<title>Trade Message Injector</title>
+<base href="/" />
+<!-- Bootstrap core CSS -->
+<!-- link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"-->
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+<!-- Font Awesome support -->
+<script src="https://use.fontawesome.com/1fbe357976.js"></script>
+<script src="./dist/js/sockjs-0.3.min.js" type="text/javascript"></script>
+<script src="./dist/js/stomp.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+	crossorigin="anonymous"></script>
+<!-- script src="https://code.angularjs.org/1.4.9/angular.min.js"></script-->
+<script src="./dist/js/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.min.js"></script>
+
+<script
+	src="https://rawgit.com/dwmkerr/angular-modal-service/master/dst/angular-modal-service.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"
+	type="text/javascript"></script>
+<script src="./dist/js/angular-chart.js" type="text/javascript"></script>
+
+
+<!-- script src="/webjars/jquery/jquery.js" type="text/javascript"></script-->
+<script src="./dist/js/bootstrap.min.js"
+	type="text/javascript"></script>
+<script src="./scripts/app/app.js" type="text/javascript"></script>
+<script src="./scripts/app/controller.js" type="text/javascript"></script>
+<script src="./scripts/app/services.js" type="text/javascript"></script>
+
+
+
+<!-- Custom styles for this template -->
+<link href="jumbotron.css" rel="stylesheet">
+
+</head>
+
+<body ng-app="TradeInjectorApp">
+
+	<div ng-controller="TradeInjectCtrl">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#"><i class="fa fa-university"
+						aria-hidden="true"></i>Trade Message Injector</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+
+					<form class="navbar-form navbar-right" ng-show="authenticated">
+
+						<div class="btn-group ">
+							<a class="btn btn-primary" href="#"><i
+								ng-show="loginType=='facebook'" class="fa fa-facebook-square"
+								aria-hidden="true"></i> <i ng-show="loginType=='github'"
+								class="fa fa-github" aria-hidden="true"></i> <span
+								ng-bind="user"></a> <a
+								class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+								href="#"> <span class="fa fa-caret-down"
+								title="Toggle dropdown menu"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
+								<li><a href="#"><i class="fa fa-trash-o fa-fw"></i>
+										Delete</a></li>
+								<li><a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a></li>
+								<li class="divider"></li>
+								<li><a href="#"><i class="fa fa-unlock"></i> Make admin</a></li>
+							</ul>
+						</div>
+						<button ng-click="logout()" data-toggle="tooltip" title="log out"
+							class="btn btn-primary">
+							<i class="fa fa-sign-out" aria-hidden="true"></i>
+						</button>
+					</form>
+				</div>
+				<!--/.navbar-collapse -->
+			</div>
+		</nav>
+
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<div class="jumbotron" ng-show="authenticated"
+			style="background-image: url(./images/london-skyline-22.jpg); height: 400px; width: 1400px;">
+
+			<div class="container"></div>
+
+
+		</div>
+
+
+
+
+
+		<div class="jumbotron" ng-show="!authenticated">
+
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Please sign in with</h3>
+					</div>
+					<div class="panel-body">
+						<a href="/login/facebook" class="btn btn-lg btn-primary btn-block">
+							<i class="fa fa-facebook-square"></i>Facebook
+						</a> <a href="/login/github" class="btn btn-lg btn-success btn-block">
+							<i class="fa fa-github" aria-hidden="true"></i>GitHub
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="container">
+			<ul class="nav nav-pills" ng-show="authenticated">
+				<li role="presentation" ng-class="{active: isSet(1)}"
+					ng-click="setTab(1)"><a href="#"><i
+						class="fa fa-cog fa-fw" aria-hidden="true"></i>Generate Trades</a></li>
+				<li role="presentation" ng-class="{active: isSet(2)}"
+					ng-click="setTab(2)"><a href="#"><i
+						class="fa fa-cube fa-fw" aria-hidden="true"></i>Reports</a></li>
+
+			</ul>
+		</div>
+		<!-- div class="container"-->
+
+		<div ng-show="isSet(1)">
+			<div class=" container panel panel-default" ng-show="authenticated">
+				<div class="panel-body">
+					<!-- Draw up the table of created profiles -->
+					<div class="col-md-12"
+						ng-controller="TradeInjectProfileTableDisplay">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-10">
+										<h3 class="panel-title">Profiles</h3>
+									</div>
+									<div class="col-md-2">
+										<div class="btn-group" role="group" aria-label="...">
+											<button type="button" data-toggle="tooltip"
+												title="add a new profile" ng-click="showCreateProfile()"
+												class="btn btn-default">
+												<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+											</button>
+											<button type="button" ng-click="refreshAll()"
+												class="btn btn-default">
+												<i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<th>Profile Id</th>
+											<th>Profile Name</th>
+											<th>Created by</th>
+											<th></th>
+											<th>Progress</th>
+											<th>Run mode</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="x in tradeInjectProfiles">
+
+											<td>{{x.id}}</td>
+
+											<td>{{x.name}}</td>
+											<td>{{x.userId}}</td>
+											<td ng-show="x.run_mode!=0">
+												<div class="btn-group-xs well well-sm" role="group"
+													aria-label="...">
+													<button class="btn btn-default" data-toggle="tooltip"
+														title="edit profile" ng-click="showCreateProfile(x.id)"
+														type="button">
+														<i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+													</button>
+													<button class="btn btn-default" data-toggle="tooltip"
+														title="delete profile" ng-click="delete(x.id)"
+														type="button">
+														<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+													</button>
+												</div>
+											</td>
+											<td ng-show="x.run_mode==0">
+												<div class="btn-group-xs well well-sm" role="group"
+													aria-label="...">
+													<button class="btn btn-default" data-toggle="tooltip"
+														title="view profile details" ng-click="viewProfile(x.id)"
+														type="button">
+														<i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+													</button>
+												</div>
+											</td>
+											<td><i ng-show="x.run_mode==0"
+												class="fa fa-spinner fa-spin fa-1x fa-fw"></i> <span>{{x.currentMessageCount}}/{{x.numberOfTrades}}</span>
+											</td>
+											<!-- Show button for RUNNING -->
+											<td ng-show="x.run_mode==0">
+												<div class="btn-group-xs well well-sm" role="group"
+													aria-label="...">
+													<button class="btn btn-default" ng-click="stop(x.id)"
+														type="button">
+														<i class="fa fa-stop fa-fw" aria-hidden="true"></i>
+													</button>
+													<button class="btn btn-default" data-toggle="tooltip"
+														title="view charts" ng-click="showTable(x.id)"
+														type="button">
+														<i class="fa fa-bar-chart fa-fw" aria-hidden="true"></i>
+													</button>
+													<button class="btn btn-default" data-toggle="tooltip"
+														title="view sample message" ng-click="" type="button">
+														<i class="fa fa-file-text fa-fw" aria-hidden="true"></i>
+													</button>
+												</div>
+
+											</td>
+											<!-- Show button for COMPLETED -->
+											<td ng-show="x.run_mode==2">
+												<div class="btn-group-xs well well-sm" role="group"
+													aria-label="...">
+													<button class="btn btn-default" ng-click="repeat(x.id)"
+														type="button">
+														<i class="fa fa-repeat fa-fw" aria-hidden="true"></i>
+													</button>
+
+												</div>
+
+											</td>
+											<!-- Show button for STOP -->
+											<td ng-show="x.run_mode==3">
+												<div class="btn-group-xs well well-sm" role="group"
+													aria-label="...">
+													<button class="btn btn-default" ng-click="play(x.id)"
+														type="button">
+														<i class="fa fa-play fa-fw" aria-hidden="true"></i>
+													</button>
+
+												</div>
+											</td>
+
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- End of Panel Container -->
+			</div>
+			<!-- End of ng show for Generate Trades -->
+		</div>
+
+		<div ng-show="isSet(2)" ng-show="authenticated">
+			<div ng-controller="ReportStaticController">
+				<div class="container">
+					<ul class="nav nav-pills" ng-show="authenticated">
+						<li role="presentation" ng-class="{active: isTab(1)}"
+							ng-click="setTab(1)"><a href="#"><i
+								class="fa fa-line-chart fa-fw" aria-hidden="true"></i>Market
+								Data</a></li>
+						<li role="presentation" ng-class="{active: isTab(2)}"
+							ng-click="setTab(2)"><a href="#"><i
+								class="fa fa-microchip fa-fw" aria-hidden="true"></i>Trade
+								Report</a></li>
+						<li role="presentation" ng-class="{active: isTab(3)}"
+							ng-click="setTab(3)"><a href="#"><i
+								class="fa fa-microchip fa-fw" aria-hidden="true"></i>Position
+								Report</a></li>
+
+					</ul>
+				</div>
+				<div ng-show="isTab(1)">
+					<div class="container panel panel-default">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-2">
+										<h3 class="panel-title">Instrument</h3>
+									</div>
+									<div class="col-ms-10">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+
+												<!-- div ng-repeat="n in pageNavs"-->
+												<li ng-class="{active: isPageActive('A')}"
+													ng-click="clickOnPage('A')" ng-init="clickOnPage('A')"><a
+													href="#">A</a></li>
+												<li ng-class="{active: isPageActive('B')}"
+													ng-click="clickOnPage('B')"><a href="#">B</a></li>
+												<li ng-class="{active: isPageActive('C')}"
+													ng-click="clickOnPage('C')"><a href="#">C</a></li>
+												<li ng-class="{active: isPageActive('D')}"
+													ng-click="clickOnPage('D')"><a href="#">D</a></li>
+												<li ng-class="{active: isPageActive('E')}"
+													ng-click="clickOnPage('E')"><a href="#">E</a></li>
+												<li ng-class="{active: isPageActive('F')}"
+													ng-click="clickOnPage('F')"><a href="#">F</a></li>
+												<li ng-class="{active: isPageActive('G')}"
+													ng-click="clickOnPage('G')"><a href="#">G</a></li>
+												<li ng-class="{active: isPageActive('H')}"
+													ng-click="clickOnPage('H')"><a href="#">H</a></li>
+												<li ng-class="{active: isPageActive('I')}"
+													ng-click="clickOnPage('I')"><a href="#">I</a></li>
+												<li ng-class="{active: isPageActive('J')}"
+													ng-click="clickOnPage('J')"><a href="#">J</a></li>
+												<li ng-class="{active: isPageActive('K')}"
+													ng-click="clickOnPage('K')"><a href="#">K</a></li>
+												<li ng-class="{active: isPageActive('L')}"
+													ng-click="clickOnPage('L')"><a href="#">L</a></li>
+												<li ng-class="{active: isPageActive('M')}"
+													ng-click="clickOnPage('M')"><a href="#">M</a></li>
+												<li ng-class="{active: isPageActive('N')}"
+													ng-click="clickOnPage('N')"><a href="#">N</a></li>
+												<li ng-class="{active: isPageActive('O')}"
+													ng-click="clickOnPage('O')"><a href="#">O</a></li>
+												<li ng-class="{active: isPageActive('P')}"
+													ng-click="clickOnPage('P')"><a href="#">P</a></li>
+												<li ng-class="{active: isPageActive('Q')}"
+													ng-click="clickOnPage('Q')"><a href="#">Q</a></li>
+												<li ng-class="{active: isPageActive('R')}"
+													ng-click="clickOnPage('R')"><a href="#">R</a></li>
+												<li ng-class="{active: isPageActive('S')}"
+													ng-click="clickOnPage('S')"><a href="#">S</a></li>
+												<li ng-class="{active: isPageActive('T')}"
+													ng-click="clickOnPage('T')"><a href="#">T</a></li>
+												<li ng-class="{active: isPageActive('U')}"
+													ng-click="clickOnPage('U')"><a href="#">U</a></li>
+												<li ng-class="{active: isPageActive('V')}"
+													ng-click="clickOnPage('V')"><a href="#">V</a></li>
+												<li ng-class="{active: isPageActive('W')}"
+													ng-click="clickOnPage('W')"><a href="#">W</a></li>
+												<li ng-class="{active: isPageActive('X')}"
+													ng-click="clickOnPage('X')"><a href="#">X</a></li>
+												<li ng-class="{active: isPageActive('Y')}"
+													ng-click="clickOnPage('Y')"><a href="#">Y</a></li>
+												<li ng-class="{active: isPageActive('Z')}"
+													ng-click="clickOnPage('Z')"><a href="#">Z</a></li>
+												<!-- /div-->
+
+
+											</ul>
+										</nav>
+									</div>
+
+								</div>
+							</div>
+							<div class="panel-body"></div>
+							<table class="table table-normal table-hover">
+								<thead>
+									<tr>
+										<th>Instrument Id</th>
+										<th>Symbol</th>
+										<th>Name</th>
+										<th>Price</th>
+										<th>Previoius Price</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="x in allInstrumentsData">
+
+										<td>{{x.id}}</td>
+										<td>{{x.id}}</td>
+										<td>{{x.name}}</td>
+										<td>{{x.price}}</td>
+										<td>{{x.prevPrice}}</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- End of isTab(1) -->
+				<div ng-show="isTab(2)">
+					<div class="container panel panel-default">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-2">
+										<h3 class="panel-title">Trades</h3>
+									</div>
+									<div class="col-md-6"></div>
+									<div class="col-md-4">
+										Trade Registered:{{tradeCount}}
+										<button type="button" ng-click="refreshTrades()"
+											class="btn btn-default">
+											<i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<table class="table table-normal table-hover">
+									<thead>
+										<tr>
+											<th>Trade Id</th>
+											<th>Trade Date & Time</th>
+											<th>Instrument Id</th>
+											<th>Position Account</th>
+											<th>Last Qty</th>
+											<th>Last Px</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="x in allTradeData">
+
+											<td>{{x.tradeId}}</td>
+											<td>{{x.tradeDate | date:'yyyy-MM-dd HH:mm:ss.sss'}}</td>
+											<td>{{x.instrumentId}}</td>
+											<td>{{x.positionAccountId}}</td>
+											<td>{{x.quantity}}</td>
+											<td>{{x.price}}</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End of isTab(2) -->
+				<div ng-show="isTab(3)">
+					<div class="container panel panel-default">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-2">
+										<h3 class="panel-title">Positions</h3>
+									</div>
+									<div class="input-group col-md-6">
+										<span class="input-group-addon"><i class="fa fa-search"
+											aria-hidden="true"></i></span> <input type="text" ng-model="search"
+											class="form-control" aria-label="Search"> <span
+											class="input-group-addon">
+											<button type="button" ng-click="refreshPositions()"
+												class="btn btn-default">
+												<i class="fa fa-refresh" aria-hidden="true"></i>
+											</button>
+										</span>
+										<span
+											class="input-group-addon">Trade Registered:{{tradeCount}}</span>
+
+										
+									</div>
+
+
+								</div>
+							</div>
+							<div class="panel-body">
+								<table class="table table-normal table-hover">
+									<thead>
+										<tr>
+											<th>Position Account</th>
+											<th>Instrument Id</th>
+											<th>Position Size</th>
+											<th>PnL</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="x in allPositionData | filter:search">
+
+											<td>{{x.accountId}}</td>
+											<td>{{x.instrumentid}}</td>
+											<td>{{x.size}}</td>
+											<td><span ng-if="(x.pnl < 0)" ng-style="{color: 'red'}">{{x.pnl}}</span>
+												<span ng-if="(x.pnl > 0)" ng-style="{color: 'blue'}">{{x.pnl}}</span>
+											</td>
+
+
+
+											<td>
+												<button class="btn btn-default" data-toggle="tooltip"
+													title="view trades for this position"
+													ng-click="showtable(x.accountId, x.instrumentid, $index)"
+													type="button">
+													<i ng-show="showtableView" class="fa fa-compress fa-fw"
+														aria-hidden="true"></i> <i ng-show="!showtableView"
+														class="fa fa-expand fa-fw" aria-hidden="true"></i>
+												</button>
+												<table ng-show="showtableView && tableIndex==$index"
+													class="table table-normal table-hover">
+													<!-- button class="btn btn-default" data-toggle="tooltip"
+														title="hide" ng-click="showtableView=!showtableView"
+														type="button">
+														<i class="fa fa-file-text fa-fw" aria-hidden="true"></i>
+													</button-->
+													<thead>
+														<tr>
+															<th>Trade Id</th>
+															<th>Trade Date & Time</th>
+															<th>Instrument Id</th>
+															<th>Position Account</th>
+															<th>Last Qty</th>
+															<th>Last Px</th>
+
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="x in allTradeData">
+
+															<td>{{x.tradeId}}</td>
+															<td>{{x.tradeDate | date:'yyyy-MM-dd HH:mm:ss.sss'}}</td>
+															<td>{{x.instrumentId}}</td>
+															<td>{{x.positionAccountId}}</td>
+															<td>{{x.quantity}}</td>
+															<td>{{x.price}}</td>
+														</tr>
+
+													</tbody>
+												</table>
+											</td>
+
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End of ng show Configure -->
+	</div>
+	<!-- End of Controller -->
+
+	<hr>
+
+	<footer>
+		<p>&copy; 2016 Company, Inc.</p>
+	</footer>
+
+	<!-- /container -->
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Pla
+	
+	
+	ced at the end of the document so the pages load faster -->
+
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<!-- script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
+</body>
+</html>
