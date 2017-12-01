@@ -14,7 +14,7 @@ spec:
         name: trade-streamer
     spec:
       hostAliases:
-      - ip: "138.68.176.187"
+      - ip: "178.62.124.180""
         hostnames:
         - "a8bceadb696d"
       containers:
