@@ -10,7 +10,7 @@ stages:
  - test
  - createnamespace
  - deployhz
- - deploytradestreamer
+ - deploystreamer
 
 deleteNameSpace:
   stage: deletenamespace
@@ -24,7 +24,7 @@ build:
     - mvn -version
     - mvn clean package install -DskipTests
     - cd streamprocessor
-    - mvn docker:build	
+    - mvn clean package install -DskipTests docker:build	
     - docker push dineshpillai/innovation-mu-streamers
  dependencies:
     - deleteNameSpace
@@ -46,10 +46,11 @@ deployhz:
   dependencies:
     - build 
 
-deployTradeStreamer:
-  stage: deploytradestreamer
+deployStreamer:
+  stage: deploystreamer
   script: 
    - cd kubernetes
    - kubectl apply -f trade-streamer-deployments.yaml
+   - kubectl apply -f price-streamer-deployments.yaml
   dependencies:
     - deployhz
