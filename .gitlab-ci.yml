@@ -26,6 +26,12 @@ build:
     - cd streamprocessor
     - mvn clean package install -DskipTests docker:build	
     - docker push dineshpillai/innovation-mu-streamers
+    - cd ../trade-imdg
+    - mvn docker:build
+    - docker push dineshpillai/innovation-trade-imdg
+    - cd ../trade-injector
+    - mvn docker:build
+    - docker push dineshpillai/innovation-trade-injector 
  dependencies:
     - deleteNameSpace
    
