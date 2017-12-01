@@ -49,6 +49,8 @@ deployhz:
     - cd kubernetes	
     - kubectl apply -f run-mzk.yaml
     - kubectl apply -f run-hz-jet-cluster.yaml
+    - sleep 20s
+    - kubectl apply -f run-apps-reports.yaml
     - sleep 20s 
   dependencies:
     - build 
