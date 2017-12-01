@@ -9,7 +9,8 @@ stages:
  - build
  - test
  - createnamespace
- - deploy
+ - deployhz
+ - deploytradestreamer
 
 deleteNameSpace:
   stage: deletenamespace
@@ -36,11 +37,18 @@ createNameSpace:
   dependencies:
     - build
 
-deploy:
-  stage: deploy
+deployhz:
+  stage: deployhz
   script:
     - cd kubernetes	
     - kubectl apply -f run-mzk.yaml
-    - kubectl apply -f run-hz-jet-cluster.yaml
   dependencies:
     - build 
+
+deployTradeStreamer:
+  stage: deploytradestreamer
+  script: 
+   - cd kubernetes
+   - kubectl apply -f trade-streamer-deployments.yaml
+  dependencies:
+    - deployhz
