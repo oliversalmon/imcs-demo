@@ -10,7 +10,7 @@
     <module>database</module>
     <module>docker</module>
     <module>cache</module>
-    <module>streamprocessor</module>
+    <!--  module>streamprocessor</module-->
     <module>tradequerymicroservice</module>
     <module>positionqueryservice</module>
     <module>pricequeryservice</module>
