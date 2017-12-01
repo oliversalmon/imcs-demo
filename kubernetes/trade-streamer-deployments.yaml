@@ -16,7 +16,7 @@ spec:
       hostAliases:
       - ip: "138.68.176.187"
         hostnames:
-        - "1524d2683b90"
+        - "a8bceadb696d"
       containers:
       - image: dineshpillai/innovation-mu-streamers:1.0-SNAPSHOT
         name: trade-streamer
