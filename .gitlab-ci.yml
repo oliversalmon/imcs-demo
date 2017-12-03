@@ -34,7 +34,7 @@ build:
     - docker push dineshpillai/innovation-trade-injector
     - cd ../tradequerymicroservice
     - mvn docker:build
-    - docker push dineshpillai/imcys-tradequeryservice 
+    - docker push dineshpillai/imcs-tradequeryservice 
  dependencies:
     - deleteNameSpace
    
