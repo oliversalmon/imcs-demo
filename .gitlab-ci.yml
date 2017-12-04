@@ -38,7 +38,7 @@ build:
     - cd ../positionqueryservice
     - mvn docker:build
     - docker push dineshpillai/imcs-positionqueryservice 
-dependencies:
+ dependencies:
     - deleteNameSpace
    
 createNameSpace:
