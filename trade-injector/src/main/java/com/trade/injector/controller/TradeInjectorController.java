@@ -57,10 +57,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CompositeFilter;
 
 import com.example.mu.domain.Instrument;
 import com.example.mu.domain.Party;
+import com.example.mu.domain.PositionAccount;
 import com.example.mu.domain.Trade;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
@@ -731,6 +733,16 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		
 		
 		return report;
+	}
+	
+	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
+	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
+
+		RestTemplate restTemplate = new RestTemplate();
+		
+		return ResponseEntity.ok(restTemplate.getForObject(
+				"http://position-query-service:8093/positionqueryservice/getAllPositionAccounts", List.class));
+
 	}
 
 	/*

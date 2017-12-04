@@ -27,5 +27,10 @@ public class TradeInjectorReactorClient {
 	public void testDummy() throws Exception{
 		
 	}
+	
+	@Test
+	public void getPositions() throws Exception{
+		
+	}
 
 }

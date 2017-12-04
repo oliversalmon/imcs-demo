@@ -717,7 +717,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		// get all the positions
 		$http({
 			  method: 'GET',
-			  url: 'http://localhost:8093/positionqueryservice/getAllPositionAccounts'
+			  url: '/getAllPositionAccounts'
 			}).then(function successCallback(response) {
 			    // this callback will be called asynchronously
 			    // when the response is available
