@@ -35,7 +35,10 @@ build:
     - cd ../tradequerymicroservice
     - mvn docker:build
     - docker push dineshpillai/imcs-tradequeryservice 
- dependencies:
+    - cd ../positionqueryservice
+    - mvn docker:build
+    - docker push dineshpillai/imcs-positionqueryservice 
+dependencies:
     - deleteNameSpace
    
 createNameSpace:
