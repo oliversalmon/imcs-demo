@@ -741,7 +741,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		return ResponseEntity.ok(restTemplate.getForObject(
-				"http://position-query-service:8093/positionqueryservice/getAllPositionAccounts", List.class));
+				"http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts", List.class));
 
 	}
 
