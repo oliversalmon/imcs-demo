@@ -739,7 +739,10 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
 
 		RestTemplate restTemplate = new RestTemplate();
+		LOG.info("Pinging the following URL http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts");
 		
+		//needs to be recoded via zookeeper
+		//TODO: Move to Zookeeper
 		return ResponseEntity.ok(restTemplate.getForObject(
 				"http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts", List.class));
 
