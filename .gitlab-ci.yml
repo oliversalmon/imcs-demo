@@ -57,7 +57,8 @@ deployhz:
     - kubectl apply -f run-hz-jet-cluster.yaml
     - sleep 20s
     - kubectl apply -f run-apps-reports.yaml
-    - sleep 20s 
+    - sleep 20s
+    - kubectl apply -f run-querymicroservices.yaml 
   dependencies:
     - build 
 
@@ -67,5 +68,6 @@ deployStreamer:
    - cd kubernetes
    - kubectl apply -f trade-streamer-deployments.yaml
    - kubectl apply -f price-streamer-deployment.yaml
+   - kubectl apply -f position-streamer-deployment.yaml
   dependencies:
     - deployhz
