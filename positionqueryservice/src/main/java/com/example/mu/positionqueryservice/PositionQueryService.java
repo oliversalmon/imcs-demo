@@ -25,8 +25,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 import static com.hazelcast.query.Predicates.*;
-
-//@CrossOrigin(origins = "http://localhost:8090")
+@CrossOrigin(origins = "*")
 @SpringBootApplication(scanBasePackages = "com.example.mu.positionqueryservice")
 @EnableCaching
 @RestController
