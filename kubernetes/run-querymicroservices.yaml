@@ -1,0 +1,85 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-query
+  namespace: mu-architecture-demo
+  labels:
+    name: trade-query
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: trade-query
+    spec:
+      hostAliases:
+      - ip: "178.62.124.180"
+        hostnames:
+        - "39a8a6341e07"
+      containers:
+      - image: dineshpillai/imcs-tradequeryservice:0.0.1-SNAPSHOT
+        name: trade-query
+        imagePullPolicy: Always
+        ports:
+        - name: price-streamer
+          containerPort: 8094
+        resources: {}
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trade-query-service
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-query
+spec:
+  ports:
+  - port: 8094
+    name: trade-query-port
+    targetPort: 8094
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: position-query
+  namespace: mu-architecture-demo
+  labels:
+    name: position-query
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: position-query
+    spec:
+      hostAliases:
+      - ip: "178.62.124.180"
+        hostnames:
+        - "39a8a6341e07"
+      containers:
+      - image: dineshpillai/imcs-positionqueryservice:0.0.1-SNAPSHOT
+        name: position-query
+        imagePullPolicy: Always
+        ports:
+        - name: price-streamer
+          containerPort: 8093
+        resources: {}
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: position-query-service
+  namespace: mu-architecture-demo
+  labels:
+    app: position-query
+spec:
+  ports:
+  - port: 8093
+    name: position-query-port
+    targetPort: 8093
