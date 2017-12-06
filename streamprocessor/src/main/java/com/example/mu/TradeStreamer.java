@@ -212,7 +212,8 @@ public class TradeStreamer {
 
 		// check to see if the record exists in the Position
 		PositionAccount aPosition;
-		IMap<String, PositionAccount> posMap = hzClient.getMap(POSITION_ACCOUNT_MAP);
+		IMap<String, PositionAccount> posMap = jet.getMap(POSITION_ACCOUNT_MAP);
+		
 		LOG.info("Size of Position Map is " + posMap.size());
 		String accountId = s.getKey().split("&")[0];
 		String instrumnetId = s.getKey().split("&")[1];
@@ -263,6 +264,7 @@ public class TradeStreamer {
 		return new AbstractMap.SimpleEntry<>(aPosition.getAccountId() + aPosition.getInstrumentid(), aPosition);
 	}
 
+	@Deprecated
 	private static SimpleEntry<String, PositionAccount> createPositionMapForTimeStampedEntry(
 			TimestampedEntry<String, Long> s) {
 

@@ -36,9 +36,8 @@ public class PositionStreamer {
 
 	private final static String POSITION_ACCOUNT_MAP = "position-account";
 	private final static String PRICE_MAP = "price";
-	//private static HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
+	private static HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 	final static Logger LOG = LoggerFactory.getLogger(PriceStreamer.class);
-	private static final JetInstance jetInstance = Jet.newJetInstance();
 	
 	
 	private static DAG getDAG(String url) throws Exception {
@@ -80,7 +79,8 @@ public class PositionStreamer {
 
 	private static SimpleEntry<String, PositionAccount> updatePositionValue(PositionAccount p) {
 
-		IMap<String, Price> pxMap = jetInstance.getMap(PRICE_MAP);
+		IMap<String, Price> pxMap = hzClient.getMap(PRICE_MAP);
+		pxMap.loadAll(true);
 		Price spotPx = pxMap.get(p.getInstrumentid().trim());
 
 		LOG.info("Position before update on Pnl " + p.getPnl());
@@ -95,7 +95,7 @@ public class PositionStreamer {
 
 	public static void connectAndUpdatePositions(String hzHost, String runs, String delay) throws Exception {
 		
-		
+		JetInstance jetInstance = Jet.newJetInstance();
 		Job job = jetInstance.newJob(getDAG(hzHost));
 		
 		
