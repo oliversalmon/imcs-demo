@@ -83,3 +83,4 @@ spec:
   - port: 8093
     name: position-query-port
     targetPort: 8093
+  type: LoadBalancer
