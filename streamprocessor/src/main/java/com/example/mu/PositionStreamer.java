@@ -57,15 +57,15 @@ public class PositionStreamer {
 		
 		//Hack to work around Zookeeper and Curator not doing its job with ClientConfig
 		
-		List<String> addresses = new ArrayList();
-		addresses.add("172.19.0.3");
-		addresses.add("172.19.0.4");
-		
-		HzClientConfig.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
+//		List<String> addresses = new ArrayList();
+//		addresses.add("172.19.0.3");
+//		addresses.add("172.19.0.4");
+//		
+//		HzClientConfig.getClientConfig().addAddress("172.19.0.3", "172.19.0.4");
 
 		// sink to Position map
 		Vertex sinkToPosition = dag
-				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP, HzClientConfig.getClientConfig()))
+				.newVertex("sinkPosition", Sinks.writeMap(POSITION_ACCOUNT_MAP))
 				.localParallelism(1);
 
 		dag.edge(between(source, positionProcessor));
