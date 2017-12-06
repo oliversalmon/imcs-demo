@@ -87,7 +87,7 @@ public class ReportScheduler {
 		generateTradeStats(tradeReport);
 
 		// next generate instrument stats
-		generateInstrumentReport(tradeReport);
+		//generateInstrumentReport(tradeReport);
 
 		List<TradeReport> listOfReports = reportRepo.findAll();
 		messageSender.convertAndSend("/topic/tradeAck", listOfReports);
