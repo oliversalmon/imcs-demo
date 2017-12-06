@@ -80,6 +80,7 @@ public class PositionStreamer {
 	private static SimpleEntry<String, PositionAccount> updatePositionValue(PositionAccount p) {
 
 		IMap<String, Price> pxMap = hzClient.getMap(PRICE_MAP);
+		pxMap.loadAll(true);
 		Price spotPx = pxMap.get(p.getInstrumentid().trim());
 
 		LOG.info("Position before update on Pnl " + p.getPnl());

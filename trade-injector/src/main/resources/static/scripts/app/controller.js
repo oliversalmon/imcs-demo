@@ -671,7 +671,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		// get the trade data
 		$http({
 			  method: 'GET',
-			  url: 'http://localhost:8094/tradequeryservice/getAllTrades'
+			  url: 'http://192.168.1.176:8093/tradequeryservice/getAllTrades'
 			}).then(function successCallback(response) {
 			    // this callback will be called asynchronously
 			    // when the response is available
@@ -692,7 +692,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		if($scope.showtableView===true){
 			$http({
 				  method: 'GET',
-				  url: 'http://localhost:8094/tradequeryservice/getTradesForPositionAccountAndInstrument/'+accountid+'/'+instrumentid
+				  url: 'http://192.168.1.176:8093/tradequeryservice/getTradesForPositionAccountAndInstrument/'+accountid+'/'+instrumentid
 				}).then(function successCallback(response) {
 				    // this callback will be called asynchronously
 				    // when the response is available
