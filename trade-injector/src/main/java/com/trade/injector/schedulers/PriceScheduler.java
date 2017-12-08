@@ -62,7 +62,7 @@ public class PriceScheduler {
 	@Scheduled(fixedDelay = 300000)
 	public void generateFrequentPriceData() throws Exception {
 
-		LOG.info("Starting to generate price...");
+		LOG.info("Starting to generate prices ");
 		// first get all the prices from the cache
 		IMap<String, Instrument> mapInstruments = hazelcastInstance
 				.getMap("instrument");
