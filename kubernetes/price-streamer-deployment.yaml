@@ -16,7 +16,7 @@ spec:
       hostAliases:
       - ip: "178.62.124.180"
         hostnames:
-        - "0a6db884f721"
+        - "36d04cfe1d2e"
       containers:
       - image: dineshpillai/innovation-mu-streamers:1.0-SNAPSHOT
         name: price-streamer
