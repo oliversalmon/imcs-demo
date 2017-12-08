@@ -786,6 +786,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 					}).then(function successCallback(response) {
 					    // this callback will be called asynchronously
 					    // when the response is available
+						$scope.allPositionData=[];
 						$scope.allPositionData = response.data;
 						
 					  }, function errorCallback(response) {
