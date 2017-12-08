@@ -11,6 +11,7 @@ stages:
  - createnamespace
  - deployhz
  - deploystreamer
+ - deployflink 
 
 deleteNameSpace:
   stage: deletenamespace
@@ -71,3 +72,10 @@ deployStreamer:
    - kubectl apply -f position-streamer-deployment.yaml
   dependencies:
     - deployhz
+
+deployFlinkCluster
+  stage: deployflink
+  script:
+   - kubectl apply -f jobmanager-controller.yaml
+   - kubectl apply -f jobmanager-service.yaml  
+   - kubectl apply -f taskmanager-controller.yaml
