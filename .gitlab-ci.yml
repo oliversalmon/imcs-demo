@@ -76,6 +76,7 @@ deployStreamer:
 deployFlinkCluster:
   stage: deployflink
   script:
+   - cd kubernetes
    - kubectl apply -f jobmanager-controller.yaml
    - kubectl apply -f jobmanager-service.yaml  
    - kubectl apply -f taskmanager-controller.yaml
