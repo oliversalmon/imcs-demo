@@ -73,7 +73,7 @@ deployStreamer:
   dependencies:
     - deployhz
 
-deployFlinkCluster
+deployFlinkCluster:
   stage: deployflink
   script:
    - kubectl apply -f jobmanager-controller.yaml
