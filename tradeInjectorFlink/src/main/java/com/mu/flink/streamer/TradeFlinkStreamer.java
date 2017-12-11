@@ -22,7 +22,7 @@ public class TradeFlinkStreamer {
 	    //
 		
 		Class aClass = classLoader.loadClass("com.hazelcast.zookeeper.ZookeeperDiscoveryStrategy");
-        System.out.println("aClass.getName() = " + aClass.getName());
+        //System.out.println("aClass.getName() = " + aClass.getName());
         HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 		LOG.info("Completed Trade Flink Streamer");
 		//hzClient.shutdown();

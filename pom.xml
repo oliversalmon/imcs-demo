@@ -16,6 +16,7 @@
     <module>pricequeryservice</module>
     <module>trade-imdg</module>
     <module>trade-injector</module>
+    <module>tradeInjectorFlink</module>
   </modules>
   <packaging>pom</packaging>
 
