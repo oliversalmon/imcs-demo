@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -19,13 +20,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 
 
 
 public class TradeFlinkStreamer {
 	
-	final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamer.class);
-	 HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
+	 final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamer.class);
+	 private static final HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 	 private static Gson gson = new GsonBuilder().create();
 	 
 	 public Properties consumerConfigs() {
@@ -68,25 +70,21 @@ public class TradeFlinkStreamer {
 
 					return p;
 				}
-			}).map(new MapFunction<Trade,String>(){
-
-				//stores the price object in hazelcast
-			
-				public String map(Trade arg0) throws Exception {
-					
-					
-					//IMap<String, String> priceMap = hazelcastInstance.getMap("price");
-					//priceMap.put(arg0.getInstrumentId(), arg0);
-					return "Trade stored in hz "+arg0.getInstrumentId();
-					
-				}
-				
-			}).print();
+			}).addSink(new HzTradeSink());
 			
 			env.execute();
 	 }
+	 
+	 public static HazelcastInstance getHzClient() {
+		return hzClient;
+	 }
 	
 	
+	private SinkFunction<Trade> writeToHz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public static void main(String[] args) throws Exception {
 		
 		ClassLoader classLoader = TradeFlinkStreamer.class.getClassLoader();
