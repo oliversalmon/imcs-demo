@@ -1,32 +1,30 @@
-package com.mu.flink.streamer;
+package com.mu.flink.pricestreamer;
 
 import java.util.Properties;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.mu.domain.Trade;
+import com.example.mu.domain.Price;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
 
 
 
-public class TradeFlinkStreamer {
+
+public class PriceFlinkStreamer {
 	
-	 final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamer.class);
+	final static Logger LOG = LoggerFactory.getLogger(PriceFlinkStreamer.class);
 	 private static final HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 	 private static Gson gson = new GsonBuilder().create();
 	 
@@ -49,28 +47,28 @@ public class TradeFlinkStreamer {
 			return props;
 		}
 	 
-	 public void connectToTradeStream() throws Exception {
+	 public void connectToPriceStream() throws Exception {
 			StreamExecutionEnvironment env = StreamExecutionEnvironment
 					.getExecutionEnvironment();
 			
 			FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010(
-					"trade", new SimpleStringSchema(), consumerConfigs());
+					"market_data", new SimpleStringSchema(), consumerConfigs());
 			DataStream<String> stream = env.addSource(kafkaConsumer);
 			
-			stream.map(new MapFunction<String, Trade>() {
+			stream.map(new MapFunction<String, Price>() {
 				private static final long serialVersionUID = -6867736771747690202L;
 				
 				
 				//returns a price object
 				
-				public Trade map(String value) throws Exception {
+				public Price map(String value) throws Exception {
 					
 						
-			            Trade p = gson.fromJson(value, Trade.class);
+			            Price p = gson.fromJson(value, Price.class);
 
 					return p;
 				}
-			}).addSink(new HzTradeSink());
+			}).addSink(new HzPriceSink());
 			
 			env.execute();
 	 }
@@ -83,15 +81,12 @@ public class TradeFlinkStreamer {
 	
 
 	public static void main(String[] args) throws Exception {
-		
-		
 		LOG.info("Starting Trade Flink Streamer");
-	
-		new TradeFlinkStreamer().connectToTradeStream();
+		
+		new PriceFlinkStreamer().connectToPriceStream();
 	
 		LOG.info("Completed Trade Flink Streamer");
-	
-		
+
 	}
 
 }
