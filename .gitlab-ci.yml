@@ -62,15 +62,6 @@ deployhz:
   dependencies:
     - build 
 
-deployStreamer:
-  stage: deploystreamer
-  script: 
-   - cd kubernetes
-   - kubectl apply -f trade-streamer-deployments.yaml
-   - kubectl apply -f price-streamer-deployment.yaml
-   - kubectl apply -f position-streamer-deployment.yaml
-  dependencies:
-    - deployhz
 
 deployFlinkCluster:
   stage: deployflink
