@@ -10,7 +10,6 @@ stages:
  - test
  - createnamespace
  - deployhz
- - deploystreamer
  - deployflink 
 
 deleteNameSpace:
