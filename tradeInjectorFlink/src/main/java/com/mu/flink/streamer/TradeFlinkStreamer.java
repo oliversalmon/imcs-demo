@@ -3,11 +3,16 @@ package com.mu.flink.streamer;
 import java.util.Properties;
 
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
+import org.apache.flink.util.Collector;
+import org.apache.flink.util.OutputTag;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -57,20 +62,53 @@ public class TradeFlinkStreamer {
 					"trade", new SimpleStringSchema(), consumerConfigs());
 			DataStream<String> stream = env.addSource(kafkaConsumer);
 			
-			stream.map(new MapFunction<String, Trade>() {
-				private static final long serialVersionUID = -6867736771747690202L;
-				
-				
-				//returns a price object
-				
-				public Trade map(String value) throws Exception {
-					
-						
-			            Trade p = gson.fromJson(value, Trade.class);
+			
+			
+			final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-output") {};
+			
+			SingleOutputStreamOperator<Trade> mainDataStream = stream.
+					process(new ProcessFunction<String, Trade>() {
 
-					return p;
-				}
-			}).addSink(new HzTradeSink());
+			      /**
+						 * 
+						 */
+					private static final long serialVersionUID = 1L;
+
+				@Override
+			      public void processElement(
+			          String value,
+			          Context ctx,
+			          Collector<Trade> out) throws Exception {
+			        // emit data to regular output
+			    	  	Trade p = gson.fromJson(value, Trade.class);
+			        out.collect(p);
+
+			        // emit data to side output
+			        ctx.output(outputTag, p);
+			      }
+			    });
+			
+			mainDataStream.addSink(new HzTradeSink());
+			
+			//finally pass the individual trades into creating positions
+			DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+			sideOutputStream.keyBy(new TradeKeyForPositionAccount())
+			.process(new TradeProcess());
+			
+//			stream.map(new MapFunction<String, Trade>() {
+//				private static final long serialVersionUID = -6867736771747690202L;
+//				
+//				
+//				//returns a price object
+//				
+//				public Trade map(String value) throws Exception {
+//					
+//						
+//			            Trade p = gson.fromJson(value, Trade.class);
+//
+//					return p;
+//				}
+//			}).addSink(new HzTradeSink());
 			
 			env.execute();
 	 }
@@ -93,5 +131,7 @@ public class TradeFlinkStreamer {
 	
 		
 	}
+
+	
 
 }
