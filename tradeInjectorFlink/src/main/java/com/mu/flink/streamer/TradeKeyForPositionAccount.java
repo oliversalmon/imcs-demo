@@ -1,7 +1,7 @@
 package com.mu.flink.streamer;
 
 import org.apache.flink.api.java.functions.KeySelector;
-
+	
 import com.example.mu.domain.Trade;
 
 public class TradeKeyForPositionAccount implements KeySelector<Trade, String>  {

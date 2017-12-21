@@ -17,31 +17,42 @@ import com.example.mu.domain.Trade;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 
-public class PositionAggregator extends RichFlatMapFunction<Trade, PositionAccount> {
+public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade>, PositionAccount> {
 
 	/**
 	* 
 	*/
 	private static final long serialVersionUID = 1L;
-	private transient ValueState<PositionAccount> sumOfQty;
-	private transient ValueState<Long> startTime;
-	
+	private transient ValueState<Tuple2<String, PositionAccount>> sumOfQty;
+	private transient ValueState<Tuple2<String, Long>> startTime;
 
 	final static Logger LOG = LoggerFactory.getLogger(PositionAggregator.class);
 
 	@Override
-	public void flatMap(Trade arg0, Collector<PositionAccount> arg1) throws Exception {
+	public void flatMap(Tuple2<String, Trade> arg0, Collector<PositionAccount> arg1) throws Exception {
 
 		LOG.info("Starting to calculate Positions...");
 
 		// get the particulars of the trade to set the position correctly
-		String accountId = arg0.getPositionAccountInstrumentKey().split("&")[0];
-		String instrumnetId = arg0.getPositionAccountInstrumentKey().split("&")[1];
+		String accountId = arg0.f1.getPositionAccountInstrumentKey().split("&")[0];
+		String instrumnetId = arg0.f1.getPositionAccountInstrumentKey().split("&")[1];
 
 		LOG.info("for the following instrument and position " + accountId + " " + instrumnetId);
 
+		// get the time
+		Tuple2<String, Long> timer = startTime.value();
+		Long starttime = timer.f1;
+
+		if (timer.f0.equals(""))
+			timer.f0 = arg0.f0;
+
 		// first set the quantity
-		PositionAccount currentPosition = sumOfQty.value();
+		Tuple2<String, PositionAccount> positionTuple = sumOfQty.value();
+		PositionAccount currentPosition = positionTuple.f1;
+
+		// set the key to be the position Instrument key
+		if (positionTuple.f0.equals(""))
+			positionTuple.f0 = arg0.f0;
 
 		// make sure the Position is properly created before setting the quantity
 		if (currentPosition.getAccountId() == null)
@@ -50,39 +61,38 @@ public class PositionAggregator extends RichFlatMapFunction<Trade, PositionAccou
 			currentPosition.setInstrumentid(instrumnetId);
 
 		long qty = currentPosition.getSize();
-		currentPosition.setSize(qty += arg0.getQuantity());
+		currentPosition.setSize(qty += arg0.f1.getQuantity());
 
 		LOG.info("position quantity is " + currentPosition.getSize());
 
 		// now set the pnl
-		//get the spot Px
+		// get the spot Px
 		HazelcastInstance hzClient = TradeFlinkStreamer.getHzClient();
 		IMap<String, Price> mapPrice = hzClient.getMap("price");
 		Price spotPx = mapPrice.get(instrumnetId);
-		if(spotPx == null)
-			LOG.warn("NO Spot PX available for the following instrument id, not calculating PnL "+instrumnetId);
+		if (spotPx == null)
+			LOG.warn("NO Spot PX available for the following instrument id, not calculating PnL " + instrumnetId);
 		else {
-			LOG.info("Spot px used ="+spotPx.getPrice());
-			LOG.info("traded value is "+arg0.getTradeValue());
-			double pnl = spotPx.getPrice()*arg0.getQuantity() - arg0.getTradeValue();
-			pnl+= currentPosition.getPnl();
-			LOG.info("Pnl calculated is "+pnl);
-			currentPosition.setPnl(pnl);
+			LOG.info("Spot px used =" + spotPx.getPrice());
+			LOG.info("traded value is " + arg0.f1.getTradeValue());
+			double pnl = spotPx.getPrice() * arg0.f1.getQuantity() - arg0.f1.getTradeValue();
+		
+			LOG.info("Pnl calculated is " + pnl);
+			double currentPnl = currentPosition.getPnl();
+			currentPosition.setPnl( currentPnl+= pnl);
 		}
 
 		// update the state
-		sumOfQty.update(currentPosition);
+		sumOfQty.update(positionTuple);
 
-		// emit for every 1 minute of trades (needs to be configurable)
-		double timepassed = System.currentTimeMillis()-startTime.value();
-		LOG.info("Number of millis passed "+timepassed);
-		if (System.currentTimeMillis()-startTime.value() > 60000) {
+		// emit position state every 200 millis
+		double elapsed = System.currentTimeMillis() - starttime;
+		LOG.info("time elapsed "+elapsed);
+		if (elapsed > 200) {
 			arg1.collect(currentPosition);
-			sumOfQty.clear();
 			startTime.clear();
-
+			sumOfQty.clear();
 			LOG.info("emitting current Position");
-
 		}
 
 	}
@@ -90,21 +100,24 @@ public class PositionAggregator extends RichFlatMapFunction<Trade, PositionAccou
 	@Override
 	public void open(Configuration config) {
 		@SuppressWarnings("deprecation")
-		ValueStateDescriptor<PositionAccount> descriptor = new ValueStateDescriptor<PositionAccount>("positionQty", // the
-																													// state
-																													// name
-				TypeInformation.of(new TypeHint<PositionAccount>() {
+		ValueStateDescriptor<Tuple2<String, PositionAccount>> descriptor = new ValueStateDescriptor<Tuple2<String, PositionAccount>>(
+				"positionQty", // the
+				// state
+				// name
+				TypeInformation.of(new TypeHint<Tuple2<String, PositionAccount>>() {
 				}), // type information
-				new PositionAccount()); // default value of the state, if nothing was set
+				Tuple2.of("", new PositionAccount())); // default value of the state, if nothing was set
 		sumOfQty = getRuntimeContext().getState(descriptor);
 
 		// start the clock
 
 		@SuppressWarnings("deprecation")
-		ValueStateDescriptor<Long> time = new ValueStateDescriptor<Long>("time", // the state name
-				TypeInformation.of(new TypeHint<Long>() {
+		ValueStateDescriptor<Tuple2<String, Long>> time = new ValueStateDescriptor<Tuple2<String, Long>>("time", // the
+																													// state
+																													// name
+				TypeInformation.of(new TypeHint<Tuple2<String, Long>>() {
 				}), // type information
-				System.currentTimeMillis()); // default value of the state, if nothing was set
+				Tuple2.of("", System.currentTimeMillis())); // default value of the state, if nothing was set
 		startTime = getRuntimeContext().getState(time);
 	}
 
