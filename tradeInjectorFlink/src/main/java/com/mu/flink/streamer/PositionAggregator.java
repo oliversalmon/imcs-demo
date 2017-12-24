@@ -37,14 +37,13 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 		String accountId = arg0.f1.getPositionAccountInstrumentKey().split("&")[0];
 		String instrumnetId = arg0.f1.getPositionAccountInstrumentKey().split("&")[1];
 
-		LOG.info("for the following instrument and position " + accountId + " " + instrumnetId);
+		LOG.debug("for the following instrument and position " + accountId + " " + instrumnetId);
 
 		// get the time
 		Tuple2<String, Long> timer = startTime.value();
 		Long starttime = timer.f1;
 
-		if (timer.f0.equals(""))
-			timer.f0 = arg0.f0;
+		
 
 		// first set the quantity
 		Tuple2<String, PositionAccount> positionTuple = sumOfQty.value();
@@ -63,7 +62,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 		long qty = currentPosition.getSize();
 		currentPosition.setSize(qty += arg0.f1.getQuantity());
 
-		LOG.info("position quantity is " + currentPosition.getSize());
+		LOG.debug("position quantity is " + currentPosition.getSize());
 
 		// now set the pnl
 		// get the spot Px
@@ -73,11 +72,11 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 		if (spotPx == null)
 			LOG.warn("NO Spot PX available for the following instrument id, not calculating PnL " + instrumnetId);
 		else {
-			LOG.info("Spot px used =" + spotPx.getPrice());
-			LOG.info("traded value is " + arg0.f1.getTradeValue());
+			LOG.debug("Spot px used =" + spotPx.getPrice());
+			LOG.debug("traded value is " + arg0.f1.getTradeValue());
 			double pnl = spotPx.getPrice() * arg0.f1.getQuantity() - arg0.f1.getTradeValue();
 		
-			LOG.info("Pnl calculated is " + pnl);
+			LOG.debug("Pnl calculated is " + pnl);
 			double currentPnl = currentPosition.getPnl();
 			currentPosition.setPnl( currentPnl+= pnl);
 		}
@@ -87,12 +86,13 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 
 		// emit position state every 200 millis
 		double elapsed = System.currentTimeMillis() - starttime;
-		LOG.info("time elapsed "+elapsed);
-		if (elapsed > 200) {
+		LOG.debug("time elapsed "+elapsed);
+		if (elapsed > 100) {
 			arg1.collect(currentPosition);
-			startTime.clear();
+			startTime.update(Tuple2.of("t1", System.currentTimeMillis()));
 			sumOfQty.clear();
 			LOG.info("emitting current Position");
+			LOG.debug("starttime values is "+startTime.value().f1+" and actual time is "+System.currentTimeMillis());
 		}
 
 	}
@@ -117,7 +117,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 																													// name
 				TypeInformation.of(new TypeHint<Tuple2<String, Long>>() {
 				}), // type information
-				Tuple2.of("", System.currentTimeMillis())); // default value of the state, if nothing was set
+				Tuple2.of("t1", System.currentTimeMillis())); // default value of the state, if nothing was set
 		startTime = getRuntimeContext().getState(time);
 	}
 
