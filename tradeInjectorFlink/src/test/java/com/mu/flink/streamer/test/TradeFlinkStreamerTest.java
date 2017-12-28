@@ -12,16 +12,21 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
-import org.I0Itec.zkclient.ZkClient;
+//import org.I0Itec.zkclient.ZkClient;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.ProcessFunction;
+import org.apache.flink.streaming.api.functions.ProcessFunction.Context;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010.FlinkKafkaProducer010Configuration;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
+import org.apache.flink.util.Collector;
+import org.apache.flink.util.OutputTag;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-import kafka.utils.ZKStringSerializer$;
+//import kafka.utils.ZKStringSerializer$;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,40 +39,48 @@ import com.example.mu.domain.Party;
 import com.example.mu.domain.Price;
 import com.example.mu.domain.Trade;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.mu.flink.streamer.HzPositionSink;
+import com.mu.flink.streamer.HzTradeSink;
+import com.mu.flink.streamer.PositionAggregator;
 import com.mu.flink.streamer.TradeFlinkStreamer;
+import com.mu.flink.streamer.TradeProcess;
+import com.mu.flink.streamer.TradeToTupleKeyTrade;
 
-import kafka.admin.TopicCommand;
-import kafka.consumer.ConsumerConfig;
-import kafka.consumer.ConsumerIterator;
-import kafka.consumer.KafkaStream;
-import kafka.javaapi.consumer.ConsumerConnector;
-import kafka.producer.KeyedMessage;
-import kafka.producer.Producer;
-import kafka.producer.ProducerConfig;
-import kafka.server.KafkaConfig;
-import kafka.server.KafkaServer;
-import kafka.utils.MockTime;
-import kafka.utils.TestUtils;
-import kafka.utils.TestZKUtils;
-import kafka.utils.Time;
-import kafka.utils.ZKStringSerializer$;
-import kafka.zk.EmbeddedZookeeper;
+//import kafka.admin.TopicCommand;
+//import kafka.consumer.ConsumerConfig;
+//import kafka.consumer.ConsumerIterator;
+//import kafka.consumer.KafkaStream;
+//import kafka.javaapi.consumer.ConsumerConnector;
+//import kafka.producer.KeyedMessage;
+//import kafka.producer.Producer;
+//import kafka.producer.ProducerConfig;
+//import kafka.server.KafkaConfig;
+//import kafka.server.KafkaServer;
+//import kafka.utils.MockTime;
+//import kafka.utils.TestUtils;
+//import kafka.utils.TestZKUtils;
+//import kafka.utils.Time;
+//import kafka.utils.ZKStringSerializer$;
+//import kafka.zk.EmbeddedZookeeper;
 
 public class TradeFlinkStreamerTest {
 	HazelcastInstance hz = Hazelcast.newHazelcastInstance();
 	final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamerTest.class);
+	private static Gson gson = new GsonBuilder().create();
 
 	private int brokerId = 0;
 	private String topic = "trade";
-
-	Producer producer;
-	ZkClient zkClient;
-	KafkaServer kafkaServer;
-	ConsumerConnector consumer;
-	EmbeddedZookeeper zkServer;
+//
+//	Producer producer;
+//	ZkClient zkClient;
+//	KafkaServer kafkaServer;
+//	ConsumerConnector consumer;
+//	EmbeddedZookeeper zkServer;
 	Properties consumerProperties;
 	Properties properties;
 	int port;
@@ -75,34 +88,40 @@ public class TradeFlinkStreamerTest {
 	@Before
 	public void setUpKafkaAndZoo() {
 
-		String zkConnect = TestZKUtils.zookeeperConnect();
-		zkServer = new EmbeddedZookeeper(zkConnect);
-		zkClient = new ZkClient(zkServer.connectString(), 30000, 30000, ZKStringSerializer$.MODULE$);
-
-		// setup Broker
-		port = TestUtils.choosePort();
-		Properties props = TestUtils.createBrokerConfig(brokerId, port, true);
-
-		KafkaConfig config = new KafkaConfig(props);
-		Time mock = new MockTime();
-		kafkaServer = TestUtils.createServer(config, mock);
-		String[] arguments = new String[] { "--topic", topic, "--partitions", "1", "--replication-factor", "1" };
-		// create topic
-		TopicCommand.createTopic(zkClient, new TopicCommand.TopicCommandOptions(arguments));
-
-		List<KafkaServer> servers = new ArrayList<KafkaServer>();
-		servers.add(kafkaServer);
-		TestUtils.waitUntilMetadataIsPropagated(scala.collection.JavaConversions.asScalaBuffer(servers), topic, 0,
-				5000);
-
-		// setup producer
-		properties = TestUtils.getProducerConfig("localhost:" + port);
-		ProducerConfig producerConfig = new ProducerConfig(properties);
-		producer = new Producer(producerConfig);
-
-		// setup simple consumer
-		consumerProperties = TestUtils.createConsumerProperties(zkServer.connectString(), "group0", "consumer0", -1);
-		consumer = kafka.consumer.Consumer.createJavaConsumerConnector(new ConsumerConfig(consumerProperties));
+//		String zkConnect = TestZKUtils.zookeeperConnect();
+//		zkServer = new EmbeddedZookeeper(zkConnect);
+//		zkClient = new ZkClient(zkServer.connectString(), 30000, 30000, ZKStringSerializer$.MODULE$);
+//
+//		// setup Broker
+//		port = TestUtils.choosePort();
+//		Properties props = TestUtils.createBrokerConfig(brokerId, port, true);
+//
+//		KafkaConfig config = new KafkaConfig(props);
+//		Time mock = new MockTime();
+//		kafkaServer = TestUtils.createServer(config, mock);
+//		String[] arguments = new String[] { "--topic", topic, "--partitions", "1", "--replication-factor", "1" };
+//		// create topic
+//		TopicCommand.createTopic(zkClient, new TopicCommand.TopicCommandOptions(arguments));
+//
+//		List<KafkaServer> servers = new ArrayList<KafkaServer>();
+//		servers.add(kafkaServer);
+//		TestUtils.waitUntilMetadataIsPropagated(scala.collection.JavaConversions.asScalaBuffer(servers), topic, 0,
+//				5000);
+//
+//		// setup producer
+//		properties = TestUtils.getProducerConfig("localhost:" + port);
+//		ProducerConfig producerConfig = new ProducerConfig(properties);
+//		producer = new Producer(producerConfig);
+//
+//		// setup simple consumer
+//		consumerProperties = TestUtils.createConsumerProperties(zkServer.connectString(), "group0", "consumer0", -1);
+//		consumerProperties.put("bootstrap.servers", "localhost:"+port);
+//		//consumerProperties.put("partition.assignment.strategy", "range");
+//		consumerProperties.put("auto.offset.reset", "none");
+//		consumerProperties.put("key.deserializer", StringDeserializer.class);
+//		consumerProperties.put("value.deserializer", JsonDeserializer.class);
+		
+		//consumer = kafka.consumer.Consumer.createJavaConsumerConnector(new ConsumerConfig(consumerProperties));
 
 		// set up Test Data
 		// create new Trades, Instruments, Prices, Parties
@@ -163,36 +182,36 @@ public class TradeFlinkStreamerTest {
 	@Test
 	public void testdummyMessageToKafka() {
 
-		KeyedMessage<Integer, byte[]> data = new KeyedMessage(topic, "test-message".getBytes(StandardCharsets.UTF_8));
-
-		List<KeyedMessage> messages = new ArrayList<KeyedMessage>();
-		messages.add(data);
-
-		// send message
-
-		producer.send(scala.collection.JavaConversions.asScalaBuffer(messages));
-		producer.close();
-
-		// deleting zookeeper information to make sure the consumer starts from the
-		// beginning
-		// see
-		// https://stackoverflow.com/questions/14935755/how-to-get-data-from-old-offset-point-in-kafka
-		zkClient.delete("/consumers/group0");
-
-		// starting consumer
-		Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-		topicCountMap.put(topic, 1);
-		Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumer.createMessageStreams(topicCountMap);
-		KafkaStream<byte[], byte[]> stream = consumerMap.get(topic).get(0);
-		ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
-
-		if (iterator.hasNext()) {
-			String msg = new String(iterator.next().message(), StandardCharsets.UTF_8);
-			System.out.println(msg);
-			assertEquals("test-message", msg);
-		} else {
-			fail();
-		}
+//		KeyedMessage<Integer, byte[]> data = new KeyedMessage(topic, "test-message".getBytes(StandardCharsets.UTF_8));
+//
+//		List<KeyedMessage> messages = new ArrayList<KeyedMessage>();
+//		messages.add(data);
+//
+//		// send message
+//
+//		producer.send(scala.collection.JavaConversions.asScalaBuffer(messages));
+//		producer.close();
+//
+//		// deleting zookeeper information to make sure the consumer starts from the
+//		// beginning
+//		// see
+//		// https://stackoverflow.com/questions/14935755/how-to-get-data-from-old-offset-point-in-kafka
+//		zkClient.delete("/consumers/group0");
+//
+//		// starting consumer
+//		Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
+//		topicCountMap.put(topic, 1);
+//		Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumer.createMessageStreams(topicCountMap);
+//		KafkaStream<byte[], byte[]> stream = consumerMap.get(topic).get(0);
+//		ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
+//
+//		if (iterator.hasNext()) {
+//			String msg = new String(iterator.next().message(), StandardCharsets.UTF_8);
+//			System.out.println(msg);
+//			assertEquals("test-message", msg);
+//		} else {
+//			fail();
+//		}
 
 	}
 
@@ -295,12 +314,33 @@ public class TradeFlinkStreamerTest {
 
 		double sellpnl = spotPx.getPrice() * aSelltrade.getQuantity() - aSelltrade.getTradeValue();
 		sellPnl += sellpnl;
+		
+		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		env.setParallelism(1);
+		
+		DataStream<String> stream = env.fromElements(atrade.toJSON(), aSelltrade.toJSON());
+
+		SingleOutputStreamOperator<Trade> mainDataStream   = stream.process(new TradeProcess());
+		mainDataStream.addSink(new HzTradeSink());
+		
+		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
+		};
+		
+		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new PositionAggregator())
+		.addSink(new HzPositionSink());
+		
+		env.execute();
+		
+		//now confirm if the counts are the same
+		assertEquals(2, hz.getMap(HzTradeSink.getMapName()).size());
+		assertEquals(2, hz.getMap(HzPositionSink.getMapName()).size());
 
 		// now send the trades to Kafka queue
 
-		KeyedMessage<Integer, byte[]> data = new KeyedMessage(topic,
-		atrade.getTradeId().getBytes(StandardCharsets.UTF_8),
-		atrade.toJSON().getBytes(StandardCharsets.UTF_8));
+		// KeyedMessage<Integer, byte[]> data = new KeyedMessage(topic,
+		// atrade.getTradeId().getBytes(StandardCharsets.UTF_8),
+		// atrade.toJSON().getBytes(StandardCharsets.UTF_8));
 		// KeyedMessage<Integer, byte[]> data2 = new KeyedMessage(topic,
 		// aSelltrade.getTradeId().getBytes(StandardCharsets.UTF_8),
 		// aSelltrade.toJSON().getBytes(StandardCharsets.UTF_8));
@@ -314,62 +354,65 @@ public class TradeFlinkStreamerTest {
 		// producer.send(scala.collection.JavaConversions.asScalaBuffer(messages));
 		// producer.close();
 		
-		Properties props = new Properties();
-		// list of host:port pairs used for establishing the initial connections
-		// to the Kakfa cluster
-		props.put("bootstrap.servers", "localhost:"+port);
+//		Properties props = new Properties();
+//		// list of host:port pairs used for establishing the initial connections
+//		// to the Kakfa cluster
+//		props.put("bootstrap.servers", "localhost:"+port);
+//		consumerProperties.put("key.deserializer", StringDeserializer.class);
+//		consumerProperties.put("value.deserializer", JsonDeserializer.class);
 		
 
 		// allows a pool of processes to divide the work of consuming and
 		// processing records
 		
-
-		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-		DataStream stream = env.fromElements(atrade.toJSON(),aSelltrade.toJSON());
-		FlinkKafkaProducer010<String> producer = new FlinkKafkaProducer010<String>(
-				"localhost:" + port,
-				"trade",
-				new SimpleStringSchema());                // custom configuration for KafkaProducer (including broker list)
-
-		// the following is necessary for at-least-once delivery guarantee
-		producer.setLogFailuresOnly(false);   // "false" by default
-		producer.setFlushOnCheckpoint(true);
-		
-		stream.addSink(producer);
-		
-		
-
-		// deleting zookeeper information to make sure the consumer starts from the
-		// beginning
-		// see
-		// https://stackoverflow.com/questions/14935755/how-to-get-data-from-old-offset-point-in-kafka
-		zkClient.delete("/consumers/group0");
-
-		// starting consumer
-		//
-
-		// run through Main streamer
-		// TradeFlinkStreamer streamer = new TradeFlinkStreamer();
-		// streamer.consumerConfigs().setProperty("bootstrap.servers",
-		// zkServer.connectString());
-		// streamer.connectToTradeStream();
-		
-
-		FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010("trade", new SimpleStringSchema(),
-				consumerProperties);
-		DataStream<String> stream2 = env.addSource(kafkaConsumer);
-		stream2.print();
-		
+//
+//		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+//		DataStream stream = env.fromElements(atrade.toJSON(),aSelltrade.toJSON());
+//		FlinkKafkaProducer010<String> producer = new FlinkKafkaProducer010<String>(
+//				"localhost:" + port,
+//				"trade",
+//				new SimpleStringSchema());                // custom configuration for KafkaProducer (including broker list)
+//
+//		// the following is necessary for at-least-once delivery guarantee
+//		producer.setLogFailuresOnly(false);   // "false" by default
+//		producer.setFlushOnCheckpoint(true);
+//		
+//		stream.addSink(producer);
+//		
+//
+//		// deleting zookeeper information to make sure the consumer starts from the
+//		// beginning
+//		// see
+//		// https://stackoverflow.com/questions/14935755/how-to-get-data-from-old-offset-point-in-kafka
+////		zkClient.delete("/consumers/group0");
+//
+//		// starting consumer
+//		//
+//	
+//		// run through Main streamer
+//		// TradeFlinkStreamer streamer = new TradeFlinkStreamer();
+//		// streamer.consumerConfigs().setProperty("bootstrap.servers",
+//		// zkServer.connectString());
+//		// streamer.connectToTradeStream();
+//		
+//		
+//		
+//
+//		FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010("trade", new SimpleStringSchema(),
+//				consumerProperties);
+//		DataStream<String> stream2 = env.addSource(kafkaConsumer);
+//		stream2.print();
+//		env.execute();
 
 	}
 
 	@After
 	public void shutdownKafkaZooHz() {
 		// cleanup
-		consumer.shutdown();
-		kafkaServer.shutdown();
-		zkClient.close();
-		zkServer.shutdown();
+//		consumer.shutdown();
+//		kafkaServer.shutdown();
+//		zkClient.close();
+//		zkServer.shutdown();
 
 		hz.shutdown();
 	}

@@ -26,5 +26,9 @@ public class HzTradeSink extends RichSinkFunction<Trade> {
 		LOG.info("successfully added to TradeMap");
 		
 	}
+	
+	public static String getMapName() {
+		return TRADEMAP;
+	}
 
 }

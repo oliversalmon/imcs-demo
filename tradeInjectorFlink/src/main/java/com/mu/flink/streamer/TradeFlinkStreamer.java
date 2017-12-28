@@ -32,6 +32,7 @@ public class TradeFlinkStreamer {
 	final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamer.class);
 	private static final HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 	private static Gson gson = new GsonBuilder().create();
+	
 
 	public Properties consumerConfigs() {
 		Properties props = new Properties();
@@ -51,38 +52,21 @@ public class TradeFlinkStreamer {
 
 	public void connectToTradeStream() throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		env.setParallelism(3);
 
 		FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010("trade", new SimpleStringSchema(),
 				consumerConfigs());
 		DataStream<String> stream = env.addSource(kafkaConsumer);
 
-		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-output") {
-		};
-
-		SingleOutputStreamOperator<Trade> mainDataStream = stream.process(new ProcessFunction<String, Trade>() {
-
-			/**
-				 * 
-				 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void processElement(String value, Context ctx, Collector<Trade> out) throws Exception {
-				// emit data to regular output
-				Trade p = gson.fromJson(value, Trade.class);
-				out.collect(p);
-
-				// emit data to side output
-				ctx.output(outputTag, p);
-			}
-		});
-
+		SingleOutputStreamOperator<Trade> mainDataStream   = stream.process(new TradeProcess());
 		mainDataStream.addSink(new HzTradeSink());
-
-		// finally pass the individual trades into creating positions
+		
+		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
+		};
+		
 		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
 		sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new PositionAggregator())
-				.addSink(new HzPositionSink());
+		.addSink(new HzPositionSink());
 
 		
 

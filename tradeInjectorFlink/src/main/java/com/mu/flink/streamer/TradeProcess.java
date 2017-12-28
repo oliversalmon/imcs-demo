@@ -2,34 +2,39 @@ package com.mu.flink.streamer;
 
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.util.Collector;
+import org.apache.flink.util.OutputTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.mu.domain.PositionAccount;
-import com.example.mu.domain.Trade;
 
-public class TradeProcess extends ProcessFunction<Trade, PositionAccount> {
+import com.example.mu.domain.Trade;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class TradeProcess extends ProcessFunction<String, Trade> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	final static Logger LOG = LoggerFactory.getLogger(TradeProcess.class);
+	private static Gson gson = new GsonBuilder().create();
+	final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
+	};
 
 	@Override
-	public void processElement(Trade arg0, ProcessFunction<Trade, PositionAccount>.Context arg1,
-			Collector<PositionAccount> arg2) throws Exception {
-		
-		LOG.info("Starting to process trades into positions...");
-		
-		//get the position account from Hz
-		
-		//update the position account qty with the trade value through the RichFlatMapFunction based on Value State
-		
-		//get the price from Hz
-		
-		//update the position value with the curren
-		
-		LOG.info("Done.");
-		
+	public void processElement(String value, ProcessFunction<String, Trade>.Context ctx, Collector<Trade> out)
+			throws Exception {
+		Trade p = gson.fromJson(value, Trade.class);
+		out.collect(p);
+		ctx.output(outputTag, p);
 		
 	}
+	
+	
+
+
+	
 
 	
 

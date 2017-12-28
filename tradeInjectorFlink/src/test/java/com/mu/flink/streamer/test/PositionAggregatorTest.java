@@ -38,7 +38,7 @@ public class PositionAggregatorTest {
 
 	HazelcastInstance hz = Hazelcast.newHazelcastInstance();
 	final static Logger LOG = LoggerFactory.getLogger(PositionAggregatorTest.class);
-	private static final String POSITIONACCOUNTMAP = "postion-account";
+	private static final String POSITIONACCOUNTMAP = "position-account";
 
 	@Before
 	public void setUp() {
@@ -274,7 +274,7 @@ public class PositionAggregatorTest {
 		
 
 		// run 100 trades with 1 second intervals
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < 2000; i++) {
 			String executionId = UUID.randomUUID().toString();
 			String executingFirmId = "TEST_EX1_" + i;
 			String executingTraderId = "TEST_TRD" + i;

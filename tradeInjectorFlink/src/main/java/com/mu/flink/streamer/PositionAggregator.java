@@ -87,13 +87,13 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 		// emit position state every 200 millis
 		double elapsed = System.currentTimeMillis() - starttime;
 		LOG.debug("time elapsed "+elapsed);
-		if (elapsed > 100) {
+		//if (elapsed > 100) {
 			arg1.collect(currentPosition);
 			startTime.update(Tuple2.of("t1", System.currentTimeMillis()));
 			sumOfQty.clear();
 			LOG.info("emitting current Position");
 			LOG.debug("starttime values is "+startTime.value().f1+" and actual time is "+System.currentTimeMillis());
-		}
+		//}
 
 	}
 

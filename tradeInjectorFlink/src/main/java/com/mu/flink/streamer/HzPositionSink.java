@@ -16,7 +16,7 @@ public class HzPositionSink extends RichSinkFunction<PositionAccount>{
 	 */
 	private static final long serialVersionUID = 1L;
 	final static Logger LOG = LoggerFactory.getLogger(HzPositionSink.class);
-	private static final String POSITIONACCOUNTMAP = "postion-account";
+	private static final String POSITIONACCOUNTMAP = "position-account";
 
 	@Override
 	public void invoke(PositionAccount arg0) throws Exception {
@@ -32,9 +32,14 @@ public class HzPositionSink extends RichSinkFunction<PositionAccount>{
 			LOG.info("updating the position account in the map");
 			updateAccount.setSize(updateAccount.getSize()+arg0.getSize());
 			updateAccount.setPnl(updateAccount.getPnl()+arg0.getPnl());
+			posMap.put(posKey, updateAccount);
 			LOG.info("updated Pnl is "+updateAccount.getPnl());
 		}
 		
+	}
+	
+	public static String getMapName() {
+		return POSITIONACCOUNTMAP;
 	}
 
 }
