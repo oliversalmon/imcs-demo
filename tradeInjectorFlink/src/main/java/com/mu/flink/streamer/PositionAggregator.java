@@ -37,7 +37,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 		String accountId = arg0.f1.getPositionAccountInstrumentKey().split("&")[0];
 		String instrumnetId = arg0.f1.getPositionAccountInstrumentKey().split("&")[1];
 
-		LOG.debug("for the following instrument and position " + accountId + " " + instrumnetId);
+		LOG.info("for the following instrument and position " + accountId + " " + instrumnetId);
 
 		// get the time
 		Tuple2<String, Long> timer = startTime.value();
@@ -91,7 +91,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 			arg1.collect(currentPosition);
 			startTime.update(Tuple2.of("t1", System.currentTimeMillis()));
 			sumOfQty.clear();
-			LOG.info("emitting current Position");
+			LOG.info("emitting current Position for "+currentPosition.getAccountId());
 			LOG.debug("starttime values is "+startTime.value().f1+" and actual time is "+System.currentTimeMillis());
 		//}
 
