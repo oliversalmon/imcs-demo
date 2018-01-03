@@ -27,7 +27,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://178.62.124.180:32196")
 @SpringBootApplication(scanBasePackages = "com.example.mu.tradequeryservice")
 @EnableCaching
 @RestController
@@ -60,6 +60,8 @@ public class TradeQueryService {
 	public ResponseEntity<List<Object>> getAllTrades() throws Exception {
 
 		IMap<String, Trade> trade = hazelcastInstance.getMap(TRADE_MAP);
+		trade.loadAll(true);
+		LOG.info("Size returning "+trade.size());
 		return ResponseEntity.ok(trade.values().stream().collect(Collectors.toList()));
 
 	}
@@ -80,6 +82,7 @@ public class TradeQueryService {
 			@PathVariable String instrumentId) throws Exception {
 
 		IMap<String, Trade> trade = hazelcastInstance.getMap(TRADE_MAP);
+		trade.loadAll(true);
 		Predicate positionAccount = equal("positionAccountId", positionAccountId);
 		Predicate instrument = equal("instrumentId", instrumentId);
 		Predicate predicate = and(positionAccount, instrument);

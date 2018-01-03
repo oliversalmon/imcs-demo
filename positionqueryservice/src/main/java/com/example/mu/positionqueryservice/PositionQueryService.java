@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,11 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 import static com.hazelcast.query.Predicates.*;
-@CrossOrigin(origins = "http://178.62.124.180:32509")
+@CrossOrigin(origins = "http://178.62.124.180:32196")
 @SpringBootApplication(scanBasePackages = "com.example.mu.positionqueryservice")
 @EnableCaching
 @RestController
+//@EnableDiscoveryClient
 public class PositionQueryService {
 
 	public final Logger LOG = LoggerFactory.getLogger(PositionQueryService.class);
@@ -50,7 +52,8 @@ public class PositionQueryService {
 	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
 
 		IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
-		posMap.loadAll(false);
+		posMap.size();
+		posMap.loadAll(true);
 		return ResponseEntity.ok(posMap.values().stream().collect(Collectors.toList()));
 
 	}
