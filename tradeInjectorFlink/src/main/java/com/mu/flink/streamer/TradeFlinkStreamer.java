@@ -4,11 +4,14 @@ import java.util.Properties;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.functions.KeySelector;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
@@ -32,7 +35,6 @@ public class TradeFlinkStreamer {
 	final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamer.class);
 	private static final HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 	private static Gson gson = new GsonBuilder().create();
-	
 
 	public Properties consumerConfigs() {
 		Properties props = new Properties();
@@ -52,23 +54,28 @@ public class TradeFlinkStreamer {
 
 	public void connectToTradeStream() throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 		env.setParallelism(3);
 
 		FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010("trade", new SimpleStringSchema(),
 				consumerConfigs());
 		DataStream<String> stream = env.addSource(kafkaConsumer);
 
-		SingleOutputStreamOperator<Trade> mainDataStream   = stream.process(new TradeProcess());
+		SingleOutputStreamOperator<Trade> mainDataStream = stream.process(new TradeProcess());
 		mainDataStream.addSink(new HzTradeSink());
-		
+
 		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
 		};
-		
-		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
-		sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new PositionAggregator())
-		.addSink(new HzPositionSink());
 
-		
+		// DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		// sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new
+		// PositionAggregator())
+		// .addSink(new HzPositionSink());
+
+		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		sideOutputStream.assignTimestampsAndWatermarks(new TradeTimeStampWaterMarkAssigner(Time.seconds(10)))
+				.flatMap(new TradeToTupleKeyTrade()).keyBy(0).window(TumblingEventTimeWindows.of(Time.seconds(5)))
+				.aggregate(new PositionFoldAggregator()).addSink(new HzPositionWindowSink());
 
 		env.execute();
 	}

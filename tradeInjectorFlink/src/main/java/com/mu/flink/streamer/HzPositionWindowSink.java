@@ -24,5 +24,9 @@ public class HzPositionWindowSink extends RichSinkFunction<PositionAccount> {
 		LOG.info("Placed the followoing position in the map "+value.getAccountId());
 		
 	}
+	
+	public static String getMapName() {
+		return POSITIONACCOUNTMAP;
+	}
 
 }

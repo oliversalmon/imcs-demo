@@ -12,12 +12,15 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.apache.flink.streaming.api.TimeCharacteristic;
 //import org.I0Itec.zkclient.ZkClient;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.functions.ProcessFunction.Context;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010.FlinkKafkaProducer010Configuration;
@@ -36,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import com.example.mu.domain.Instrument;
 import com.example.mu.domain.Party;
+import com.example.mu.domain.PositionAccount;
 import com.example.mu.domain.Price;
 import com.example.mu.domain.Trade;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -45,10 +49,13 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.mu.flink.streamer.HzPositionSink;
+import com.mu.flink.streamer.HzPositionWindowSink;
 import com.mu.flink.streamer.HzTradeSink;
 import com.mu.flink.streamer.PositionAggregator;
+import com.mu.flink.streamer.PositionFoldAggregator;
 import com.mu.flink.streamer.TradeFlinkStreamer;
 import com.mu.flink.streamer.TradeProcess;
+import com.mu.flink.streamer.TradeTimeStampWaterMarkAssigner;
 import com.mu.flink.streamer.TradeToTupleKeyTrade;
 
 //import kafka.admin.TopicCommand;
@@ -72,6 +79,7 @@ public class TradeFlinkStreamerTest {
 	HazelcastInstance hz = Hazelcast.newHazelcastInstance();
 	final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamerTest.class);
 	private static Gson gson = new GsonBuilder().create();
+	private static final String POSITIONACCOUNTMAP = "position-account";
 
 	private int brokerId = 0;
 	private String topic = "trade";
@@ -176,6 +184,11 @@ public class TradeFlinkStreamerTest {
 		IMap<String, Price> mapPrice = hz.getMap("price");
 		mapPrice.put(price.getInstrumentId(), price);
 		mapPrice.put(price2.getInstrumentId(), price2);
+		
+
+		IMap<String, Price> mapPrice2 = TradeFlinkStreamer.getHzClient().getMap("price");
+		mapPrice2.put(price.getInstrumentId(), price);
+		mapPrice2.put(price2.getInstrumentId(), price2);
 
 	}
 
@@ -330,6 +343,8 @@ public class TradeFlinkStreamerTest {
 		sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new PositionAggregator())
 		.addSink(new HzPositionSink());
 		
+		
+		
 		env.execute();
 		
 		//now confirm if the counts are the same
@@ -403,6 +418,143 @@ public class TradeFlinkStreamerTest {
 //		DataStream<String> stream2 = env.addSource(kafkaConsumer);
 //		stream2.print();
 //		env.execute();
+
+	}
+	
+	@Test
+	public void sendTradesViaWindow() throws Exception {
+
+		int buyQty = 0;
+		int sellQty = 0;
+
+		double buyPnL = 0;
+		double sellPnl = 0;
+
+		IMap<String, Party> map = hz.getMap("party");
+		assert (map.size() == 2);
+
+		IMap<String, Instrument> mapIns = hz.getMap("instrument");
+		assert (mapIns.size() == 2);
+
+		IMap<String, Price> mapPrice = hz.getMap("price");
+		assert (mapPrice.size() == 2);
+		
+		IMap<String, PositionAccount> mapPos = TradeFlinkStreamer.getHzClient().getMap(POSITIONACCOUNTMAP);
+		mapPos.clear();
+		assertEquals(0, mapPos.size());
+
+		// set up the trade information for this test
+		// set the date
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+
+		// generate all the common attributes for both sides of the trade
+
+		String executionId = UUID.randomUUID().toString();
+		String currency = "USD";
+		String executingFirmId = "TEST_EX1_" + 1;
+		String executingTraderId = "TEST_TRD1";
+		String executionVenue = "EX1";
+		double trdpx = (double) (Math.random() * 1000 + 1);
+		int quantity = (int) (Math.random() * 100 + 1);
+
+		Party buyParty = map.get("PARTY1");
+		Party sellParty = map.get("PARTY2");
+		Date tradeDate = date;
+		System.out.println("Current date and time in Date's toString() is : " + tradeDate + "\n");
+
+		Instrument tradedInstrument = mapIns.get("INS1");
+		Price spotPx = mapPrice.get(tradedInstrument.getSymbol());
+
+		// do the buy
+		String buyKey = UUID.randomUUID().toString();
+		Trade atrade = new Trade();
+		atrade.setClientId(buyParty.getName());
+		atrade.setCurrency(currency);
+		atrade.setExecutingFirmId(executingFirmId);
+		atrade.setExecutingTraderId(executingTraderId);
+		atrade.setExecutionId(buyKey);
+		atrade.setExecutionVenueId(executionVenue);
+		atrade.setFirmTradeId(executionId);
+		atrade.setInstrumentId(tradedInstrument.getSymbol());
+		atrade.setOriginalTradeDate(tradeDate);
+		atrade.setPositionAccountId(buyParty.getPositionAccountId());
+		atrade.setPrice(trdpx);
+		atrade.setQuantity(quantity);
+		atrade.setSecondaryFirmTradeId(executionId);
+		atrade.setSecondaryTradeId(executionId);
+		atrade.setSettlementDate(tradeDate);
+		atrade.setTradeDate(tradeDate);
+		atrade.setTradeId(buyKey);
+		atrade.setTradeType("0");
+		atrade.setSecondaryTradeType("0");
+
+		// run the calculation here for buy
+		buyQty += atrade.getQuantity();
+
+		LOG.info("Spot px used " + spotPx.getPrice());
+		double pnl = spotPx.getPrice() * atrade.getQuantity() - atrade.getTradeValue();
+		buyPnL += pnl;
+
+		// now generate Sell side
+		String sellKey = UUID.randomUUID().toString();
+		Trade aSelltrade = new Trade();
+		aSelltrade.setClientId(sellParty.getName());
+		aSelltrade.setCurrency(currency);
+		aSelltrade.setExecutingFirmId(executingFirmId);
+		aSelltrade.setExecutingTraderId(executingTraderId);
+		aSelltrade.setExecutionId(sellKey);
+		aSelltrade.setExecutionVenueId(executionVenue);
+		aSelltrade.setFirmTradeId(executionId);
+		aSelltrade.setInstrumentId(tradedInstrument.getSymbol());
+		aSelltrade.setOriginalTradeDate(tradeDate);
+		aSelltrade.setPositionAccountId(sellParty.getPositionAccountId());
+		aSelltrade.setPrice(trdpx);
+		aSelltrade.setQuantity(-quantity);
+		aSelltrade.setSecondaryFirmTradeId(executionId);
+		aSelltrade.setSecondaryTradeId(executionId);
+		aSelltrade.setSettlementDate(tradeDate);
+		aSelltrade.setTradeDate(tradeDate);
+		aSelltrade.setTradeId(sellKey);
+		aSelltrade.setTradeType("0");
+		aSelltrade.setSecondaryTradeType("0");
+
+		// run the calculation here for buy
+		sellQty += aSelltrade.getQuantity();
+
+		double sellpnl = spotPx.getPrice() * aSelltrade.getQuantity() - aSelltrade.getTradeValue();
+		sellPnl += sellpnl;
+		
+		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		env.setParallelism(1);
+		
+		DataStream<String> stream = env.fromElements(atrade.toJSON(), aSelltrade.toJSON());
+
+		SingleOutputStreamOperator<Trade> mainDataStream   = stream.process(new TradeProcess());
+		mainDataStream.addSink(new HzTradeSink());
+		
+		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
+		};
+		
+		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		sideOutputStream.assignTimestampsAndWatermarks(new TradeTimeStampWaterMarkAssigner(Time.seconds(10)))
+		.flatMap(new TradeToTupleKeyTrade())
+		.keyBy(0)
+	    .window(TumblingEventTimeWindows.of(Time.seconds(5)))
+	    .aggregate(new PositionFoldAggregator())   
+	    //.print();
+	    .addSink(new HzPositionWindowSink());
+		
+		
+		
+		env.execute();
+		
+		//now confirm if the counts are the same
+		assertEquals(2, TradeFlinkStreamer.getHzClient().getMap(HzTradeSink.getMapName()).size());
+		assertEquals(2, TradeFlinkStreamer.getHzClient().getMap(HzPositionWindowSink.getMapName()).size());
+
+
 
 	}
 

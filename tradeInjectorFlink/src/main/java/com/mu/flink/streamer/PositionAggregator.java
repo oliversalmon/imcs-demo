@@ -25,7 +25,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 	private static final long serialVersionUID = 1L;
 	private transient ValueState<Tuple2<String, PositionAccount>> sumOfQty;
 	private transient ValueState<Tuple2<String, Long>> startTime;
-
+	private static HazelcastInstance hzClient = TradeFlinkStreamer.getHzClient();
 	final static Logger LOG = LoggerFactory.getLogger(PositionAggregator.class);
 
 	@Override
@@ -66,7 +66,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 
 		// now set the pnl
 		// get the spot Px
-		HazelcastInstance hzClient = TradeFlinkStreamer.getHzClient();
+		
 		IMap<String, Price> mapPrice = hzClient.getMap("price");
 		Price spotPx = mapPrice.get(instrumnetId);
 		if (spotPx == null)

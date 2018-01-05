@@ -104,6 +104,11 @@ public class PositionAggregatorTest {
 		IMap<String, Price> mapPrice = hz.getMap("price");
 		mapPrice.put(price.getInstrumentId(), price);
 		mapPrice.put(price2.getInstrumentId(), price2);
+		
+		
+		IMap<String, Price> mapPrice2 = TradeFlinkStreamer.getHzClient().getMap("price");
+		mapPrice2.put(price.getInstrumentId(), price);
+		mapPrice2.put(price2.getInstrumentId(), price2);
 
 	}
 
@@ -363,6 +368,8 @@ public class PositionAggregatorTest {
 		env.execute();
 		
 		
+		
+		
 		LOG.info("Spot px used "+buySpotPx);
 		
 		
@@ -437,7 +444,7 @@ public class PositionAggregatorTest {
 		
 
 		// run 100 trades with 1 second intervals
-		for (int i = 0; i < 2000; i++) {
+		for (int i = 0; i < 20000; i++) {
 			String executionId = UUID.randomUUID().toString();
 			String executingFirmId = "TEST_EX1_" + i;
 			String executingTraderId = "TEST_TRD" + i;
@@ -545,15 +552,15 @@ public class PositionAggregatorTest {
 			if (acc.getSize() < 0)
 				assertEquals (sellQty, acc.getSize());
 			
-//			if (acc.getPnl() < 0) {
-//				LOG.info("PNL from sink is "+acc.getPnl());
-//				LOG.info("PNL from test calculation "+buyPnL);
-//			}
-//					
-//			if (acc.getPnl() > 0) {
-//				LOG.info("PNL from sink is "+acc.getPnl());
-//				LOG.info("PNL from test calculation "+sellPnl);
-//			}
+			if (acc.getPnl() < 0) {
+				LOG.info("PNL from sink is "+acc.getPnl());
+				LOG.info("PNL from test calculation "+buyPnL);
+			}
+					
+			if (acc.getPnl() > 0) {
+				LOG.info("PNL from sink is "+acc.getPnl());
+				LOG.info("PNL from test calculation "+sellPnl);
+			}
 			  
 		}
 		
