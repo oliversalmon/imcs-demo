@@ -67,15 +67,15 @@ public class TradeFlinkStreamer {
 		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
 		};
 
-		// DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
-		// sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new
-		// PositionAggregator())
-		// .addSink(new HzPositionSink());
+		 DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		 sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new
+		 PositionAggregator())
+		 .addSink(new HzPositionSink());
 
-		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
-		sideOutputStream.assignTimestampsAndWatermarks(new TradeTimeStampWaterMarkAssigner(Time.seconds(10)))
-				.flatMap(new TradeToTupleKeyTrade()).keyBy(0).window(TumblingEventTimeWindows.of(Time.seconds(5)))
-				.aggregate(new PositionFoldAggregator()).addSink(new HzPositionWindowSink());
+		//DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		//sideOutputStream.assignTimestampsAndWatermarks(new TradeTimeStampWaterMarkAssigner(Time.seconds(10)))
+		//		.flatMap(new TradeToTupleKeyTrade()).keyBy(0).window(TumblingEventTimeWindows.of(Time.seconds(5)))
+		//		.aggregate(new PositionFoldAggregator()).addSink(new HzPositionWindowSink());
 
 		env.execute();
 	}
