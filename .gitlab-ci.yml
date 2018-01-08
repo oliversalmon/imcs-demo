@@ -23,9 +23,6 @@ build:
  script:
     - mvn -version
     - mvn clean package install -DskipTests
-    - cd streamprocessor
-    - mvn clean package install -DskipTests docker:build	
-    - docker push dineshpillai/innovation-mu-streamers
     - cd ../trade-imdg
     - mvn docker:build
     - docker push dineshpillai/innovation-trade-imdg
