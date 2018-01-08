@@ -7,10 +7,10 @@ echo $JOB_MANAGER_NAME
 kubectl cp mu-flink-trade-injector-0.0.1-SNAPSHOT.jar mu-architecture-demo/$JOB_MANAGER_NAME:/tmp/dummy.jar
 
 #once copy is successful load the jar within the container
-kubectl exec -it $JOB_MANAGER_NAME -n=mu-architecture-demo ./bin/flink run /tmp/mu-flink-trade-injector-0.0.1-SNAPSHOT.jar
+nohup kubectl exec -it $JOB_MANAGER_NAME -n=mu-architecture-demo ./bin/flink run /tmp/mu-flink-trade-injector-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
 
 
 cd ../../priceInjectorFlink/target
 
 kubectl cp mu-flink-price-injector-0.0.1-SNAPSHOT.jar mu-architecture-demo/$JOB_MANAGER_NAME:/tmp/dummy.jar
-kubectl exec -it $JOB_MANAGER_NAME -n=mu-architecture-demo ./bin/flink run /tmp/mu-flink-price-injector-0.0.1-SNAPSHOT.jar
+nohup kubectl exec -it $JOB_MANAGER_NAME -n=mu-architecture-demo ./bin/flink run  /tmp/mu-flink-price-injector-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
