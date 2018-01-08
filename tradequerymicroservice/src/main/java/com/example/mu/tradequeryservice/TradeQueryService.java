@@ -27,7 +27,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 
-@CrossOrigin(origins = "http://178.62.124.180:32196")
+@CrossOrigin(origins = "http://178.62.124.180:8090")
 @SpringBootApplication(scanBasePackages = "com.example.mu.tradequeryservice")
 @EnableCaching
 @RestController
