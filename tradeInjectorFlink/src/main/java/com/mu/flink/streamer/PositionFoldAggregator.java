@@ -38,11 +38,11 @@ public class PositionFoldAggregator implements AggregateFunction<Tuple2<String,T
 		if (spotPx == null)
 			LOG.warn("NO Spot PX available for the following instrument id, not calculating PnL " + value.f1.getInstrumentId());
 		else {
-			LOG.debug("Spot px used =" + spotPx.getPrice());
-			LOG.debug("traded value is " + value.f1.getTradeValue());
+			//LOG.debug("Spot px used =" + spotPx.getPrice());
+			//LOG.debug("traded value is " + value.f1.getTradeValue());
 			double pnl = spotPx.getPrice() * value.f1.getQuantity() - value.f1.getTradeValue();
 		
-			LOG.debug("Pnl calculated is " + pnl);
+			//LOG.debug("Pnl calculated is " + pnl);
 			double currentPnl = accumulator.getPnl();
 			accumulator.setPnl( currentPnl+= pnl);
 		}

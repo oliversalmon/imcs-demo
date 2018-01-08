@@ -1,6 +1,6 @@
 package com.mu.flink.streamer.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,11 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.flink.api.common.functions.FoldFunction;
-import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.common.typeinfo.TypeHint;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
@@ -21,7 +17,6 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mortbay.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +33,6 @@ import com.mu.flink.streamer.HzPositionWindowSink;
 import com.mu.flink.streamer.PositionAggregator;
 import com.mu.flink.streamer.PositionFoldAggregator;
 import com.mu.flink.streamer.TradeFlinkStreamer;
-import com.mu.flink.streamer.TradeKeyForPositionAccount;
 import com.mu.flink.streamer.TradeTimeStampWaterMarkAssigner;
 import com.mu.flink.streamer.TradeToTupleKeyTrade;
 
@@ -47,6 +41,7 @@ public class PositionAggregatorTest {
 	private static HazelcastInstance hz = Hazelcast.newHazelcastInstance();
 	final static Logger LOG = LoggerFactory.getLogger(PositionAggregatorTest.class);
 	private static final String POSITIONACCOUNTMAP = "position-account";
+	final Configuration config = new Configuration();
 
 	@Before
 	public void setUp() {
@@ -362,13 +357,64 @@ public class PositionAggregatorTest {
 		//CollectSink.values.clear();
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.setParallelism(1);
+		
 		env.fromCollection(mapTrade.values()).flatMap(new TradeToTupleKeyTrade()).keyBy(0)
 				.flatMap(new PositionAggregator()).addSink(new HzPositionSink());
 
 		env.execute();
 		
 		
+//		QueryableStateClient client = new QueryableStateClient("",0);
+//
+//		// the state descriptor of the state to be fetched.
+//		ValueStateDescriptor<Tuple2<String, PositionAccount>> descriptor =
+//		        new ValueStateDescriptor<Tuple2<String, PositionAccount>>(
+//		          "average",
+//		          TypeInformation.of(new TypeHint<Tuple2<String, PositionAccount>>() {}),
+//		          Tuple2.of("", new PositionAccount()));
+//
+//		java.util.concurrent.CompletableFuture<ValueState<Tuple2<String, PositionAccount>>> resultFuture =
+//		        client.getKvState(new JobID(), "query-name", "", BasicTypeInfo.STRING_TYPE_INFO, descriptor);
+//
+//		// now handle the returned value
+//		resultFuture.thenAccept(response -> {
+//		        try {
+//		            Tuple2<String, PositionAccount> res = response.value();
+//		        } catch (Exception e) {
+//		            e.printStackTrace();
+//		        }
+//		});
 		
+	
+//		config.setString(JobManagerOptions.ADDRESS, "localhost");
+//		config.setInteger(JobManagerOptions.PORT, 6125);
+//		
+//		final HighAvailabilityServices highAvailabilityServices =
+//			      HighAvailabilityServicesUtils.createHighAvailabilityServices(
+//			           config,
+//			           Executors.newSingleThreadScheduledExecutor(),
+//			           HighAvailabilityServicesUtils.AddressResolution.TRY_ADDRESS_RESOLUTION);
+//
+//			QueryableStateClient client = new QueryableStateClient(config, highAvailabilityServices);
+//			
+//			final TypeSerializer<String> keySerializer =
+//			        TypeInformation.of(new TypeHint<String>() {}).createSerializer(new ExecutionConfig());
+//			final TypeSerializer<Tuple2<String, PositionAccount>> valueSerializer =
+//			        TypeInformation.of(new TypeHint<Tuple2<String, PositionAccount>>() {}).createSerializer(new ExecutionConfig());
+//
+//			final byte[] serializedKey =
+//			        KvStateRequestSerializer.serializeKeyAndNamespace(
+//			                "", keySerializer,
+//			                VoidNamespace.INSTANCE, VoidNamespaceSerializer.INSTANCE);
+//
+//			Awaitable<byte[]> serializedResult =
+//			        client.getKvState(new JobID(), "position-state-query", "".hashCode(), serializedKey);
+//
+//			// now wait for the result and return it
+//			final FiniteDuration duration = new FiniteDuration(1, TimeUnit.SECONDS);
+//			byte[] serializedValue = Await.result(serializedResult, duration);
+//			Tuple2<String, PositionAccount> value =
+//			        KvStateRequestSerializer.deserializeValue(serializedValue, valueSerializer);
 		
 		LOG.info("Spot px used "+buySpotPx);
 		

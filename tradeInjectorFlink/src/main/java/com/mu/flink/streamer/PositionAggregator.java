@@ -107,6 +107,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 				TypeInformation.of(new TypeHint<Tuple2<String, PositionAccount>>() {
 				}), // type information
 				Tuple2.of("", new PositionAccount())); // default value of the state, if nothing was set
+		descriptor.setQueryable("position-state-query");
 		sumOfQty = getRuntimeContext().getState(descriptor);
 
 		// start the clock

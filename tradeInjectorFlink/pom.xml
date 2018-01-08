@@ -52,6 +52,11 @@
 			</exclusions>
 
 		</dependency>
+		<!--  dependency>
+		  <groupId>org.apache.flink</groupId>
+		  <artifactId>flink-queryable-state-client-java_2.11</artifactId>
+		  <version>1.4.0</version>
+		</dependency-->
 		<dependency>
 			<artifactId>cache</artifactId>
 			<groupId>com.example.mu</groupId>
