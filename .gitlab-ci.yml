@@ -23,7 +23,7 @@ build:
  script:
     - mvn -version
     - mvn clean package install -DskipTests
-    - cd ../trade-imdg
+    - cd ./trade-imdg
     - mvn docker:build
     - docker push dineshpillai/innovation-trade-imdg
     - cd ../trade-injector
