@@ -671,7 +671,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		// get the trade data
 		$http({
 			  method: 'GET',
-			  url: 'http://192.168.1.176:8094/tradequeryservice/getAllTrades'
+			  url: 'http://178.62.124.180:8094/tradequeryservice/getAllTrades'
 			}).then(function successCallback(response) {
 			    // this callback will be called asynchronously
 			    // when the response is available
@@ -692,7 +692,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		if($scope.showtableView===true){
 			$http({
 				  method: 'GET',
-				  url: 'http://192.168.1.176:8094/tradequeryservice/getTradesForPositionAccountAndInstrument/'+accountid+'/'+instrumentid
+				  url: 'http://178.62.124.180:8094/tradequeryservice/getTradesForPositionAccountAndInstrument/'+accountid+'/'+instrumentid
 				}).then(function successCallback(response) {
 				    // this callback will be called asynchronously
 				    // when the response is available
@@ -717,7 +717,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		// get all the positions
 		$http({
 			  method: 'GET',
-			  url: 'http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts'
+			  url: 'http://178.62.124.180:8093/positionqueryservice/getAllPositionAccounts'
 			}).then(function successCallback(response) {
 			    // this callback will be called asynchronously
 			    // when the response is available
@@ -782,7 +782,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 				//also refresh the positions
 				$http({
 					  method: 'GET',
-					  url: 'http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts'
+					  url: 'http://178.62.124.180:8093/positionqueryservice/getAllPositionAccounts'
 					}).then(function successCallback(response) {
 					    // this callback will be called asynchronously
 					    // when the response is available
