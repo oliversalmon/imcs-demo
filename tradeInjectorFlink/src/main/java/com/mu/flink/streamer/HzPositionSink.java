@@ -32,8 +32,8 @@ public class HzPositionSink extends RichSinkFunction<PositionAccount>{
 			LOG.info("updating the position account in the map");
 			updateAccount.setAccountId(arg0.getAccountId());
 			updateAccount.setInstrumentid(arg0.getInstrumentid());
-			updateAccount.setSize(updateAccount.getSize()+arg0.getSize());
-			updateAccount.setPnl(updateAccount.getPnl()+arg0.getPnl());
+			updateAccount.setSize(arg0.getSize());
+			updateAccount.setPnl(arg0.getPnl());
 			posMap.put(posKey, updateAccount);
 			LOG.info("updated Pnl for "+updateAccount.getAccountId()+" is "+updateAccount.getPnl());
 		}

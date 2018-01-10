@@ -26,3 +26,4 @@ streamprocessor/target/
 /database.uml
 /domain.uml
 /.project
+/Dockerfile

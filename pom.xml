@@ -17,6 +17,8 @@
     <module>trade-imdg</module>
     <module>trade-injector</module>
     <module>tradeInjectorFlink</module>
+    <module>positionSnapFlinkJob</module>
+    <module>priceInjectorFlink</module>
   </modules>
   <packaging>pom</packaging>
 

@@ -90,7 +90,7 @@ public class PositionAggregator extends RichFlatMapFunction<Tuple2<String, Trade
 		//if (elapsed > 100) {
 			arg1.collect(currentPosition);
 			startTime.update(Tuple2.of("t1", System.currentTimeMillis()));
-			sumOfQty.clear();
+			//sumOfQty.clear();
 			LOG.info("emitting current Position for "+currentPosition.getAccountId());
 			LOG.debug("starttime values is "+startTime.value().f1+" and actual time is "+System.currentTimeMillis());
 		//}
