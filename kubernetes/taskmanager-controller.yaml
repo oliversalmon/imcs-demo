@@ -4,7 +4,7 @@ metadata:
   name: flink-taskmanager
   namespace: mu-architecture-demo
 spec:
-  replicas: 2
+  replicas: 4
   template:
     metadata:
       labels:

@@ -16,7 +16,7 @@ spec:
       hostAliases:
       - ip: "178.62.124.180"
         hostnames:
-        - "c6ef8330f87c"
+        - "e89da677c8c1"
       containers:
       - image: dineshpillai/innovation-trade-imdg:0.0.1-SNAPSHOT
         name: trade-imdg
