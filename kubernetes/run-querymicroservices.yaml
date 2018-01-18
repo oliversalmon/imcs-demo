@@ -40,6 +40,7 @@ spec:
   - port: 8094
     name: trade-query-port
     targetPort: 8094
+  type: NodePort
 
 ---
 apiVersion: extensions/v1beta1
@@ -83,4 +84,4 @@ spec:
   - port: 8093
     name: position-query-port
     targetPort: 8093
-  type: LoadBalancer
+  type: NodePort
