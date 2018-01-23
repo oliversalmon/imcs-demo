@@ -27,6 +27,9 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.feign.FeignClient;
 //import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -56,6 +59,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CompositeFilter;
@@ -98,16 +102,23 @@ import com.trade.injector.jto.repository.TradeInjectorProfileRepository;
 import com.trade.injector.jto.repository.TradeReportRepository;
 import com.trade.injector.sinks.KafkaSink;
 
+import org.springframework.http.MediaType;
+
 @SpringBootApplication(scanBasePackages = "com.trade.injector")
 @EnableOAuth2Client
 @RestController
 @EnableMongoRepositories(basePackages = "com.trade.injector.jto.repository")
 @EnableScheduling
 @EnableCaching
+@EnableFeignClients
+@EnableDiscoveryClient
 //@EnableDiscoveryClient
 public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	final Logger LOG = LoggerFactory.getLogger(TradeInjectorController.class);
+	
+	@Autowired
+	private PriceServiceClient priceClient;
 
 	@Bean
 	// @Profile("client")
@@ -120,7 +131,20 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		// return Hazelcast.newHazelcastInstance();
 
 	}
+	
+	@FeignClient(name = "priceQueryService")
+	interface PriceServiceClient {
+		@RequestMapping(value = "/hi", method = RequestMethod.GET)
+		@ResponseBody
+		String hi();
+	}
 
+	@RequestMapping(value = "/pingPrice", method = RequestMethod.GET)
+	public String pingPrice() {
+		return priceClient.hi();
+	}
+	
+	
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
 

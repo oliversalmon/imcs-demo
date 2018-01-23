@@ -43,7 +43,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 @RestController
 @EnableWebFlux
-@EnableFeignClients
+//@EnableFeignClients
 public class PriceQueryHandler {
 	
 	@Value("${spring.application.name:priceQueryService}")
@@ -62,8 +62,8 @@ public class PriceQueryHandler {
 	@Autowired
 	private Environment env;
 
-	@Autowired
-	private AppClient appClient;
+//	@Autowired
+//	private AppClient appClient;
 
 	@Autowired(required = false)
 	private Registration registration;
@@ -73,7 +73,7 @@ public class PriceQueryHandler {
 	
 	@RequestMapping("/hi")
 	public String hi() {
-		return "Hello World! from " + this.registration;
+		return "Price service! from " + this.registration;
 	}
 	
 
@@ -87,19 +87,19 @@ public class PriceQueryHandler {
 		return this.env.getProperty(prop, "Not Found");
 	}
 	
-	@RequestMapping("/self")
-	public String self() {
-		return this.appClient.hi();
-	}
+//	@RequestMapping("/self")
+//	public String self() {
+//		return this.appClient.hi();
+//	}
 	
-	@FeignClient("priceQueryService")
-	interface AppClient {
-		@RequestMapping(path = "pricequeryservice/pricestream", method = RequestMethod.GET)
-		Flux<Price> getFluxPrices();
-		@RequestMapping(path = "/ping", method = RequestMethod.GET)
-		String hi();
-		
-	}
+//	@FeignClient("priceQueryService")
+//	interface AppClient {
+//		@RequestMapping(path = "pricequeryservice/pricestream", method = RequestMethod.GET)
+//		Flux<Price> getFluxPrices();
+//		@RequestMapping(path = "/ping", method = RequestMethod.GET)
+//		String hi();
+//		
+//	}
 
 	public Mono<ServerResponse> getAllPrices(ServerRequest request) {
 
