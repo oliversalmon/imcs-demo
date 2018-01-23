@@ -30,7 +30,7 @@ public class PriceQueryTest {
 				"--management.endpoints.web.expose=*",
 				"--spring.cloud.zookeeper.connect-string=localhost:" + zkPort);
 
-		ResponseEntity<String> response = new TestRestTemplate().getForEntity("http://priceQueryService/hi", String.class);
+		ResponseEntity<String> response = new TestRestTemplate().getForEntity("http://priceQueryService/ping", String.class);
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 
 		context.close();

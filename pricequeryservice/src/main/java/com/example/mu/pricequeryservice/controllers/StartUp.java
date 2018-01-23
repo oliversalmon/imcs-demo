@@ -2,10 +2,12 @@ package com.example.mu.pricequeryservice.controllers;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(scanBasePackages = "com.example.mu.pricequeryservice")
 @EnableScheduling
+@EnableDiscoveryClient
 public class StartUp {
 
 	public static void main(String[] args) {
