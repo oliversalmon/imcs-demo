@@ -717,7 +717,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		// get all the positions
 		$http({
 			  method: 'GET',
-			  url: 'http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts'
+			  url: '/getAllPositions'
 			}).then(function successCallback(response) {
 			    // this callback will be called asynchronously
 			    // when the response is available
@@ -744,36 +744,6 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 			function(data) {
 
 				
-					// run through the instruments and add the price data to it
-
-// var filteredData = $scope.allInstrumentsData.filter(function (data) {
-// return (data.instruments[id=="A"]);
-// });
-//
-//					
-// filteredData[0].instruments
-// .forEach(changeInstrumentData);
-//					
-//					
-//
-// function changeInstrumentData(
-// instrument, index,
-// callback) {
-//						
-//													
-// console.log("the instrument id is "+instrument.id);
-// if(instrument.id===$scope.allInstrumentsData[index].id){
-// $scope.allInstrumentsData[index].price = instrument.price;
-// $scope.allInstrumentsData[index].prevPrice = instrument.prevPrice;
-//							
-// //console.log("full instrument data is
-// "+$scope.allInstrumentsData[index].price);
-// $scope.allInstrumentsData[index].push;
-// }
-//						
-//											 
-//						
-// };
 				
 				// set the trade count
 				$scope.tradeCount = data[0].tradeCount;
@@ -782,10 +752,11 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 				//also refresh the positions
 				$http({
 					  method: 'GET',
-					  url: 'http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts'
+					  url: '/getAllPositions'
 					}).then(function successCallback(response) {
 					    // this callback will be called asynchronously
 					    // when the response is available
+						console.log(response.data);
 						$scope.allPositionData=[];
 						$scope.allPositionData = response.data;
 						

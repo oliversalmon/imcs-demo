@@ -33,6 +33,7 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 //import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
@@ -77,6 +78,7 @@ import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.netflix.client.util.Resources;
 import com.trade.injector.application.Application;
 import com.trade.injector.business.service.BusinessServiceCacheNames;
 import com.trade.injector.business.service.GenerateInstrumentCache;
@@ -112,14 +114,17 @@ import org.springframework.http.MediaType;
 @EnableCaching
 @EnableFeignClients
 @EnableDiscoveryClient
-//@EnableDiscoveryClient
+// @EnableDiscoveryClient
 public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	final Logger LOG = LoggerFactory.getLogger(TradeInjectorController.class);
-	
+
 	@Autowired
 	private PriceServiceClient priceClient;
 
+	@Autowired
+	private PositionServiceClient positionClient;
+	
 	@Bean
 	// @Profile("client")
 	HazelcastInstance hazelcastInstance() {
@@ -131,20 +136,37 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		// return Hazelcast.newHazelcastInstance();
 
 	}
-	
+
 	@FeignClient(name = "priceQueryService")
 	interface PriceServiceClient {
 		@RequestMapping(value = "/hi", method = RequestMethod.GET)
 		@ResponseBody
 		String hi();
+
+		
+
+	}
+
+	@FeignClient(name = "positionqueryservice")
+	interface PositionServiceClient {
+
+		@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
+		@ResponseBody
+		Resource getAllPositionAccounts();
+
 	}
 
 	@RequestMapping(value = "/pingPrice", method = RequestMethod.GET)
 	public String pingPrice() {
 		return priceClient.hi();
 	}
-	
-	
+
+	@RequestMapping(value = "/getAllPositions", method = RequestMethod.GET)
+	public Resource getAllPositions() {
+
+		return positionClient.getAllPositionAccounts();
+	}
+
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
 
@@ -188,21 +210,11 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/**")
-				.authorizeRequests()
-				.antMatchers("/", "/login/**", "/webjars/**", "/dist/**",
-						"/scripts/**", "/jumbotron.css", "/injectorUI/**")
-				.permitAll()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.logout()
-				.logoutSuccessUrl("/")
-				.permitAll()
-				.and()
-				.csrf()
-				.csrfTokenRepository(
-						CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
+		http.antMatcher("/**").authorizeRequests()
+				.antMatchers("/", "/login/**", "/webjars/**", "/dist/**", "/scripts/**", "/jumbotron.css",
+						"/injectorUI/**")
+				.permitAll().anyRequest().authenticated().and().logout().logoutSuccessUrl("/").permitAll().and().csrf()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 
 	}
@@ -214,11 +226,10 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 		OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
 				"/login/facebook");
-		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(
-				facebook(), oauth2ClientContext);
+		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
 		facebookFilter.setRestTemplate(facebookTemplate);
-		UserInfoTokenServices tokenServices = new UserInfoTokenServices(
-				facebookResource().getUserInfoUri(), facebook().getClientId());
+		UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(),
+				facebook().getClientId());
 		tokenServices.setRestTemplate(facebookTemplate);
 		facebookFilter.setTokenServices(tokenServices);
 
@@ -226,11 +237,9 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 		OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter(
 				"/login/github");
-		OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(),
-				oauth2ClientContext);
+		OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
 		githubFilter.setRestTemplate(githubTemplate);
-		tokenServices = new UserInfoTokenServices(githubResource()
-				.getUserInfoUri(), github().getClientId());
+		tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), github().getClientId());
 		tokenServices.setRestTemplate(githubTemplate);
 		githubFilter.setTokenServices(tokenServices);
 		filters.add(githubFilter);
@@ -253,8 +262,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public FilterRegistrationBean oauth2ClientFilterRegistration(
-			OAuth2ClientContextFilter filter) {
+	public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
 		registration.setFilter(filter);
 		registration.setOrder(-100);
@@ -274,17 +282,14 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/tradeMessageStopForProfile", method = RequestMethod.POST)
-	public void tradeStopForProfile(@RequestBody String messageId)
-			throws Exception {
+	public void tradeStopForProfile(@RequestBody String messageId) throws Exception {
 
 		LOG.info("Stop run for the following Id " + messageId);
 
 		// we need to remove the id= bit from message id
-		messageId = messageId.substring(messageId.indexOf('=') + 1,
-				messageId.length());
+		messageId = messageId.substring(messageId.indexOf('=') + 1, messageId.length());
 
-		TradeInjectorProfile profile = coreTemplate.findOne(
-				Query.query(Criteria.where("id").is(messageId)),
+		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
 				TradeInjectorProfile.class);
 
 		if (profile != null) {
@@ -294,60 +299,50 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			// refreshTradeInjectQueue();
 
 		} else
-			LOG.error("Unable to find message for the following id "
-					+ messageId);
+			LOG.error("Unable to find message for the following id " + messageId);
 
 	}
 
 	@RequestMapping(value = "/tradeMessagePlayForProfile", method = RequestMethod.POST)
-	public void tradePlayForProfile(@RequestBody String messageId)
-			throws Exception {
+	public void tradePlayForProfile(@RequestBody String messageId) throws Exception {
 
 		// we need to remove the id= bit from message id
-		messageId = messageId.substring(messageId.indexOf('=') + 1,
-				messageId.length());
+		messageId = messageId.substring(messageId.indexOf('=') + 1, messageId.length());
 		LOG.info("Playing for the following Id " + messageId);
 
-		TradeInjectorProfile profile = coreTemplate.findOne(
-				Query.query(Criteria.where("id").is(messageId)),
+		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
 				TradeInjectorProfile.class);
 
 		if (profile != null) {
 			runTradeInjectForTradeProfileId(profile);
 		} else
-			LOG.error("Unable to find profile for the following id "
-					+ messageId);
+			LOG.error("Unable to find profile for the following id " + messageId);
 
 	}
-	
-	private String getRHSOfString(String equation){
-		
-		if(equation == null)
+
+	private String getRHSOfString(String equation) {
+
+		if (equation == null)
 			return null;
-		
-		return equation.substring(equation.indexOf('=') + 1,
-				equation.length());
+
+		return equation.substring(equation.indexOf('=') + 1, equation.length());
 	}
 
 	@RequestMapping(value = "/tradeMessageRepeatForProfile", method = RequestMethod.POST)
-	public void repeatRunOnProfile(@RequestBody String profileId)
-			throws Exception {
+	public void repeatRunOnProfile(@RequestBody String profileId) throws Exception {
 
 		// we need to remove the id= bit from message id
-		profileId = profileId.substring(profileId.indexOf('=') + 1,
-				profileId.length());
+		profileId = profileId.substring(profileId.indexOf('=') + 1, profileId.length());
 		LOG.info("Running for the following Id " + profileId);
 
-		TradeInjectorProfile profile = coreTemplate.findOne(
-				Query.query(Criteria.where("id").is(profileId)),
+		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
 				TradeInjectorProfile.class);
 
 		if (profile != null) {
 
 			// remove the reports for Trade Data
-			TradeReport tradeReport = coreTemplate.findOne(
-					Query.query(Criteria.where("injectorProfileId").is(
-							profileId)), TradeReport.class);
+			TradeReport tradeReport = coreTemplate
+					.findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)), TradeReport.class);
 			if (tradeReport != null)
 				reportRepo.delete(tradeReport);
 
@@ -356,14 +351,12 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			runTradeInjectForTradeProfileId(profile);
 
 		} else
-			LOG.error("Unable to find message for the following id "
-					+ profileId);
+			LOG.error("Unable to find message for the following id " + profileId);
 
 	}
 
 	@RequestMapping(value = "/tradeRunStart", method = RequestMethod.POST)
-	public void injectTradesOnProfile(@RequestBody TradeInjectorProfile profile)
-			throws Exception {
+	public void injectTradesOnProfile(@RequestBody TradeInjectorProfile profile) throws Exception {
 
 		LOG.info("Running for the following profile... " + profile.id);
 		runTradeInjectForTradeProfileId(profile);
@@ -374,25 +367,21 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	@RequestMapping(value = "/deleteProfile", method = RequestMethod.POST)
 	public void deleteProfile(@RequestBody String profileId) throws Exception {
 
-		profileId = profileId.substring(profileId.indexOf('=') + 1,
-				profileId.length());
+		profileId = profileId.substring(profileId.indexOf('=') + 1, profileId.length());
 
 		// delete any reports associated to this profile
-		TradeReport report = coreTemplate.findOne(
-				Query.query(Criteria.where("injectorProfileId").is(profileId)),
+		TradeReport report = coreTemplate.findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)),
 				TradeReport.class);
 
 		LOG.info("Deleting TradeReport... " + profileId);
 		if (report != null) {
 			reportRepo.delete(report);
 		} else {
-			LOG.warn("No trade report found with the following profile id "
-					+ profileId);
+			LOG.warn("No trade report found with the following profile id " + profileId);
 		}
 
 		LOG.info("Deleting profile... " + profileId);
-		TradeInjectorProfile profile = coreTemplate.findOne(
-				Query.query(Criteria.where("id").is(profileId)),
+		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
 				TradeInjectorProfile.class);
 
 		if (profile != null) {
@@ -406,8 +395,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	}
 
-	private void runTradeInjectForTradeProfileId(TradeInjectorProfile profile)
-			throws Exception {
+	private void runTradeInjectForTradeProfileId(TradeInjectorProfile profile) throws Exception {
 
 		// List<Instrument> listOfInstruments = new GenerateRandomInstruments()
 		// .createRandomData(new Integer(profile.getNumberOfInstruments()));
@@ -419,16 +407,13 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 		GeneratePartyCache cacheGenerator = new GeneratePartyCache();
 		cacheGenerator.populateMap(profile.getNumberOfParties(), partyMap);
-		
-		LOG.info("Successfully generated party cache");
-		
 
-		IMap<String, Instrument> instrumentMap = hazelcastInstance
-				.getMap("instrument");
+		LOG.info("Successfully generated party cache");
+
+		IMap<String, Instrument> instrumentMap = hazelcastInstance.getMap("instrument");
 		GenerateInstrumentCache insCacheGenerator = new GenerateInstrumentCache();
-		insCacheGenerator.populateMap(profile.getNumberOfInstruments(),
-				instrumentMap);
-		
+		insCacheGenerator.populateMap(profile.getNumberOfInstruments(), instrumentMap);
+
 		LOG.info("Successfully generated instrument cache");
 
 		int startFrom = new Integer(profile.getCurrentMessageCount());
@@ -439,12 +424,11 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		while (startFrom != numberOfTrades) {
 
 			startFrom++;
-			Trade[] trades = tradeDataCache.createTrade(startFrom, partyMap,
-					profile.getNumberOfParties(), instrumentMap,
-					profile.getNumberOfInstruments());
+			Trade[] trades = tradeDataCache.createTrade(startFrom, partyMap, profile.getNumberOfParties(),
+					instrumentMap, profile.getNumberOfInstruments());
 
 			// send it to the Kafka sink
-			LOG.info("Sending the following trades "+trades[0].toJSON()+ " ####### "+trades[1].toJSON());
+			LOG.info("Sending the following trades " + trades[0].toJSON() + " ####### " + trades[1].toJSON());
 
 			sender.send(tradeTopic, trades[0].getTradeId(), trades[0].toJSON());
 			sender.send(tradeTopic, trades[1].getTradeId(), trades[1].toJSON());
@@ -463,8 +447,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			Thread.sleep(profile.getSimulatedWaitTime());
 
 			// if the kill flag is set by the UI return the process.
-			if (profileRepo.findById(profile.id).get().getRun_mode() == TradeInjectRunModes.STOP
-					.getRunMode())
+			if (profileRepo.findById(profile.id).get().getRun_mode() == TradeInjectRunModes.STOP.getRunMode())
 
 				// kill it and return
 
@@ -477,17 +460,16 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			profile.setRun_mode(TradeInjectRunModes.COMPLETED.getRunMode());
 			profileRepo.save(profile);
 		}
-		
+
 		LOG.info("Successfully generated trades, quitting");
 
 	}
 
-	private void convertToReportAndSaveForProfile(Trade ack, String username,
-			String injectorProfileId) throws Exception {
+	private void convertToReportAndSaveForProfile(Trade ack, String username, String injectorProfileId)
+			throws Exception {
 
-		TradeReport tradeReport = coreTemplate.findOne(
-				Query.query(Criteria.where("injectorProfileId").is(
-						injectorProfileId)), TradeReport.class);
+		TradeReport tradeReport = coreTemplate
+				.findOne(Query.query(Criteria.where("injectorProfileId").is(injectorProfileId)), TradeReport.class);
 
 		if (tradeReport == null) {
 			// create a new one
@@ -526,12 +508,9 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			List<PartyReport> parties = tradeReport.getParties();
 			List<InstrumentReport> instruments = tradeReport.getInstruments();
 
-			List<PartyReport> modifiedParties = parties.stream()
-					.filter(a -> a.getName().equals(ack.getClientId()))
-					.map(a -> a.incrementCountByOne())
-					.collect(Collectors.toList());
-			List<PartyReport> nonModifiedParties = parties.stream()
-					.filter(a -> !a.getName().equals(ack.getClientId()))
+			List<PartyReport> modifiedParties = parties.stream().filter(a -> a.getName().equals(ack.getClientId()))
+					.map(a -> a.incrementCountByOne()).collect(Collectors.toList());
+			List<PartyReport> nonModifiedParties = parties.stream().filter(a -> !a.getName().equals(ack.getClientId()))
 					.collect(Collectors.toList());
 
 			if (modifiedParties.size() == 0) {
@@ -543,18 +522,14 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 				modifiedParties.add(newParty);
 			}
 
-			parties = Stream.concat(modifiedParties.stream(),
-					nonModifiedParties.stream()).collect(Collectors.toList());
+			parties = Stream.concat(modifiedParties.stream(), nonModifiedParties.stream()).collect(Collectors.toList());
 
 			// now do the same for the instruments
 			List<InstrumentReport> modifiedInstruments = instruments.stream()
-					.filter(a -> a.getId().equals(ack.getInstrumentId()))
-					.map(a -> a.incrementCountByOne())
+					.filter(a -> a.getId().equals(ack.getInstrumentId())).map(a -> a.incrementCountByOne())
 					.collect(Collectors.toList());
-			List<InstrumentReport> nonModifiedInstruments = instruments
-					.stream()
-					.filter(a -> !a.getId().equals(ack.getInstrumentId()))
-					.collect(Collectors.toList());
+			List<InstrumentReport> nonModifiedInstruments = instruments.stream()
+					.filter(a -> !a.getId().equals(ack.getInstrumentId())).collect(Collectors.toList());
 
 			if (modifiedInstruments.size() == 0) {
 
@@ -567,9 +542,8 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			}
 
 			// finally concat the list
-			instruments = Stream.concat(modifiedInstruments.stream(),
-					nonModifiedInstruments.stream()).collect(
-					Collectors.toList());
+			instruments = Stream.concat(modifiedInstruments.stream(), nonModifiedInstruments.stream())
+					.collect(Collectors.toList());
 
 			tradeReport.setParties(parties);
 			tradeReport.setInstruments(instruments);
@@ -581,12 +555,10 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@Deprecated
-	private void convertToReportAndSaveForProfile(TradeAcknowledge ack,
-			String username) throws Exception {
+	private void convertToReportAndSaveForProfile(TradeAcknowledge ack, String username) throws Exception {
 
 		TradeReport tradeReport = coreTemplate.findOne(
-				Query.query(Criteria.where("injectorProfileId").is(
-						ack.getProfileIdentifier())), TradeReport.class);
+				Query.query(Criteria.where("injectorProfileId").is(ack.getProfileIdentifier())), TradeReport.class);
 
 		if (tradeReport == null) {
 			// create a new one
@@ -626,12 +598,9 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			List<PartyReport> parties = tradeReport.getParties();
 			List<InstrumentReport> instruments = tradeReport.getInstruments();
 
-			List<PartyReport> modifiedParties = parties.stream()
-					.filter(a -> a.getId().equals(ack.getClientName()))
-					.map(a -> a.incrementCountByOne())
-					.collect(Collectors.toList());
-			List<PartyReport> nonModifiedParties = parties.stream()
-					.filter(a -> !a.getId().equals(ack.getClientName()))
+			List<PartyReport> modifiedParties = parties.stream().filter(a -> a.getId().equals(ack.getClientName()))
+					.map(a -> a.incrementCountByOne()).collect(Collectors.toList());
+			List<PartyReport> nonModifiedParties = parties.stream().filter(a -> !a.getId().equals(ack.getClientName()))
 					.collect(Collectors.toList());
 
 			if (modifiedParties.size() == 0) {
@@ -643,18 +612,14 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 				modifiedParties.add(newParty);
 			}
 
-			parties = Stream.concat(modifiedParties.stream(),
-					nonModifiedParties.stream()).collect(Collectors.toList());
+			parties = Stream.concat(modifiedParties.stream(), nonModifiedParties.stream()).collect(Collectors.toList());
 
 			// now do the same for the instruments
 			List<InstrumentReport> modifiedInstruments = instruments.stream()
-					.filter(a -> a.getId().equals(ack.getInstrumentId()))
-					.map(a -> a.incrementCountByOne())
+					.filter(a -> a.getId().equals(ack.getInstrumentId())).map(a -> a.incrementCountByOne())
 					.collect(Collectors.toList());
-			List<InstrumentReport> nonModifiedInstruments = instruments
-					.stream()
-					.filter(a -> !a.getId().equals(ack.getInstrumentId()))
-					.collect(Collectors.toList());
+			List<InstrumentReport> nonModifiedInstruments = instruments.stream()
+					.filter(a -> !a.getId().equals(ack.getInstrumentId())).collect(Collectors.toList());
 
 			if (modifiedInstruments.size() == 0) {
 
@@ -667,9 +632,8 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 			}
 
 			// finally concat the list
-			instruments = Stream.concat(modifiedInstruments.stream(),
-					nonModifiedInstruments.stream()).collect(
-					Collectors.toList());
+			instruments = Stream.concat(modifiedInstruments.stream(), nonModifiedInstruments.stream())
+					.collect(Collectors.toList());
 
 			tradeReport.setParties(parties);
 			tradeReport.setInstruments(instruments);
@@ -681,8 +645,8 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/saveTradeInjectProfile", method = RequestMethod.POST)
-	public ResponseEntity<TradeInjectorProfile> saveTradeInjectProfile(
-			@RequestBody TradeInjectorProfile profile) throws Exception {
+	public ResponseEntity<TradeInjectorProfile> saveTradeInjectProfile(@RequestBody TradeInjectorProfile profile)
+			throws Exception {
 
 		// set it to stop so that it can show up as play on the profile
 		profile.setRun_mode(TradeInjectRunModes.STOP.getRunMode());
@@ -694,22 +658,18 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/getAllInjectProfiles", method = RequestMethod.GET)
-	public ResponseEntity<List<TradeInjectorProfile>> saveTradeInjectProfile()
-			throws Exception {
+	public ResponseEntity<List<TradeInjectorProfile>> saveTradeInjectProfile() throws Exception {
 
 		return ResponseEntity.ok(profileRepo.findAll());
 
 	}
 
 	@RequestMapping(value = "/getProfile", method = RequestMethod.POST)
-	public ResponseEntity<TradeInjectorProfile> getProfile(
-			@RequestBody String profileId) throws Exception {
+	public ResponseEntity<TradeInjectorProfile> getProfile(@RequestBody String profileId) throws Exception {
 
-		profileId = profileId.substring(profileId.indexOf('=') + 1,
-				profileId.length());
+		profileId = profileId.substring(profileId.indexOf('=') + 1, profileId.length());
 
-		TradeInjectorProfile profile = coreTemplate.findOne(
-				Query.query(Criteria.where("id").is(profileId)),
+		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
 				TradeInjectorProfile.class);
 
 		if (profile == null)
@@ -730,54 +690,52 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	public ResponseEntity<Collection<InstrumentReport>> getAllInstruments(@RequestBody String pageMarker)
 			throws Exception {
 
-		IMap<String, Instrument> mapInstruments = hazelcastInstance
-				.getMap(BusinessServiceCacheNames.INSTRUMENT_CACHE);
-		
+		IMap<String, Instrument> mapInstruments = hazelcastInstance.getMap(BusinessServiceCacheNames.INSTRUMENT_CACHE);
+
 		pageMarker = getRHSOfString(pageMarker);
-		LOG.info("Page Marker is  "+pageMarker);
+		LOG.info("Page Marker is  " + pageMarker);
 
 		// no data do not generate
 		if (mapInstruments.size() == 0) {
 			LOG.warn("No instruments found");
 			return ResponseEntity.ok(new ArrayList<InstrumentReport>());
 		}
-		
-		Predicate predicate = new SqlPredicate(String.format("instrumentId like %s", pageMarker+"%"));
-		Collection<InstrumentReport> ins =  mapInstruments.values(predicate).stream().map(x->convertInstrumentToReport(x)).collect(Collectors.toList());
-		LOG.info("Number of Instruments to return for following page marker "+pageMarker+" " + ins.size());
+
+		Predicate predicate = new SqlPredicate(String.format("instrumentId like %s", pageMarker + "%"));
+		Collection<InstrumentReport> ins = mapInstruments.values(predicate).stream()
+				.map(x -> convertInstrumentToReport(x)).collect(Collectors.toList());
+		LOG.info("Number of Instruments to return for following page marker " + pageMarker + " " + ins.size());
 
 		return ResponseEntity.ok(ins);
 
 	}
-	
-	private InstrumentReport convertInstrumentToReport(Instrument ins){
+
+	private InstrumentReport convertInstrumentToReport(Instrument ins) {
 		InstrumentReport report = new InstrumentReport();
 		report.setId(ins.getSymbol());
 		report.setName(ins.getIssuer());
-		
-		
+
 		return report;
 	}
-	
+
 	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
 	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
 
 		RestTemplate restTemplate = new RestTemplate();
 		LOG.info("Pinging the following URL http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts");
-		
-		//needs to be recoded via zookeeper
-		//TODO: Move to Zookeeper and discover this service
-		return ResponseEntity.ok(restTemplate.getForObject(
-				"http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts", List.class));
+
+		// needs to be recoded via zookeeper
+		// TODO: Move to Zookeeper and discover this service
+		return ResponseEntity.ok(restTemplate
+				.getForObject("http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts", List.class));
 
 	}
 
 	/*
-	 * private TradeAcknowledge convertToAckForProfile(Trade aTrade, String id)
-	 * { TradeAcknowledge ack = new TradeAcknowledge(); if (aTrade != null) {
+	 * private TradeAcknowledge convertToAckForProfile(Trade aTrade, String id) {
+	 * TradeAcknowledge ack = new TradeAcknowledge(); if (aTrade != null) {
 	 * ack.setProfileIdentifier(id); ack.setClientName(aTrade.getClientName());
-	 * ack.setInstrumentId(aTrade.getInstrumentId());
-	 * ack.setSide(aTrade.getSide());
+	 * ack.setInstrumentId(aTrade.getInstrumentId()); ack.setSide(aTrade.getSide());
 	 * ack.setTradeDate(aTrade.getTradeDate().toString()); ack.setTradePx(new
 	 * Double(aTrade.getTradePx()).toString()); ack.setTradeQty(new
 	 * Integer(aTrade.getTradeQty()).toString()); }
