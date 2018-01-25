@@ -51,10 +51,11 @@ metadata:
   labels:
     name: position-query
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
-      labels:
+     name: position-query 
+     labels:
         name: position-query
     spec:
       hostAliases:
@@ -68,6 +69,9 @@ spec:
         ports:
         - name: price-streamer
           containerPort: 8093
+        env:
+        - name: spring_cloud_zookeeper_connectString
+          value: zoo1:2181
         resources: {}
 
 

@@ -29,7 +29,7 @@ spec:
           value: db
         - name: spring.hazelcast.client.config
           value: mu1-client-config.xml
-        - name: spring.cloud.zookeeper.connectString
+        - name: spring_cloud_zookeeper_connectString
           value: zoo1:2181
 
 ---
