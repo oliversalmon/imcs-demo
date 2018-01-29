@@ -16,6 +16,13 @@ spec:
       labels:
         app: trade-injector
     spec:
+      hostAliases:
+      - ip: "IP_1"
+        hostnames:
+        - "HOST_1"
+      - ip: "IP_2"
+        hostnames:
+        - "HOST_2"
       containers:
       - name: trade-injector
         image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
