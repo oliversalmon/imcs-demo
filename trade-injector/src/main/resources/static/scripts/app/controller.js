@@ -692,7 +692,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		if($scope.showtableView===true){
 			$http({
 				  method: 'GET',
-				  url: 'http://192.168.1.176:8094/tradequeryservice/getTradesForPositionAccountAndInstrument/'+accountid+'/'+instrumentid
+				  url: '/getTradesForPositionAccountAndInstrument/'+accountid+'/'+instrumentid
 				}).then(function successCallback(response) {
 				    // this callback will be called asynchronously
 				    // when the response is available

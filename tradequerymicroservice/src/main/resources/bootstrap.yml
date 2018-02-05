@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: tradequeryservice
+  cloud:
+    zookeeper:
+      discovery:
+        enabled: true

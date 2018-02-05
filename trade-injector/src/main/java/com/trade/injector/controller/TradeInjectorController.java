@@ -56,6 +56,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -125,6 +126,9 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private PositionServiceClient positionClient;
 	
+	@Autowired
+	private TradeServiceClient tradeServiceClient;
+	
 	@Bean
 	// @Profile("client")
 	HazelcastInstance hazelcastInstance() {
@@ -155,6 +159,17 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		Resource getAllPositionAccounts();
 
 	}
+	
+
+	@FeignClient(name = "tradequeryservice")
+	interface TradeServiceClient {
+
+		@RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
+		@ResponseBody
+		Resource getTradesForPositionAccountAndInstrument(@PathVariable ("positionAccountId") String positionAccountId,
+				@PathVariable ("instrumentId") String instrumentId);
+
+	}
 
 	@RequestMapping(value = "/pingPrice", method = RequestMethod.GET)
 	public String pingPrice() {
@@ -165,6 +180,13 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	public Resource getAllPositions() {
 
 		return positionClient.getAllPositionAccounts();
+	}
+	
+	@RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
+	public Resource getTradesForPositionAccountAndInstrument(@PathVariable String positionAccountId,
+			@PathVariable String instrumentId) {
+
+		return tradeServiceClient.getTradesForPositionAccountAndInstrument(positionAccountId, instrumentId);
 	}
 
 	@Autowired
