@@ -53,8 +53,6 @@ deployhz:
     - cd kubernetes	
     - kubectl apply -f run-mzk.yaml
     - kubectl apply -f run-hz-jet-cluster.yaml
-    - sleep 20s
-    - kubectl apply -f run-apps-reports.yaml
   dependencies:
     - build 
 
@@ -62,8 +60,10 @@ deployStreamerAndApps:
   stage: deployStreamers  
   script:
    - cd kubernetes
-   - ./setKubeIP.sh
    - kubectl apply -f run-querymicroservices.yaml
+   - sleep 30s
+   - ./setKubeIP.sh
+   - kubectl apply -f run-apps-reports-dep.yaml
   dependencies:
     - deployhz
 
