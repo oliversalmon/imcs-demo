@@ -10,6 +10,7 @@ stages:
  - test
  - createnamespace
  - deployhz
+ - deployStreamers
  - deployflink 
 
 deleteNameSpace:
@@ -54,11 +55,17 @@ deployhz:
     - kubectl apply -f run-hz-jet-cluster.yaml
     - sleep 20s
     - kubectl apply -f run-apps-reports.yaml
-    - sleep 20s
-    - kubectl apply -f run-querymicroservices.yaml 
   dependencies:
     - build 
 
+deployStreamerAndApps:
+  stage: deployStreamers  
+  script:
+   - cd kubernetes
+   - ./setKubeIP.sh
+   - kubectl apply -f run-querymicroservices.yaml
+  dependencies:
+    - deployhz
 
 deployFlinkCluster:
   stage: deployflink
