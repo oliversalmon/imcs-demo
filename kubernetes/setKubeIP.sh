@@ -3,9 +3,10 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 #first extract the postion query services  
 POSITION_QUERY_SERVICE=$(kubectl get pods -n=mu-architecture-demo | grep position |  awk '{print $1}')
-cp ~/mu-architecture-core/kubernetes/file.txt ~/mu-architecture-core/kubernetes/file2.txt
 cp ~/mu-architecture-core/kubernetes/run-apps-reports.yaml ~/mu-architecture-core/kubernetes/run-apps-reports-dep.yaml
 
+
+#loop through each container id and replace host and ip with container id and ip address
 counter=1
 for i in $POSITION_QUERY_SERVICE
 do
