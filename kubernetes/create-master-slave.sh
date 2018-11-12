@@ -1,3 +1,7 @@
+#Install Java and Maven
+apt install default-jdk
+apt install maven
+
 # Install Docker from Ubuntu's repositories:
 apt-get update
 apt-get install -y docker.io
