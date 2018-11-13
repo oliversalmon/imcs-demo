@@ -14,9 +14,9 @@ spec:
         name: trade-imdg
     spec:
       hostAliases:
-      - ip: "178.62.124.180"
+      - ip: "{{HOSTIPADDRESS}}"
         hostnames:
-        - "ca2fa3b905c2"
+        - "{{HBASECONTAINERID}}"
       containers:
       - image: dineshpillai/innovation-trade-imdg:0.0.1-SNAPSHOT
         name: trade-imdg

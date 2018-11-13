@@ -59,9 +59,9 @@ spec:
         name: position-query
     spec:
       hostAliases:
-      - ip: "178.62.124.180"
+      - ip: "{{HOSTIPADDRESS}}"
         hostnames:
-        - "39a8a6341e07"
+        - "{{HBASECONTAINERID}}"
       containers:
       - image: dineshpillai/imcs-positionqueryservice:0.0.1-SNAPSHOT
         name: position-query
