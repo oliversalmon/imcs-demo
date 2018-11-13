@@ -1,35 +1,21 @@
 package com.trade.imdg.hazelcast;
 
-import static com.example.mu.database.MuSchemaConstants.ASSET_CLASS;
-import static com.example.mu.database.MuSchemaConstants.CF_INSTRUMENT_DETAILS;
-import static com.example.mu.database.MuSchemaConstants.HBASE_HOST;
-import static com.example.mu.database.MuSchemaConstants.INSTRUMENT_ID;
-import static com.example.mu.database.MuSchemaConstants.ISSUER;
-import static com.example.mu.database.MuSchemaConstants.PRODUCT;
-import static com.example.mu.database.MuSchemaConstants.SYMBOL;
-import static com.example.mu.database.MuSchemaConstants.TABLE_INSTRUMENT;
-import static com.example.mu.database.MuSchemaConstants.ZK_HOST;
+import com.example.mu.domain.Instrument;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.UUID;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Get;
-import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.client.Result;
-import org.apache.hadoop.hbase.client.ResultScanner;
-import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.client.Table;
-import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.log4j.Logger;
+import static com.example.mu.database.MuSchemaConstants.*;
 
-import com.example.mu.cachemapstore.InstrumentMapStore;
-import com.example.mu.domain.Instrument;
+//import static com.example.mu.database.MuSchemaConstants.HBASE_HOST;
+//import static com.example.mu.database.MuSchemaConstants.ZK_HOST;
 
 public class HBaseClientDemo {
 
@@ -55,7 +41,7 @@ public class HBaseClientDemo {
 		config =  HBaseConfiguration.create();
         config.setInt("timeout", 120000);
         //config.set("hbase.master", HBASE_HOST + ":60000");
-        config.set("hbase.zookeeper.quorum",ZK_HOST);
+        //config.set("hbase.zookeeper.quorum",ZK_HOST);
         config.set("hbase.zookeeper.property.clientPort", "2181");
 
         logger.info("Trying to connect to HBase");
@@ -90,7 +76,7 @@ public class HBaseClientDemo {
         System.out.printf("\t%s = %s\n", rowKey, symbol);
 	}
 	
-	public void scanTable() throws Exception{
+	public void scanTable() {
 		
 		 Scan scan = new Scan();
 	        scan.setMaxVersions(1);

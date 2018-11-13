@@ -1,7 +1,15 @@
 package com.trade.imdg.hazelcast;
 
-import static com.example.mu.database.MuSchemaConstants.HBASE_HOST;
-import static com.example.mu.database.MuSchemaConstants.ZK_HOST;
+//import static com.example.mu.database.MuSchemaConstants.HBASE_HOST;
+//import static com.example.mu.database.MuSchemaConstants.ZK_HOST;
+
+import com.example.mu.domain.Instrument;
+import com.example.mu.domain.Price;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,29 +18,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.example.mu.database.Schema;
-import com.example.mu.domain.Instrument;
-import com.example.mu.domain.Party;
-import com.example.mu.domain.Price;
-import com.example.mu.domain.Trade;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.jet.Jet;
-import com.hazelcast.jet.JetInstance;
-
 public class MainNoSpringBoot {
 	public static final String MAP_INSTRUMENTS = "instrument";
 	private final static String PRICE_MAP = "price";
 	public static final Logger LOG = LoggerFactory.getLogger(MainNoSpringBoot.class);
 	public static HazelcastInstance hz = Hazelcast.newHazelcastInstance();
 
-	public static void startUpHz() throws Exception {
+	public static void startUpHz() {
 
 		// load up prices as well
 		IMap<String, Price> prices = hz.getMap(PRICE_MAP);
@@ -88,7 +80,7 @@ public class MainNoSpringBoot {
 		return aInstrument;
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		MainNoSpringBoot.startUpHz();
 

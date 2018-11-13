@@ -1,43 +1,24 @@
 package com.trade.imdg.hazelcast;
 
-import static com.example.mu.database.MuSchemaConstants.HBASE_HOST;
-import static com.example.mu.database.MuSchemaConstants.ZK_HOST;
+//import static com.example.mu.database.MuSchemaConstants.HBASE_HOST;
+//import static com.example.mu.database.MuSchemaConstants.ZK_HOST;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
+import com.example.mu.domain.Instrument;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mu.database.Schema;
-import com.example.mu.domain.Instrument;
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.core.IQueue;
-import com.hazelcast.jet.Jet;
-import com.hazelcast.jet.JetInstance;
-import com.hazelcast.jet.config.JetConfig;
-import com.trade.imdg.jet.implementations.JetKafkaConsume;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.List;
 
 @SpringBootApplication(scanBasePackages = "com.trade.imdg")
 @EnableCaching
@@ -91,7 +72,7 @@ public class Main {
 	}
 
 	@PostConstruct
-	private void loadCache() throws Exception {
+	private void loadCache() {
 
 		try {
 			
