@@ -1,8 +1,8 @@
-***Demo Implementation of the Mu Architecture***
+#Demo Implementation of the Mu Architecture
 
 Please the [wiki](https://github.com/oliversalmon/imcc-demo/wiki) for an overview of the architecture
 
-***Installing and Running the architecture***
+#Installing and Running the architecture
 
 **Create Droplets from Digitial Ocean**
 
@@ -60,4 +60,29 @@ kubeadm join 209.97.138.77:6443 --token rj8wm6.3mhdj99v5akgoxvx --discovery-toke
 
 **Join kube slaves to master**
 
+Run the following join command on each slave for each slave to join
+successfully to the master
+
+```
+kubeadm join 209.97.138.77:6443 --token rj8wm6.3mhdj99v5akgoxvx --discovery-token-ca-cert-hash sha256:e822f0e646d187552d2edba7ac53e70b82da14593b9cda18da535f4757c0b948
+``` 
+
+
 **Deploy the architecture**
+
+The following command will deploy the following components
+on the kubernets cloud
+
+* Zookeeper
+* Kafka (for Market Data and Trade Data)
+* MongoDB (to register state of play with Trade Injector)
+* Trade IMDB - In Memory Data Grid
+* Trade Query Service - To query the Trade Cache
+* Position Query Service - To query positions of Position Cache
+* Trade Injector - Injecting and Reporting UI
+* Flink Cluster and Job Manager to stream and manage state of Trades and Positions
+
+```
+/deploy-stack.sh
+```
+**Confirm if the applications run successfully**
