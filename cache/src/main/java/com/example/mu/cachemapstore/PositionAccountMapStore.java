@@ -10,7 +10,6 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,8 +32,8 @@ public class PositionAccountMapStore implements MapStore<String, PositionAccount
         try{
             config =  HBaseConfiguration.create();
             config.setInt("timeout", 120000);
-            config.set("hbase.master", InetAddress.getLocalHost().getHostAddress() + ":60000");
-            config.set("hbase.zookeeper.quorum",InetAddress.getLocalHost().getHostAddress());
+            config.set("hbase.master", HBASE_HOST + ":60000");
+            config.set("hbase.zookeeper.quorum",ZK_HOST);
             config.set("hbase.zookeeper.property.clientPort", "2181");
 
             logger.info("Trying to connect to HBase");

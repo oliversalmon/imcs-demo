@@ -9,7 +9,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 public interface MuSchemaConstants {
     // HBASE connectivity
     String HBASE_HOST = "{HOSTIPADDRESS}";
-    String ZK_HOST = "{HBASECONTAINERID}";
+    String ZK_HOST = "{HOSTIPADDRESS}";
 
     // TRADE Table
     String TABLE_TRADE = "mu:trade";
