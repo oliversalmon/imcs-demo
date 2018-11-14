@@ -13,7 +13,7 @@ getMyIP() {
 }
 
 getMyIP HOSTIPADDRESS
-HBASECONTAINERID=docker ps -a | grep hbase | awk '{print $1}'
+HBASECONTAINERID=`docker ps -a | grep hbase | awk '{print $1}'`
 
 #Do all the builds, create the containers and push
 cd ../
@@ -36,9 +36,9 @@ kubectl create namespace mu-architecture-demo
 #Deploy to Kubernetes
 cd ../kubernetes
 kubectl apply -f run-mzk.yaml
-hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e 's/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g'`
+hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$hzformated"|kubectl apply -f -
-queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e 's/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g'`
+queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$queryMicroservices"|kubectl apply -f -
 sleep 30s
 ./setKubeIP.sh
