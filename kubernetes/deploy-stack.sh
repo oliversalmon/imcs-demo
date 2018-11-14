@@ -1,4 +1,6 @@
 #!/bin/bash
+export KUBECONFIG=/etc/kubernetes/admin.conf
+docker login -u dineshpillai -p Pill2017
 
 getMyIP() {
     local _ip _myip _line _nl=$'\n'
