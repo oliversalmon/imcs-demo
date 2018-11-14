@@ -1,8 +1,8 @@
-#Demo Implementation of the Mu Architecture
+# Demo Implementation of the Mu Architecture
 
 Please the [wiki](https://github.com/oliversalmon/imcc-demo/wiki) for an overview of the architecture
 
-#Installing and Running the architecture
+# Installing and Running the architecture
 
 **Create Droplets from Digitial Ocean**
 
@@ -26,7 +26,7 @@ apt-get install git-core
 git clone https://github.com/oliversalmon/imcs-demo.git
 ```
 
-**Install mu in each droplet**
+**Install Kubernetes in each droplet**
 
 Run the following shell script to install the following components
 * Java (Oracle JDK 8)
@@ -71,7 +71,7 @@ kubeadm join 209.97.138.77:6443 --token rj8wm6.3mhdj99v5akgoxvx --discovery-toke
 **Deploy the architecture**
 
 The following command will deploy the following components
-on the kubernets cloud
+on the kubernetes cloud
 
 * Zookeeper
 * Kafka (for Market Data and Trade Data)

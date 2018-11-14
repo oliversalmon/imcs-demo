@@ -1,19 +1,21 @@
 #!/bin/bash
+
+if [ -z "$1" ]
+  then
+    echo "External Public IP not passed in"
+    exit
+fi
+
 export KUBECONFIG=/etc/kubernetes/admin.conf
 docker login -u dineshpillai -p Pill2017
 
-getMyIP() {
-    local _ip _myip _line _nl=$'\n'
-    while IFS=$': \t' read -a _line ;do
-        [ -z "${_line%inet}" ] &&
-           _ip=${_line[${#_line[1]}>4?1:2]} &&
-           [ "${_ip#127.0.0.1}" ] && _myip=$_ip
-      done< <(LANG=C /sbin/ifconfig)
-    printf ${1+-v} $1 "%s${_nl:0:$[${#1}>0?0:1]}" $_myip
-}
-
-getMyIP HOSTIPADDRESS
+HOSTIPADDRESS=$1
 HBASECONTAINERID=`docker ps -a | grep hbase | awk '{print $1}'`
+
+#Bake the Hbase Host and Container Id in MuSchema constants
+sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
+
+
 
 #Do all the builds, create the containers and push
 cd ../

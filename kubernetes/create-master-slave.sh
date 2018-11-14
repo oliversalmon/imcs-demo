@@ -1,5 +1,8 @@
 #Install Java and Maven
-apt install default-jdk
+add-apt-repository ppa:webupd8team/java
+apt-get update
+apt-get install oracle-java8-installer
+
 apt install maven
 
 # Install Docker from Ubuntu's repositories:
