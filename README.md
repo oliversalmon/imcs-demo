@@ -117,6 +117,19 @@ trade-query-5f964dd46d-h7bx8                 0/1     CrashLoopBackOff   10      
 zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
 
 ```
+**Install the Trade and Price Flink jars**
+
+Once the flink cluster is confirmed running. 
+Run the following command from the kubernetes directory
+
+
+```
+cd ~/imcs-demo/kubernetes
+
+./loadjarsToFlink.sh
+
+```
+
 
 **Run the UI and set up login credentials with FB**
 
