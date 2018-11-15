@@ -1,10 +1,10 @@
-# Demo Implementation of the Mu Architecture
+# Demo Implementation of the Mu Architecture 
 
 Please the [wiki](https://github.com/oliversalmon/imcc-demo/wiki) for an overview of the architecture
 
 # Installing and Running the architecture
 
-**Create Droplets from Digitial Ocean**
+## Create Droplets from Digitial Ocean
 
 * Create a minimum of 2-3 droplets
 * Call the master mu-master-01 and the slaves mu-slave-01 
@@ -12,7 +12,7 @@ and so on
 * The master must have biggger diskspace as it will be used
 to run HBase and hold all the data
 
-**Install Git and download repository**
+## Install Git and download repository
 
 * Install Git to each master and slave by running the following commands
 
@@ -26,7 +26,7 @@ apt-get install git-core
 git clone https://github.com/oliversalmon/imcs-demo.git
 ```
 
-**Install Kubernetes in each droplet**
+## Install Kubernetes and Run in each droplet
 
 Run the following shell script to install the following components
 * Java (Oracle JDK 8)
@@ -68,7 +68,7 @@ kubeadm join 209.97.138.77:6443 --token rj8wm6.3mhdj99v5akgoxvx --discovery-toke
 ``` 
 
 
-**Deploy the architecture**
+## Deploy the architecture
 
 The following command will deploy the following components
 on the kubernetes cloud
