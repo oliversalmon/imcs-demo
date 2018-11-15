@@ -22,7 +22,7 @@ apt-get install git-core
 ```
 
 * Download Repository
-```$xslt
+```
 git clone https://github.com/oliversalmon/imcs-demo.git
 ```
 
@@ -68,7 +68,7 @@ kubeadm join 209.97.138.77:6443 --token rj8wm6.3mhdj99v5akgoxvx --discovery-toke
 ``` 
 
 
-## Deploy the architecture
+## Deploy and run the architecture
 
 The following command will deploy the following components
 on the kubernetes cloud
@@ -83,6 +83,21 @@ on the kubernetes cloud
 * Flink Cluster and Job Manager to stream and manage state of Trades and Positions
 
 ```
-/deploy-stack.sh
+./deploy-stack.sh <Public IP address of master>
 ```
+Note: The public IP address will be obtained from the Digital Ocean console 
+
 **Confirm if the applications run successfully**
+
+The following commands will verify if all the relevant components are running
+
+```
+kubectl get pods -n=mu-architecture-demo
+
+
+```
+
+**Run the UI and set up login credentials with FB**
+
+
+**Monitoring the architecture**

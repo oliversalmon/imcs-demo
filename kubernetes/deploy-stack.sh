@@ -43,7 +43,7 @@ java -jar database-1.0-SNAPSHOT.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRE
 kubectl create namespace mu-architecture-demo
 
 #Deploy to Kubernetes
-cd ../kubernetes
+cd ~/imcs-demo/kubernetes
 kubectl apply -f run-mzk.yaml
 hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$hzformated"|kubectl apply -f -
