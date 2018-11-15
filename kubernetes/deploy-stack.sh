@@ -10,7 +10,7 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 docker login -u dineshpillai -p Pill2017
 
 HOSTIPADDRESS=$1
-HBASECONTAINERID=hbase_host
+HBASECONTAINERID=hbasehost
 
 
 
