@@ -10,12 +10,14 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 docker login -u dineshpillai -p Pill2017
 
 HOSTIPADDRESS=$1
-HBASECONTAINERID=`docker ps -a | grep hbase | awk '{print $1}'`
+HBASECONTAINERID=hbase_host
+
+
 
 #Bake the Hbase Host and Container Id in MuSchema constants
 sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
 
-
+#Connect up to Hbase to create the tables and schema
 
 #Do all the builds, create the containers and push
 cd ../
@@ -33,6 +35,11 @@ cd ../positionqueryservice
 mvn docker:build
 docker push dineshpillai/imcs-positionqueryservice
 
+#Connect up to Hbase to create the tables and schema
+echo "$HOSTIPADDRESS hbase_host" >> /etc/hosts
+cd ~/imcs-demo/database/target
+java -jar database-1.0-SNAPSHOT.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
+
 kubectl create namespace mu-architecture-demo
 
 #Deploy to Kubernetes
@@ -42,7 +49,7 @@ hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPA
 echo "$hzformated"|kubectl apply -f -
 queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$queryMicroservices"|kubectl apply -f -
-sleep 30s
+sleep 60s
 ./setKubeIP.sh
 kubectl apply -f run-apps-reports-dep.yaml
 
