@@ -36,7 +36,7 @@ mvn docker:build
 docker push dineshpillai/imcs-positionqueryservice
 
 #Connect up to Hbase to create the tables and schema
-echo "$HOSTIPADDRESS hbase_host" >> /etc/hosts
+echo "$HOSTIPADDRESS hbasehost" >> /etc/hosts
 cd ~/imcs-demo/database/target
 java -jar database-1.0-SNAPSHOT.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
 
