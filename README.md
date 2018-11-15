@@ -12,6 +12,11 @@ and so on
 * The master must have biggger diskspace as it will be used
 to run HBase and hold all the data
 
+Note: Minimum requirement to run the architecture
+
+* Master - 4GB Memory
+* Slaves - 8GB Memory (collectively)
+
 ## Install Git and download repository
 
 * Install Git to each master and slave by running the following commands
@@ -92,12 +97,60 @@ Note: The public IP address will be obtained from the Digital Ocean console
 The following commands will verify if all the relevant components are running
 
 ```
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
 kubectl get pods -n=mu-architecture-demo
 
+NAME                                         READY   STATUS             RESTARTS   AGE
+db                                           1/1     Running            0          39m
+flink-jobmanager-676d7f5fb5-kwsg4            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-9tcf7            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-jlmdt            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-vzpt2            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-zz952            1/1     Running            0          38m
+kafka-broker-bnq7g                           1/1     Running            0          39m
+position-query-684b6cf7cd-7dx4q              1/1     Running            0          39m
+position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
+trade-imdg-7789965756-snl79                  1/1     Running            0          39m
+trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
+trade-query-5f964dd46d-h7bx8                 0/1     CrashLoopBackOff   10         39m
+zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
 
 ```
 
 **Run the UI and set up login credentials with FB**
 
+To login into the UI; you will need the port the Injector UI runs on. Run the following
+
+```
+kubectl get svc -n=mu-architecture-demo
+
+NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                                        AGE
+db                       ClusterIP   10.110.216.169   <none>        27017/TCP                                      40m
+flink-jobmanager         ClusterIP   10.104.186.26    <none>        6123/TCP,6124/TCP,6125/TCP,8081/TCP            39m
+kafka                    ClusterIP   10.105.185.120   <none>        9092/TCP                                       40m
+position-query-service   NodePort    10.100.121.27    <none>        8093:31633/TCP                                 40m
+trade-imdg-service       ClusterIP   10.104.51.125    <none>        5701/TCP                                       40m
+trade-injector-service   NodePort    10.100.45.79     <none>        8090:31435/TCP                                 39m
+trade-query-service      NodePort    10.103.202.20    <none>        8094:31111/TCP                                 40m
+zoo1                     NodePort    10.101.90.222    <none>        2181:32021/TCP,2888:32076/TCP,3888:30751/TCP   40m
+```
+
+Take a note of the ports used in trade-injector-service. Ignore 8090 and use the port number to the left of it. In the
+above example it is 31435
+
+Login to Trade Injector UI with the following URL
+
+```
+http://<public ip of master DO>:<port number obtained from the above step>
+```
+
+You will see the Login page of Trade Injector UI showing a Facebook or Github login. Login with facebook.
+Before you login; you will need to register the above URL in facebook/developer. Please speak to the authors of this 
+application to register the URL
+
+Once you have logged in; you can start to generate test trades and view the position reports.
+
+You have successfully deployed and have the application running at this point.
 
 **Monitoring the architecture**
