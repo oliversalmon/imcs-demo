@@ -1,10 +1,5 @@
 package com.trade.injector.sinks;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +33,8 @@ public class KafkaSink implements ISink {
 
 			@Override
 			public void onSuccess(SendResult<String, String> result) {
-				//LOG.info("sent message='{}' with offset={}", message, result
-						//.getRecordMetadata().offset());
+				LOG.info("sent message='{}' with offset={}", message, result
+						.getRecordMetadata().offset());
 			}
 
 			@Override
@@ -53,7 +48,7 @@ public class KafkaSink implements ISink {
 	}
 
 	@Override
-	public void writeTo(String url, String key,  String message) throws Exception {
+	public void writeTo(String url, String key,  String message) {
 		
 		send(url, key, message);
 
