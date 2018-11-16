@@ -167,3 +167,44 @@ Once you have logged in; you can start to generate test trades and view the posi
 You have successfully deployed and have the application running at this point.
 
 **Monitoring the architecture**
+
+Test if kafka works. This can be done with a simple utility called kafkacat
+
+```
+$ apt-get install kafkacat
+```
+
+Launch a seperate shell to run the consumer
+
+* First obtain the kafka IP.
+In the example below it is 10.105.185.120
+
+```
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+kubectl get svc -n=mu-architecture-demo
+
+NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                                        AGE
+db                       ClusterIP   10.110.216.169   <none>        27017/TCP                                      40m
+flink-jobmanager         ClusterIP   10.104.186.26    <none>        6123/TCP,6124/TCP,6125/TCP,8081/TCP            39m
+kafka                    ClusterIP   10.105.185.120   <none>        9092/TCP                                       40m
+position-query-service   NodePort    10.100.121.27    <none>        8093:31633/TCP                                 40m
+trade-imdg-service       ClusterIP   10.104.51.125    <none>        5701/TCP                                       40m
+trade-injector-service   NodePort    10.100.45.79     <none>        8090:31435/TCP                                 39m
+trade-query-service      NodePort    10.103.202.20    <none>        8094:31111/TCP                                 40m
+zoo1                     NodePort    10.101.90.222    <none>        2181:32021/TCP,2888:32076/TCP,3888:30751/TCP   40m
+
+```
+
+* Next run the consumer against the trade topic
+```
+kafkacat -b 10.105.185.120:9092 -t trade
+```
+
+* Send a dummy message and see the consumer above consume the message
+
+```
+$ cat dummy.txt | kafkacat -b 10.105.185.120 -t trade
+```
+
+* If the above test was successful; you can repeat the test for market_data topic
