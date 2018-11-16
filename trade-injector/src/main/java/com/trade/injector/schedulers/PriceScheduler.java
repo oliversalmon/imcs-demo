@@ -40,7 +40,7 @@ public class PriceScheduler {
 	 *
 	 */
 
-	//@Scheduled(fixedDelay = 300000)
+	@Scheduled(fixedDelay = 400000)
 	public void generateFrequentPriceData() {
 
 		LOG.info("Starting to generate prices ");
