@@ -33,8 +33,8 @@ public class KafkaSink implements ISink {
 
 			@Override
 			public void onSuccess(SendResult<String, String> result) {
-				LOG.info("sent message='{}' with offset={}", message, result
-						.getRecordMetadata().offset());
+				//LOG.info("sent message='{}' with offset={}", message, result
+						//.getRecordMetadata().offset());
 			}
 
 			@Override
