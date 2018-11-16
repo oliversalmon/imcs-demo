@@ -1,36 +1,18 @@
 package com.trade.injector.schedulers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.example.mu.domain.Instrument;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.trade.injector.business.service.GeneratePriceData;
+import com.trade.injector.sinks.KafkaSink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.example.mu.domain.Instrument;
-import com.example.mu.domain.Party;
-import com.example.mu.domain.PositionAccount;
-import com.example.mu.domain.Price;
-import com.example.mu.domain.Trade;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.query.Predicate;
-import com.hazelcast.query.SqlPredicate;
-import com.trade.injector.business.service.BusinessServiceCacheNames;
-import com.trade.injector.business.service.GeneratePriceData;
-import com.trade.injector.jto.InstrumentReport;
-import com.trade.injector.jto.TradeReport;
-import com.trade.injector.jto.repository.TradeReportRepository;
-import com.trade.injector.sinks.KafkaSink;
+import java.util.Collection;
 
 @Component
 public class PriceScheduler {
@@ -55,12 +37,11 @@ public class PriceScheduler {
 	/**
 	 * This scheduler will generate prices every 5 minute for instruments that
 	 * currently exist within the cache
-	 * 
-	 * @throws Exception
+	 *
 	 */
 
-	@Scheduled(fixedDelay = 300000)
-	public void generateFrequentPriceData() throws Exception {
+	//@Scheduled(fixedDelay = 300000)
+	public void generateFrequentPriceData() {
 
 		LOG.info("Starting to generate prices ");
 		// first get all the prices from the cache
