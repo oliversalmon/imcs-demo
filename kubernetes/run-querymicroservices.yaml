@@ -14,9 +14,9 @@ spec:
         name: trade-query
     spec:
       hostAliases:
-      - ip: "178.62.124.180"
+      - ip: "{{HOSTIPADDRESS}}"
         hostnames:
-        - "39a8a6341e07"
+        - "{{HBASECONTAINERID}}"
       containers:
       - image: dineshpillai/imcs-tradequeryservice:0.0.1-SNAPSHOT
         name: trade-query
@@ -24,6 +24,9 @@ spec:
         ports:
         - name: price-streamer
           containerPort: 8094
+        env:
+        - name: spring_cloud_zookeeper_connectString
+          value: zoo1:2181
         resources: {}
 
 
