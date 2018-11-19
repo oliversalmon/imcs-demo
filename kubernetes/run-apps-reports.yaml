@@ -23,6 +23,9 @@ spec:
       - ip: "IP_2"
         hostnames:
         - "HOST_2"
+      - ip: "IP_TR_1"
+        hostnames:
+        - "HOST_TR_1"
       containers:
       - name: trade-injector
         image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT

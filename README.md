@@ -168,6 +168,35 @@ You have successfully deployed and have the application running at this point.
 
 **Monitoring the architecture**
 
+*Monitoring Logs*
+
+To monitor a log from the container; we can run the following commands
+
+```
+$ export KUBECONFIG=/etc/kubernetes/admin.conf
+
+$ kubectl get pods -n=mu-architecture-demo
+
+NAME                                         READY   STATUS             RESTARTS   AGE
+db                                           1/1     Running            0          39m
+flink-jobmanager-676d7f5fb5-kwsg4            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-9tcf7            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-jlmdt            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-vzpt2            1/1     Running            0          38m
+flink-taskmanager-9bf7c94bc-zz952            1/1     Running            0          38m
+kafka-broker-bnq7g                           1/1     Running            0          39m
+position-query-684b6cf7cd-7dx4q              1/1     Running            0          39m
+position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
+trade-imdg-7789965756-snl79                  1/1     Running            0          39m
+trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
+trade-query-5f964dd46d-h7bx8                 1/1     Running            10         39m
+zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
+
+
+```
+
+*Kafka Test*
+
 Test if kafka works. This can be done with a simple utility called kafkacat
 
 ```
