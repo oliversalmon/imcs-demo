@@ -192,8 +192,10 @@ trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0       
 trade-query-5f964dd46d-h7bx8                 1/1     Running            10         39m
 zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
 
+$ kubectl logs -f kafka-broker-bnq7g  -n=mu-architecture-demo
 
 ```
+The last line will tail the logs for the kafka broker
 
 *Kafka Test*
 
