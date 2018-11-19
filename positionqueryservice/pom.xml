@@ -11,6 +11,10 @@
 		<version>2.0.0.M4</version>
 	</parent>
 
+
+
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,7 +51,35 @@
 			<artifactId>hazelcast-client</artifactId>
 			<version>3.8.1</version>
 		</dependency>
-		 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-test</artifactId>
+			<version>3.2.1</version>
+			<scope>test</scope>
+		</dependency>
 	
 		<!-- 
 		<dependency>
@@ -89,6 +121,7 @@
 		<docker.repository>docker.io</docker.repository>
 		<docker.image.prefix>dineshpillai</docker.image.prefix>
 		<docker.artifact.id>imcs-positionqueryservice</docker.artifact.id>
+		<cucumber-version>1.2.5</cucumber-version>
 	</properties>
 	<scm>
 		<connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
