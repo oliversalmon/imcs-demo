@@ -38,106 +38,109 @@ import static com.hazelcast.query.Predicates.equal;
 // @EnableDiscoveryClient
 public class PositionQueryService {
 
-	public final Logger LOG = LoggerFactory.getLogger(PositionQueryService.class);
-	private final static String POSITION_ACCOUNT_MAP = "position-account";
+    public final Logger LOG = LoggerFactory.getLogger(PositionQueryService.class);
+    final static String POSITION_ACCOUNT_MAP = "position-account";
 
-	@Value("${spring.application.name:positionqueryservice}")
-	private String appName;
+    @Value("${spring.application.name:positionqueryservice}")
+    private String appName;
 
-	@Autowired
-	private LoadBalancerClient loadBalancer;
+    @Autowired
+    private LoadBalancerClient loadBalancer;
 
-	@Autowired
-	private DiscoveryClient discovery;
+    @Autowired
+    private DiscoveryClient discovery;
 
-	@Autowired
-	private Environment env;
+    @Autowired
+    private Environment env;
 
-	@Autowired(required = false)
-	private Registration registration;
+    @Autowired(required = false)
+    private Registration registration;
 
-	@Autowired
-	RestTemplate rest;
+    @Autowired
+    RestTemplate rest;
 
-	@RequestMapping("/")
-	public ServiceInstance lb() {
-		return this.loadBalancer.choose(this.appName);
-	}
+    @RequestMapping("/")
+    public ServiceInstance lb() {
+        return this.loadBalancer.choose(this.appName);
+    }
 
 
-	@Bean
-		// @Profile("client")
-	HazelcastInstance hazelcastInstance() {
+    @Bean
+        // @Profile("client")
+    HazelcastInstance hazelcastInstance() {
 
-		return HazelcastClient.newHazelcastClient();
+        return HazelcastClient.newHazelcastClient();
 
-	}
+    }
 
-	//only will be used for testing
-	@Value("${requireHz}")
-	private String requireHz;
-	@Bean
-	HazelcastInstance hazelcastInstanceMember() {
+    //only will be used for testing
+    @Value("${requireHz}")
+    private String requireHz;
 
-		if(requireHz != null)
-		return Hazelcast.newHazelcastInstance();
-		else return null;
+    @Bean
+    HazelcastInstance hazelcastInstanceMember() {
 
-	}
+        if (requireHz != null)
+            return Hazelcast.newHazelcastInstance();
+        else return null;
 
-	@Autowired
-	private HazelcastInstance hazelcastInstanceMember;
+    }
 
-	@Autowired
-	private HazelcastInstance hazelcastInstance;
+    @Autowired
+    private HazelcastInstance hazelcastInstanceMember;
 
-	// @CrossOrigin(origins = "http://localhost:8090")
-	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
-	public ResponseEntity<List<PositionAccount>> getAllPositionAccounts() {
+    @Autowired
+    private HazelcastInstance hazelcastInstance;
 
-		IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
-		posMap.size();
-		posMap.loadAll(true);
-		return ResponseEntity.ok(posMap.values().stream()
-				//.map(a -> a.toJSON())
-				.collect(Collectors.toList()));
+    // @CrossOrigin(origins = "http://localhost:8090")
+    @RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
+    public ResponseEntity<List<PositionAccount>> getAllPositionAccounts() {
 
-	}
+        IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
+        posMap.size();
+        //do not load on test
+        if (requireHz == null)
+            posMap.loadAll(true);
+        return ResponseEntity.ok(posMap.values().stream()
+                //.map(a -> a.toJSON())
+                .collect(Collectors.toList()));
 
-	@RequestMapping(value = "/getPositionAccount/{positionAccountId}", method = RequestMethod.GET)
-	public ResponseEntity<List<Object>> getPositionAccount(@PathVariable String positionAccountId) {
+    }
 
-		IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
-		Predicate positionAccount = equal("accountId", positionAccountId);
-		return ResponseEntity.ok(posMap.values(positionAccount).stream().collect(Collectors.toList()));
+    @RequestMapping(value = "/getPositionAccount/{positionAccountId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getPositionAccount(@PathVariable String positionAccountId) {
 
-	}
+        IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
+        Predicate positionAccount = equal("accountId", positionAccountId);
+        return ResponseEntity.ok(posMap.values(positionAccount).stream().collect(Collectors.toList()));
 
-	@RequestMapping(value = "/getPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
-	public ResponseEntity<List<Object>> getPositionAccountForInstrument(@PathVariable String positionAccountId,
-			@PathVariable String instrumentId) {
+    }
 
-		IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
-		Predicate positionAccount = equal("accountId", positionAccountId);
-		Predicate instrumentPredicate = equal("instrumentid", instrumentId);
-		Predicate predicate = and(positionAccount, instrumentPredicate);
-		return ResponseEntity.ok(posMap.values(predicate).stream().collect(Collectors.toList()));
+    @RequestMapping(value = "/getPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getPositionAccountForInstrument(@PathVariable String positionAccountId,
+                                                                        @PathVariable String instrumentId) {
 
-	}
+        IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
+        Predicate positionAccount = equal("accountId", positionAccountId);
+        Predicate instrumentPredicate = equal("instrumentid", instrumentId);
+        Predicate predicate = and(positionAccount, instrumentPredicate);
+        return ResponseEntity.ok(posMap.values(predicate).stream().collect(Collectors.toList()));
 
-	@Bean
-	@LoadBalanced
-	RestTemplate loadBalancedRestTemplate() {
-		return new RestTemplate();
-	}
+    }
 
-	public ResponseEntity<List<Object>> rt() {
-		return this.rest.getForObject("http://" + this.appName + "/getAllPositionAccounts", ResponseEntity.class);
-	}
+    @Bean
+    @LoadBalanced
+    RestTemplate loadBalancedRestTemplate() {
+        return new RestTemplate();
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(PositionQueryService.class, args);
+    public ResponseEntity<List<Object>> rt() {
+        return this.rest.getForObject("http://" + this.appName + "/getAllPositionAccounts", ResponseEntity.class);
+    }
 
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PositionQueryService.class, args);
+
+    }
 
 }

@@ -29,9 +29,7 @@ public class CucumberRoot {
     protected HazelcastInstance hazelcastInstanceMember;
 
 
-    CucumberRoot(){
-        System.out.println("##### Starting up ...");
-    }
+
     @BeforeClass
     public void before() {
 
