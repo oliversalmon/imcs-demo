@@ -1,0 +1,28 @@
+#kafka.bootstrap-servers: 138.68.168.237:9092
+kafka.topic.marketData: market_data
+kafka.topic.trade: trade
+spring.application.name: TradeInject
+spring.cloud.zookeeper.discovery.enabled: true
+
+
+facebook:
+    client:
+      clientId: 1969633719925522
+      clientSecret: e2b89a450424fd9406769f96efbc3837
+      accessTokenUri: https://graph.facebook.com/oauth/access_token
+      userAuthorizationUri: https://www.facebook.com/dialog/oauth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://graph.facebook.com/me
+      
+github:
+  client:
+    clientId: 737ab53a83661587550c
+    clientSecret: a9fd34af9a7e6c56dfecce80d4c06cfdfb4411c9
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user

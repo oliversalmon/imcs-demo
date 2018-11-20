@@ -1,12 +1,13 @@
 package com.example.mu.positionqueryservice;
 
-import org.apache.curator.test.TestingServer;
+import com.hazelcast.core.HazelcastInstance;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
@@ -15,18 +16,25 @@ import java.util.Collections;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PositionQueryService.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = StartUp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = {"requireHz=true"})
 public class CucumberRoot {
+
+
 
     @Autowired
     protected TestRestTemplate template;
 
-    TestingServer zkServer;
+    @Autowired
+    protected HazelcastInstance hazelcastInstanceMember;
 
-    @Before
-    public void before() throws Exception {
 
-        zkServer = new TestingServer(2181, true);
+    CucumberRoot(){
+        System.out.println("##### Starting up ...");
+    }
+    @BeforeClass
+    public void before() {
+
 
         // demo to show how to add custom header Globally for the http request in spring test template , like IV user header
         template.getRestTemplate().setInterceptors(Collections.singletonList((request, body, execution) -> {
@@ -39,9 +47,8 @@ public class CucumberRoot {
     }
 
     @After
-    public void tearDown() throws Exception
-    {
-        zkServer.stop();
+    public void tearDown() {
+
     }
 
 }

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: positionqueryservice
+  cloud:
+    zookeeper:
+      discovery:
+        enabled: true
