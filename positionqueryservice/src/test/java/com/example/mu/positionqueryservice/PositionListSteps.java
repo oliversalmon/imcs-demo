@@ -10,7 +10,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.cucumber.datatable.DataTable;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryOneTime;
@@ -99,16 +98,28 @@ public class PositionListSteps  {
         assertThat("status codes is incorrect : "+ response.getBody(), currentStatusCode.value(), is(statusCode));
     }
 
-    @And("^receives the following list of Position Accounts$")
-    public void receives_the_following_list_of_Position_Accounts(DataTable lists) {
+    @And("^response contains the above list of Position Accounts$")
+    public void response_contains_the_above_list_of_Position_Accounts() {
+
+        String body = response.getBody();
+
+        Iterator<PositionAccount> iter = listOfPositions.iterator();
+        while(iter.hasNext()){
+            PositionAccount acc = iter.next();
+            assertThat("account id matches",body.contains(acc.getAccountId()));
+            assertThat("instrument id matches",body.contains(acc.getInstrumentid()));
+            assertThat("pnl matches",body.contains(new Double(acc.getPnl()).toString()));
+        }
+
+
 
 
     }
 
     @After
-    public void close() throws  Exception{
-        cli.close();
-        server.close();
+    public void close() {
+        //cli.close();
+        //server.close();
     }
 
 }
