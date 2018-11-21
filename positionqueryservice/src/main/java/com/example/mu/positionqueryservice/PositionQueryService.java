@@ -2,7 +2,6 @@ package com.example.mu.positionqueryservice;
 
 import com.example.mu.domain.PositionAccount;
 import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
@@ -73,21 +72,21 @@ public class PositionQueryService {
 
     }
 
-    //only will be used for testing
+//    //only will be used for testing
     @Value("${requireHz}")
     private String requireHz;
 
-    @Bean
-    HazelcastInstance hazelcastInstanceMember() {
-
-        if (requireHz != null)
-            return Hazelcast.newHazelcastInstance();
-        else return null;
-
-    }
-
-    @Autowired
-    private HazelcastInstance hazelcastInstanceMember;
+//    @Bean
+//    HazelcastInstance hazelcastInstanceMember() {
+//
+//        if (requireHz != null)
+//            return Hazelcast.newHazelcastInstance();
+//        else return null;
+//
+//    }
+//
+//    @Autowired
+//    private HazelcastInstance hazelcastInstanceMember;
 
     @Autowired
     private HazelcastInstance hazelcastInstance;
