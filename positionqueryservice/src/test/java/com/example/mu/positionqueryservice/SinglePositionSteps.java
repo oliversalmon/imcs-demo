@@ -16,6 +16,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import utilities.SingletonTestManager;
 
 import java.util.Iterator;
 import java.util.List;
@@ -59,9 +60,9 @@ public class SinglePositionSteps {
 
     }
 
-    @When("^the client calls /getPositionAccount/ACC1$")
-    public void the_client_calls_getAllPositionAccounts_witAccountId() {
-        response = SingletonTestManager.getRestTemplate().getForEntity(SingletonTestManager.getURL() + "/getAllPositionAccounts", String.class);
+    @When("^the client calls /getPositionAccount/\"([^\"]*)\"$")
+    public void the_client_calls_getAllPositionAccounts_witAccountId(String positionAccountId) {
+        response = SingletonTestManager.getRestTemplate().getForEntity(SingletonTestManager.getURL() + "/getPositionAccount/"+positionAccountId, String.class);
 
     }
 

@@ -6,6 +6,7 @@
   <artifactId>mu-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
+    <module>bddtestutilityservices</module>
     <module>domain</module>
     <module>database</module>
     <module>docker</module>
@@ -19,6 +20,7 @@
     <module>tradeInjectorFlink</module>
     <module>positionSnapFlinkJob</module>
     <module>priceInjectorFlink</module>
+
   </modules>
   <packaging>pom</packaging>
 

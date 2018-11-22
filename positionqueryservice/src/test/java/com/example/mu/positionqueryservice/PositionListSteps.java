@@ -10,6 +10,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import utilities.SingletonTestManager;
 
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +29,7 @@ public class PositionListSteps {
     public void before() throws Exception {
 
 
-        SingletonTestManager.startUpServices();
+       SingletonTestManager.startUpServices(StartUp.class);
 
 
     }
@@ -75,7 +76,7 @@ public class PositionListSteps {
 
     @After
     public void close() {
-        //SingletonTestManager.shutDownServices();
+        //SingletonTestManagerDeprecated.shutDownServices();
 
     }
 

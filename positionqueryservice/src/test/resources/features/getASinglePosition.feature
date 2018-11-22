@@ -7,7 +7,7 @@ Feature: a single position account and its details must be retrieved
       | ACC1      | INS2         | 100  | 0.0 |
       | ACC2      | INS1         | 100  | 0.0 |
       | ACC2      | INS2         | 100  | 0.0 |
-    When the client calls /getPositionAccount/ACC1
+    When the client calls /getPositionAccount/"ACC1"
     Then the client receives response status code of for one position 200
     And response contains only the following position account
       | accountId | instrumentid | size | pnl |

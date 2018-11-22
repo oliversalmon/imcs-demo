@@ -107,7 +107,7 @@ public class PositionQueryService {
     }
 
     @RequestMapping(value = "/getPositionAccount/{positionAccountId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Object>> getPositionAccount(@PathVariable String positionAccountId) {
+    public ResponseEntity<List<PositionAccount>> getPositionAccount(@PathVariable String positionAccountId) {
 
         IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
         Predicate positionAccount = equal("accountId", positionAccountId);

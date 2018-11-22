@@ -1,39 +1,34 @@
 package com.example.mu.pricequeryservice.repository;
 
-import static com.hazelcast.query.Predicates.equal;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
+import com.example.mu.domain.Price;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.hazelcast.query.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.mu.domain.Price;
-import com.example.mu.pricequeryservice.controllers.PriceQueryHandler;
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.query.Predicate;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import static com.hazelcast.query.Predicates.equal;
 
 @Repository
 
 public class PriceRepository {
 
 	final Logger LOG = LoggerFactory.getLogger(PriceRepository.class);
-	private final static String PRICE_MAP = "price";
+	public final static String PRICE_MAP = "price";
 	private static ConcurrentLinkedQueue<Price> listOfPrices = new ConcurrentLinkedQueue<Price>();
+
 
 	@Bean
 	// @Profile("client")
@@ -59,6 +54,16 @@ public class PriceRepository {
 		).delayElements(Duration.ofMillis(1000))
 				.log();
 
+	}
+
+	public List<Price> getAllPxs(){
+		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
+		List<Price> listOfPxs = new ArrayList<Price>();
+
+		if (listOfPrices.size() < 1)
+			priceMap.values().stream().forEach(a -> listOfPxs.add(a));
+
+		return listOfPxs;
 	}
 
 	@Scheduled(fixedDelay = 100000)

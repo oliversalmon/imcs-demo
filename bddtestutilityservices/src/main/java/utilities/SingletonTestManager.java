@@ -1,4 +1,4 @@
-package com.example.mu.positionqueryservice;
+package utilities;
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
@@ -22,11 +22,11 @@ public class SingletonTestManager {
     private static String url;
     private static TestRestTemplate template;
 
-    public static void startUpServices() throws Exception{
+    public static void startUpServices(Class startUpClassName) throws Exception {
         SingletonTestManager.getZooServer();
         SingletonTestManager.getCurator();
         SingletonTestManager.getHz();
-        SingletonTestManager.getApplicationContext();
+        SingletonTestManager.getApplicationContext(startUpClassName);
         SingletonTestManager.getRestTemplate();
 
     }
@@ -57,12 +57,12 @@ public class SingletonTestManager {
 
     }
 
-    public static ConfigurableApplicationContext getApplicationContext() {
+    public static ConfigurableApplicationContext getApplicationContext(Class className) {
         if (context == null) {
             int zkPort = SocketUtils.findAvailableTcpPort();
             int port = SocketUtils.findAvailableTcpPort(zkPort + 1);
 
-            context = new SpringApplicationBuilder(StartUp.class).run(
+            context = new SpringApplicationBuilder(className).run(
                     "--server.port=" + port,
                     "--management.endpoints.web.expose=*",
                     "--requireHz=true",
@@ -73,11 +73,10 @@ public class SingletonTestManager {
     }
 
     public static String getURL() {
-        if (url == null) {
-            getApplicationContext();
-            return url;
-        } else
-            return url;
+
+
+        return url;
+
     }
 
     public static TestingServer getZooServer() throws Exception {
