@@ -98,7 +98,7 @@ public class PositionQueryService {
         IMap<String, PositionAccount> posMap = hazelcastInstance.getMap(POSITION_ACCOUNT_MAP);
         posMap.size();
         //do not load on test
-        if (requireHz == null)
+        if (requireHz.equals("false") )
             posMap.loadAll(true);
         return ResponseEntity.ok(posMap.values().stream()
                 //.map(a -> a.toJSON())

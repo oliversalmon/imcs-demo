@@ -75,6 +75,8 @@ spec:
         env:
         - name: spring_cloud_zookeeper_connectString
           value: zoo1:2181
+        - name: requireHz
+          value: false
         resources: {}
 
 

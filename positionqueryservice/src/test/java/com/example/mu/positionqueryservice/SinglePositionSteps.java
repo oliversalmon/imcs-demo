@@ -8,8 +8,8 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryOneTime;
@@ -18,7 +18,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.SocketUtils;
 
@@ -28,9 +27,8 @@ import java.util.List;
 
 import static com.example.mu.positionqueryservice.PositionQueryService.POSITION_ACCOUNT_MAP;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
-public class PositionListSteps {
+public class SinglePositionSteps {
 
     private List<PositionAccount> listOfPositions;
     private ResponseEntity<String> response;
@@ -74,7 +72,7 @@ public class PositionListSteps {
 
     }
 
-    @Given("^the list of Position Accounts$")
+    @Given("^the list of Position Accounts to access a single account$")
     public void the_list_of_Position_Accounts(List<PositionAccount> listOfPositions) {
         this.listOfPositions = listOfPositions;
 
@@ -86,20 +84,15 @@ public class PositionListSteps {
         }
     }
 
-    @When("^the client calls /getAllPositionAccounts$")
-    public void the_client_calls_getAllPositionAccounts() {
+    @When("^the client calls /getPositionAccount/ACC1$")
+    public void the_client_calls_getAllPositionAccounts_witAccountId() {
         response = template.getForEntity(url + "/getAllPositionAccounts", String.class);
 
     }
 
-    @Then("the client receives response status code of (\\d+)$")
-    public void the_client_receives_response_status_code_of(int statusCode) {
-        HttpStatus currentStatusCode = response.getStatusCode();
-        assertThat("status codes is incorrect : " + response.getBody(), currentStatusCode.value(), is(statusCode));
-    }
 
-    @And("^response contains the above list of Position Accounts$")
-    public void response_contains_the_above_list_of_Position_Accounts() {
+    @And("^response contains only the following position account$")
+    public void response_contains_only_the_following_position_accounts(DataTable table) {
 
         String body = response.getBody();
 
@@ -119,6 +112,4 @@ public class PositionListSteps {
         cli.close();
         server.close();
     }
-
-
 }
