@@ -143,7 +143,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: io.cucumber:datatable-dependencies:1.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: io.cucumber:cucumber-spring:3.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: io.cucumber:cucumber-junit:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.curator:curator-test:3.3.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.curator:curator-test:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.zookeeper:zookeeper:3.5.1-alpha" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
