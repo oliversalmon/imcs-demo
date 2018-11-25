@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: micro.all
+    http:
+      paths:
+      - path: /positionqueryservice
+        backend:
+          serviceName: position-query-service
+          servicePort: 8093

@@ -1,27 +1,27 @@
 package com.trade.injector.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.servlet.Filter;
-
+import com.example.mu.domain.Instrument;
+import com.example.mu.domain.Party;
+import com.example.mu.domain.Trade;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.hazelcast.query.Predicate;
+import com.hazelcast.query.SqlPredicate;
+import com.trade.injector.business.service.*;
+import com.trade.injector.enums.TradeInjectRunModes;
+import com.trade.injector.jto.*;
+import com.trade.injector.jto.repository.MongoDBTemplate;
+import com.trade.injector.jto.repository.TradeInjectorMessageRepository;
+import com.trade.injector.jto.repository.TradeInjectorProfileRepository;
+import com.trade.injector.jto.repository.TradeReportRepository;
+import com.trade.injector.sinks.KafkaSink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -30,19 +30,13 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.feign.FeignClient;
-//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,57 +49,26 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CompositeFilter;
 
-import com.example.mu.domain.Instrument;
-import com.example.mu.domain.Party;
-import com.example.mu.domain.PositionAccount;
-import com.example.mu.domain.Trade;
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.query.Predicate;
-import com.hazelcast.query.SqlPredicate;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.netflix.client.util.Resources;
-import com.trade.injector.application.Application;
-import com.trade.injector.business.service.BusinessServiceCacheNames;
-import com.trade.injector.business.service.GenerateInstrumentCache;
-import com.trade.injector.business.service.GeneratePartyCache;
-import com.trade.injector.business.service.GeneratePriceData;
+import javax.servlet.Filter;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 //import com.trade.injector.business.service.GenerateRandomInstruments;
 //import com.trade.injector.business.service.GenerateRandomParty;
-import com.trade.injector.business.service.GenerateTradeCacheData;
-import com.trade.injector.business.service.GenerateTradeData;
 //import com.trade.injector.dto.Trade;
-import com.trade.injector.enums.TradeInjectRunModes;
 //import com.trade.injector.jto.Instrument;
-import com.trade.injector.jto.InstrumentReport;
 //import com.trade.injector.jto.Party;
-import com.trade.injector.jto.PartyReport;
-import com.trade.injector.jto.TradeAcknowledge;
 //import com.trade.injector.jto.TradeInjectorMessage;
-import com.trade.injector.jto.TradeInjectorProfile;
-import com.trade.injector.jto.TradeReport;
-import com.trade.injector.jto.repository.MongoDBTemplate;
-import com.trade.injector.jto.repository.TradeInjectorMessageRepository;
-import com.trade.injector.jto.repository.TradeInjectorProfileRepository;
-import com.trade.injector.jto.repository.TradeReportRepository;
-import com.trade.injector.sinks.KafkaSink;
-
-import org.springframework.http.MediaType;
 
 @SpringBootApplication(scanBasePackages = "com.trade.injector")
 @EnableOAuth2Client
@@ -151,7 +114,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@FeignClient(name = "positionqueryservice")
+	@FeignClient(name = "positionqueryservice",  url = "http://position-query-service:8093")
 	interface PositionServiceClient {
 
 		@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
@@ -304,12 +267,12 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/tradeMessageStopForProfile", method = RequestMethod.POST)
-	public void tradeStopForProfile(@RequestBody String messageId) throws Exception {
+	public void tradeStopForProfile(@RequestBody String messageId) {
 
 		LOG.info("Stop run for the following Id " + messageId);
 
 		// we need to remove the id= bit from message id
-		messageId = messageId.substring(messageId.indexOf('=') + 1, messageId.length());
+		messageId = messageId.substring(messageId.indexOf('=') + 1);
 
 		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
 				TradeInjectorProfile.class);
@@ -329,7 +292,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	public void tradePlayForProfile(@RequestBody String messageId) throws Exception {
 
 		// we need to remove the id= bit from message id
-		messageId = messageId.substring(messageId.indexOf('=') + 1, messageId.length());
+		messageId = messageId.substring(messageId.indexOf('=') + 1);
 		LOG.info("Playing for the following Id " + messageId);
 
 		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
@@ -347,14 +310,14 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 		if (equation == null)
 			return null;
 
-		return equation.substring(equation.indexOf('=') + 1, equation.length());
+		return equation.substring(equation.indexOf('=') + 1);
 	}
 
 	@RequestMapping(value = "/tradeMessageRepeatForProfile", method = RequestMethod.POST)
 	public void repeatRunOnProfile(@RequestBody String profileId) throws Exception {
 
 		// we need to remove the id= bit from message id
-		profileId = profileId.substring(profileId.indexOf('=') + 1, profileId.length());
+		profileId = profileId.substring(profileId.indexOf('=') + 1);
 		LOG.info("Running for the following Id " + profileId);
 
 		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
@@ -387,9 +350,9 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/deleteProfile", method = RequestMethod.POST)
-	public void deleteProfile(@RequestBody String profileId) throws Exception {
+	public void deleteProfile(@RequestBody String profileId) {
 
-		profileId = profileId.substring(profileId.indexOf('=') + 1, profileId.length());
+		profileId = profileId.substring(profileId.indexOf('=') + 1);
 
 		// delete any reports associated to this profile
 		TradeReport report = coreTemplate.findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)),
@@ -487,8 +450,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	}
 
-	private void convertToReportAndSaveForProfile(Trade ack, String username, String injectorProfileId)
-			throws Exception {
+	private void convertToReportAndSaveForProfile(Trade ack, String username, String injectorProfileId) {
 
 		TradeReport tradeReport = coreTemplate
 				.findOne(Query.query(Criteria.where("injectorProfileId").is(injectorProfileId)), TradeReport.class);
@@ -577,7 +539,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@Deprecated
-	private void convertToReportAndSaveForProfile(TradeAcknowledge ack, String username) throws Exception {
+	private void convertToReportAndSaveForProfile(TradeAcknowledge ack, String username) {
 
 		TradeReport tradeReport = coreTemplate.findOne(
 				Query.query(Criteria.where("injectorProfileId").is(ack.getProfileIdentifier())), TradeReport.class);
@@ -667,8 +629,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/saveTradeInjectProfile", method = RequestMethod.POST)
-	public ResponseEntity<TradeInjectorProfile> saveTradeInjectProfile(@RequestBody TradeInjectorProfile profile)
-			throws Exception {
+	public ResponseEntity<TradeInjectorProfile> saveTradeInjectProfile(@RequestBody TradeInjectorProfile profile) {
 
 		// set it to stop so that it can show up as play on the profile
 		profile.setRun_mode(TradeInjectRunModes.STOP.getRunMode());
@@ -680,16 +641,16 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/getAllInjectProfiles", method = RequestMethod.GET)
-	public ResponseEntity<List<TradeInjectorProfile>> saveTradeInjectProfile() throws Exception {
+	public ResponseEntity<List<TradeInjectorProfile>> saveTradeInjectProfile() {
 
 		return ResponseEntity.ok(profileRepo.findAll());
 
 	}
 
 	@RequestMapping(value = "/getProfile", method = RequestMethod.POST)
-	public ResponseEntity<TradeInjectorProfile> getProfile(@RequestBody String profileId) throws Exception {
+	public ResponseEntity<TradeInjectorProfile> getProfile(@RequestBody String profileId) {
 
-		profileId = profileId.substring(profileId.indexOf('=') + 1, profileId.length());
+		profileId = profileId.substring(profileId.indexOf('=') + 1);
 
 		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
 				TradeInjectorProfile.class);
@@ -706,11 +667,9 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	 * Returns the list of instruments available in the cache
 	 * 
 	 * @return ResponseEntity
-	 * @throws Exception
-	 */
+     */
 	@RequestMapping(value = "/getAllInstruments", method = RequestMethod.POST)
-	public ResponseEntity<Collection<InstrumentReport>> getAllInstruments(@RequestBody String pageMarker)
-			throws Exception {
+	public ResponseEntity<Collection<InstrumentReport>> getAllInstruments(@RequestBody String pageMarker) {
 
 		IMap<String, Instrument> mapInstruments = hazelcastInstance.getMap(BusinessServiceCacheNames.INSTRUMENT_CACHE);
 
@@ -741,7 +700,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
-	public ResponseEntity<List<Object>> getAllPositionAccounts() throws Exception {
+	public ResponseEntity<List<Object>> getAllPositionAccounts() {
 
 		RestTemplate restTemplate = new RestTemplate();
 		LOG.info("Pinging the following URL http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts");
