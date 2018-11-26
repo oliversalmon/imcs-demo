@@ -6,21 +6,39 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bddtestutilityservices" />
         <module name="cache" />
         <module name="database" />
+        <module name="demo" />
         <module name="docker" />
         <module name="domain" />
+        <module name="mu-flink-position-snap" />
+        <module name="mu-flink-price-injector" />
+        <module name="mu-flink-trade-injector" />
+        <module name="positionqueryservice" />
         <module name="streamprocessor" />
+        <module name="trade-imdg" />
+        <module name="trade-injector" />
+        <module name="tradequerymicroservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="bddtestutilityservices" target="1.8" />
       <module name="cache" target="1.8" />
       <module name="database" target="1.8" />
+      <module name="demo" target="1.8" />
       <module name="docker" target="1.5" />
       <module name="domain" target="1.8" />
+      <module name="mu-flink-position-snap" target="1.8" />
+      <module name="mu-flink-price-injector" target="1.8" />
+      <module name="mu-flink-trade-injector" target="1.8" />
       <module name="mu-parent" target="1.5" />
       <module name="muparent" target="1.5" />
+      <module name="positionqueryservice" target="1.8" />
       <module name="streamprocessor" target="1.8" />
+      <module name="trade-imdg" target="1.8" />
+      <module name="trade-injector" target="1.8" />
+      <module name="tradequerymicroservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

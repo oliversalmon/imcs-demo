@@ -2,14 +2,22 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/cache/cache.iml" filepath="$PROJECT_DIR$/cache/cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bddtestutilityservices/bddtestutilityservices.iml" filepath="$PROJECT_DIR$/bddtestutilityservices/bddtestutilityservices.iml" />
       <module fileurl="file://$PROJECT_DIR$/cache/cache.iml" filepath="$PROJECT_DIR$/cache/cache.iml" />
       <module fileurl="file://$PROJECT_DIR$/database/database.iml" filepath="$PROJECT_DIR$/database/database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pricequeryservice/demo.iml" filepath="$PROJECT_DIR$/pricequeryservice/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/docker/docker.iml" filepath="$PROJECT_DIR$/docker/docker.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/positionSnapFlinkJob/mu-flink-position-snap.iml" filepath="$PROJECT_DIR$/positionSnapFlinkJob/mu-flink-position-snap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/priceInjectorFlink/mu-flink-price-injector.iml" filepath="$PROJECT_DIR$/priceInjectorFlink/mu-flink-price-injector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tradeInjectorFlink/mu-flink-trade-injector.iml" filepath="$PROJECT_DIR$/tradeInjectorFlink/mu-flink-trade-injector.iml" />
       <module fileurl="file://$PROJECT_DIR$/mu-parent.iml" filepath="$PROJECT_DIR$/mu-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/muparent.iml" filepath="$PROJECT_DIR$/muparent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/positionqueryservice/positionqueryservice.iml" filepath="$PROJECT_DIR$/positionqueryservice/positionqueryservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/streamprocessor/streamprocessor.iml" filepath="$PROJECT_DIR$/streamprocessor/streamprocessor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-imdg/trade-imdg.iml" filepath="$PROJECT_DIR$/trade-imdg/trade-imdg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-injector/trade-injector.iml" filepath="$PROJECT_DIR$/trade-injector/trade-injector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tradequerymicroservice/tradequerymicroservice.iml" filepath="$PROJECT_DIR$/tradequerymicroservice/tradequerymicroservice.iml" />
     </modules>
   </component>
 </project>
