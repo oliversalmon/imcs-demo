@@ -172,6 +172,30 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>bddtestutilityservices</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.hazelcast.jet/hazelcast-jet-core -->
 		<!-- dependency> <groupId>com.hazelcast.jet</groupId> <artifactId>hazelcast-jet</artifactId> 
 			<version>0.3</version> </dependency -->
