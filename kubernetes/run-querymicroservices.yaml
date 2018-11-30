@@ -17,6 +17,8 @@ spec:
       - ip: "{{HOSTIPADDRESS}}"
         hostnames:
         - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - image: dineshpillai/imcs-tradequeryservice:0.0.1-SNAPSHOT
         name: trade-query
@@ -76,6 +78,8 @@ spec:
       - ip: "{{HOSTIPADDRESS}}"
         hostnames:
         - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - image: dineshpillai/imcs-positionqueryservice:0.0.1-SNAPSHOT
         name: position-query

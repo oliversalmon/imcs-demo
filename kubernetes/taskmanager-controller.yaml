@@ -11,6 +11,8 @@ spec:
         app: flink
         component: taskmanager
     spec:
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - name: taskmanager
         image: flink:latest

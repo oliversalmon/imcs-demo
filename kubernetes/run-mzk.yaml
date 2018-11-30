@@ -8,6 +8,8 @@ metadata:
     name: mongo
     app: mongo
 spec:
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - image: dineshpillai/mongo-db-repo
         name: mongo
@@ -56,6 +58,8 @@ spec:
       labels:
         app: zookeeper-1
     spec:
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - name: zoo1
         image: dineshpillai/mu_zookeeper
@@ -107,6 +111,8 @@ spec:
         app: kafka
         component: kafka-broker
     spec:
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - name: kafka
         image:  dineshpillai/mu-kafka-v11

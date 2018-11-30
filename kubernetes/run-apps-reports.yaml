@@ -35,6 +35,8 @@ spec:
       - ip: "IP_TR_1"
         hostnames:
         - "HOST_TR_1"
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - name: trade-injector
         image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
