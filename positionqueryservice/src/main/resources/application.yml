@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: position-query
+
+server:
+  port: 8093

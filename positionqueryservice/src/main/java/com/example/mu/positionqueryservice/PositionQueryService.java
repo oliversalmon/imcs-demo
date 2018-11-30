@@ -9,13 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
+
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.cloud.client.serviceregistry.Registration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -28,44 +24,18 @@ import java.util.stream.Collectors;
 import static com.hazelcast.query.Predicates.and;
 import static com.hazelcast.query.Predicates.equal;
 
-//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-
-@CrossOrigin(origins = "http://178.62.124.180:31680")
 
 @EnableCaching
 @RestController
-// @EnableDiscoveryClient
+
 public class PositionQueryService {
 
     public final Logger LOG = LoggerFactory.getLogger(PositionQueryService.class);
     final static String POSITION_ACCOUNT_MAP = "position-account";
 
-    @Value("${spring.application.name:positionqueryservice}")
-    private String appName;
-
-    @Autowired
-    private LoadBalancerClient loadBalancer;
-
-    @Autowired
-    private DiscoveryClient discovery;
-
-    @Autowired
-    private Environment env;
-
-    @Autowired(required = false)
-    private Registration registration;
-
-    @Autowired
-    RestTemplate rest;
-
-    @RequestMapping("/")
-    public ServiceInstance lb() {
-        return this.loadBalancer.choose(this.appName);
-    }
 
 
     @Bean
-        // @Profile("client")
     HazelcastInstance hazelcastInstance() {
 
         return HazelcastClient.newHazelcastClient();
@@ -76,17 +46,7 @@ public class PositionQueryService {
     @Value("${requireHz}")
     private String requireHz;
 
-//    @Bean
-//    HazelcastInstance hazelcastInstanceMember() {
-//
-//        if (requireHz != null)
-//            return Hazelcast.newHazelcastInstance();
-//        else return null;
-//
-//    }
-//
-//    @Autowired
-//    private HazelcastInstance hazelcastInstanceMember;
+
 
     @Autowired
     private HazelcastInstance hazelcastInstance;
@@ -127,19 +87,6 @@ public class PositionQueryService {
 
     }
 
-    @Bean
-    @LoadBalanced
-    RestTemplate loadBalancedRestTemplate() {
-        return new RestTemplate();
-    }
 
-    public ResponseEntity<List<Object>> rt() {
-        return this.rest.getForObject("http://" + this.appName + "/getAllPositionAccounts", ResponseEntity.class);
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(PositionQueryService.class, args);
-
-    }
 
 }
