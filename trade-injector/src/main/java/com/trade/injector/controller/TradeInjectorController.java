@@ -114,7 +114,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@FeignClient(name = "positionqueryservice",  url = "http://position-query-service:8093")
+	@FeignClient(name = "positionqueryservice")
 	interface PositionServiceClient {
 
 		@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
