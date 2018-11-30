@@ -30,6 +30,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-kubernetes-config</artifactId>
+            <version>0.2.0.RELEASE</version>
         </dependency>
 
         <dependency>

@@ -77,8 +77,8 @@ import java.util.stream.Stream;
 @EnableScheduling
 @EnableCaching
 @EnableFeignClients
-@EnableDiscoveryClient
-// @EnableDiscoveryClient
+//@EnableDiscoveryClient
+
 public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	final Logger LOG = LoggerFactory.getLogger(TradeInjectorController.class);
@@ -93,7 +93,6 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 	private TradeServiceClient tradeServiceClient;
 	
 	@Bean
-	// @Profile("client")
 	HazelcastInstance hazelcastInstance() {
 
 		// for client HazelcastInstance LocalMapStatistics will not available
@@ -114,7 +113,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@FeignClient(name = "positionqueryservice",  url = "http://position-query-service:8093")
+	@FeignClient(name = "position-query")
 	interface PositionServiceClient {
 
 		@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)

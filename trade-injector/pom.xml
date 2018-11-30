@@ -19,6 +19,7 @@
 		<spring-version>1.5.0.RELEASE</spring-version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<feign.version>9.4.0</feign.version>
 	</properties>
 
 	<dependencies>
@@ -31,14 +32,6 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
-
-
-
-
-
-		<!-- dependency> <groupId>org.webjars</groupId> <artifactId>webjars-locator</artifactId> 
-			<version>${spring-version}</version> </dependency -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>sockjs-client</artifactId>
@@ -141,21 +134,24 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zookeeper-all</artifactId>
-			<version>2.0.0.M4</version>
+			<artifactId>spring-cloud-starter-kubernetes-netflix</artifactId>
+			<version>0.2.0.RELEASE</version>
+		</dependency>
+
+
+
+		<!-- feign libs -->
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-core</artifactId>
+			<version>${feign.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>2.0.0.M4</version>
 		</dependency>
-		<!-- dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-commons</artifactId> 
-			<version>1.1.1.RELEASE</version> </dependency> <dependency> <groupId>org.springframework.cloud</groupId> 
-			<artifactId>spring-cloud-zookeeper-discovery</artifactId> <version>1.1.1.RELEASE</version> 
-			</dependency -->
-		<!-- dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-zookeeper-all</artifactId> 
-			<version>1.1.1.RELEASE</version> </dependency -->
-		<dependency>
+	    <dependency>
 			<groupId>io.reactivex</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>1.1.5</version>

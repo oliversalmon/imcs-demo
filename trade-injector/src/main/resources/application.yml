@@ -1,8 +1,11 @@
 #kafka.bootstrap-servers: 138.68.168.237:9092
 kafka.topic.marketData: market_data
 kafka.topic.trade: trade
-spring.application.name: TradeInject
-spring.cloud.zookeeper.discovery.enabled: true
+
+
+feign:
+  hystrix:
+    enabled: false
 
 
 facebook:

@@ -1,3 +1,21 @@
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: trade-injector
+  labels:
+    app: trade-injector
+  namespace: default
+data:
+  application.yml: |-
+    endpoints.trace.sensitive: false
+    backend:
+      ribbon:
+        eureka.enabled: false
+        client.enabled: true
+        ServerListRefreshInterval: 15000
+
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -8,9 +26,6 @@ metadata:
     app: trade-injector
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: trade-injector
   template:
     metadata:
       labels:
@@ -33,8 +48,8 @@ spec:
           value: db
         - name: spring.hazelcast.client.config
           value: mu1-client-config.xml
-        - name: spring_cloud_zookeeper_connectString
-          value: zoo1:2181
+      nodeSelector:
+        beta.kubernetes.io/os: linux
 
 ---
 apiVersion: v1
@@ -47,8 +62,8 @@ metadata:
 spec:
   ports:
   - port: 8090
-    name: trade-injector-port
     targetPort: 8090
+    nodePort: 31890
     protocol: TCP
   selector:
     app: trade-injector
