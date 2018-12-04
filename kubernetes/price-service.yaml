@@ -16,7 +16,7 @@ spec:
       - name: registry-secret
       containers:
       - name: price-service
-        image: dineshpillai/mu-pricequery-service:latest
+        image: dineshpillai/mu-pricequery-service:0.0.1-SNAPSHOT
         imagePullPolicy: Always
         ports:
         - containerPort: 8090
