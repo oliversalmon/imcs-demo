@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+//import reactor.core.publisher.Flux;
+//import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -41,20 +41,20 @@ public class PriceRepository {
 	@Autowired
 	private HazelcastInstance hazelcastInstance;
 
-	public Flux<Price> getAllPrices() {
-
-		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
-
-		if (listOfPrices.size() < 1)
-			priceMap.values().stream().forEach(a -> listOfPrices.add(a));
-
-		return Flux.fromStream(listOfPrices.stream()
-		// .sorted((Price p1, Price p2) ->
-		// p1.getInstrumentId().compareTo(p2.getInstrumentId()))
-		).delayElements(Duration.ofMillis(1000))
-				.log();
-
-	}
+//	public Flux<Price> getAllPrices() {
+//
+//		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
+//
+//		if (listOfPrices.size() < 1)
+//			priceMap.values().stream().forEach(a -> listOfPrices.add(a));
+//
+//		return Flux.fromStream(listOfPrices.stream()
+//		// .sorted((Price p1, Price p2) ->
+//		// p1.getInstrumentId().compareTo(p2.getInstrumentId()))
+//		).delayElements(Duration.ofMillis(1000))
+//				.log();
+//
+//	}
 
 	public List<Price> getAllPxs(){
 		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
@@ -84,10 +84,10 @@ public class PriceRepository {
 		LOG.info("Done");
 	}
 
-	public Mono<Price> getPrice(String instrumentId) {
-		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
-		Predicate priceFilter = equal("instrumentId", instrumentId);
-		return Mono.justOrEmpty(priceMap.values(priceFilter).stream().findFirst().orElse(null));
-
-	}
+//	public Mono<Price> getPrice(String instrumentId) {
+//		IMap<String, Price> priceMap = hazelcastInstance.getMap(PRICE_MAP);
+//		Predicate priceFilter = equal("instrumentId", instrumentId);
+//		return Mono.justOrEmpty(priceMap.values(priceFilter).stream().findFirst().orElse(null));
+//
+//	}
 }
