@@ -51,7 +51,7 @@ public class PositionQueryService {
     @Autowired
     private HazelcastInstance hazelcastInstance;
 
-    // @CrossOrigin(origins = "http://localhost:8090")
+
     @RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
     public ResponseEntity<List<PositionAccount>> getAllPositionAccounts() {
 

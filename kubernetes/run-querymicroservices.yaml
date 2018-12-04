@@ -53,7 +53,7 @@ metadata:
   name: position-query
   labels:
     app: position-query
-  namespace: default
+  namespace: mu-architecture-demo
 data:
   application.yml: |-
     endpoints.trace.sensitive: false
@@ -89,6 +89,10 @@ spec:
         env:
         - name: requireHz
           value: "false"
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
         resources: {}
       nodeSelector:
         beta.kubernetes.io/os: linux

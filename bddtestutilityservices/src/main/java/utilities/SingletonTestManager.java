@@ -90,7 +90,9 @@ public class SingletonTestManager {
                     "--requireHz=true",
                     "--spring.cloud.zookeeper.connect-string=localhost:" + 2181,
                     "--kafka.bootstrap-servers=localhost:9092",
-                    "--spring.data.mongodb.host=localhost");
+                    "--spring.data.mongodb.host=localhost",
+                    "--SPRING_PROFILES_ACTIVE=native",
+                    "--VERSION=K8S_TIMESTAMP");
             url = "http://localhost:" + port;
             return context;
         } else return context;
