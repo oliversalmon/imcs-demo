@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(scanBasePackages = "com.example.mu.pricequeryservice")
 @EnableScheduling
-@EnableDiscoveryClient
 public class StartUp {
 
 	public static void main(String[] args) {

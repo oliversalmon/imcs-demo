@@ -23,11 +23,11 @@ public class Router {
 		this.handler = handler;
 	}
 
-	@Bean
-	public RouterFunction<?> routerFunction() {
-		return route(GET("/pricequeryservice/prices").and(accept(MediaType.APPLICATION_JSON)), handler::getAllPrices)
-				.and(route(GET("/pricequeryservice/price/{id}").and(accept(MediaType.APPLICATION_JSON)),
-						handler::getPrice));
-	}
+	//	@Bean
+	//	public RouterFunction<?> routerFunction() {
+	//		return route(GET("/pricequeryservice/prices").and(accept(MediaType.APPLICATION_JSON)), handler::getAllPrices)
+	//				.and(route(GET("/pricequeryservice/price/{id}").and(accept(MediaType.APPLICATION_JSON)),
+	//						handler::getPrice));
+	//	}
 
 }

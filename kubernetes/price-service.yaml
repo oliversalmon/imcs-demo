@@ -1,0 +1,45 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: price-service
+  labels:
+    app: price-service
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: price-service
+    spec:
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - name: price-service
+        image: dineshpillai/mu-pricequery-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8090
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: price-service
+  labels:
+    app: price-service
+spec:
+  type: NodePort
+  ports:
+  # the port that this service should serve on
+  - port: 8090
+    targetPort: 8090
+    nodePort: 31090
+  selector:
+    app: price-service

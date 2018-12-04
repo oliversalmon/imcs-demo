@@ -30,106 +30,57 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @RestController
 @EnableWebFlux
-//@EnableFeignClients
+
 public class PriceQueryHandler {
-	
-	@Value("${spring.application.name:priceQueryService}")
-	private String appName;
+
 
 	final Logger LOG = LoggerFactory.getLogger(PriceQueryHandler.class);
 	@Autowired
 	private PriceRepository priceRepo;
 	
-	@Autowired
-	private LoadBalancerClient loadBalancer;
 
-	@Autowired
-	private DiscoveryClient discovery;
 
-	@Autowired
-	private Environment env;
-
-//	@Autowired
-//	private AppClient appClient;
-
-	@Autowired(required = false)
-	private Registration registration;
-	
-	@Autowired
-	RestTemplate rest;
-	
 	@RequestMapping("/hi")
 	public String hi() {
-		return "Price service! from " + this.registration;
+		return "Price service says a hi " ;
 	}
 	
 
-	@RequestMapping("/")
-	public ServiceInstance lb() {
-		return this.loadBalancer.choose(this.appName);
-	}
-	
-	@RequestMapping("/myenv")
-	public String env(@RequestParam("prop") String prop) {
-		return this.env.getProperty(prop, "Not Found");
-	}
-	
-//	@RequestMapping("/self")
-//	public String self() {
-//		return this.appClient.hi();
+
+
+//	public Mono<ServerResponse> getAllPrices(ServerRequest request) {
+//
+//		return ServerResponse.ok().contentType(APPLICATION_JSON).body(priceRepo.getAllPrices(), Price.class);
+//	}
+//
+//	@RequestMapping(value = "/getAllPrices", method = RequestMethod.GET)
+//	public ResponseEntity<List<Price>> getAllPrices() {
+//
+//		return ResponseEntity.ok(priceRepo.getAllPxs());
+//
+//	}
+//
+//	public Mono<ServerResponse> getPrice(ServerRequest request) {
+//
+//		return priceRepo.getPrice(request.pathVariable("id"))
+//				.flatMap(price -> ServerResponse.ok().contentType(APPLICATION_JSON).body(Mono.just(price), Price.class))
+//				.switchIfEmpty(ServerResponse.notFound().build());
+//	}
+//
+//	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE, value = "pricequeryservice/pricestream")
+//	public Flux<Price> getFluxPrices() {
+//
+//		LOG.info("In pricestream...");
+//
+//		Flux<Price> prices = priceRepo.getAllPrices();
+//
+//		LOG.info("returning flux prices...");
+//
+//		return prices;
+//
 //	}
 	
-//	@FeignClient("priceQueryService")
-//	interface AppClient {
-//		@RequestMapping(path = "pricequeryservice/pricestream", method = RequestMethod.GET)
-//		Flux<Price> getFluxPrices();
-//		@RequestMapping(path = "/ping", method = RequestMethod.GET)
-//		String hi();
-//		
-//	}
 
-	public Mono<ServerResponse> getAllPrices(ServerRequest request) {
-
-		return ServerResponse.ok().contentType(APPLICATION_JSON).body(priceRepo.getAllPrices(), Price.class);
-	}
-
-	@RequestMapping(value = "/getAllPrices", method = RequestMethod.GET)
-	public ResponseEntity<List<Price>> getAllPrices() {
-
-		return ResponseEntity.ok(priceRepo.getAllPxs());
-
-	}
-
-	public Mono<ServerResponse> getPrice(ServerRequest request) {
-
-		return priceRepo.getPrice(request.pathVariable("id"))
-				.flatMap(price -> ServerResponse.ok().contentType(APPLICATION_JSON).body(Mono.just(price), Price.class))
-				.switchIfEmpty(ServerResponse.notFound().build());
-	}
-
-	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE, value = "pricequeryservice/pricestream")
-	public Flux<Price> getFluxPrices() {
-
-		LOG.info("In pricestream...");
-
-		Flux<Price> prices = priceRepo.getAllPrices();
-
-		LOG.info("returning flux prices...");
-
-		return prices;
-
-	}
-	
-	@Bean
-	@LoadBalanced
-	RestTemplate loadBalancedRestTemplate() {
-		return new RestTemplate();
-	}
-
-	public String rt() {
-		return this.rest.getForObject("http://" + this.appName + "/hi", String.class);
-	}
-	
 	public static void main(String[] args) {
 		SpringApplication.run(PriceQueryHandler.class, args);
 
