@@ -8,10 +8,12 @@ apt install maven -y
 
 cd ../
 docker login -u dineshpillai -p Pill2017
-mvn clean package -DskipTests
+
+mvn clean package install -DskipTests
+
 
 cd ./hello-service
-mvn clean package -DskipTests
+
 docker build -t dineshpillai/hello-service .
 docker push dineshpillai/hello-service
 
