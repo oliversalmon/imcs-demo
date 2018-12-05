@@ -19,5 +19,5 @@ docker push dineshpillai/mu-pricequery-service
 
 kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:default
 
-kubectl apply -f price-query-configmap.yml
-kubectl apply -f price-service.yaml
+kubectl apply -f ./price-query-configmap.yml
+kubectl apply -f ./price-service.yaml
