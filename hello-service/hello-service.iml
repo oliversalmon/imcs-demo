@@ -70,7 +70,6 @@
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-context:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:4.2.3.RELEASE" level="project" />
     <orderEntry type="module" module-name="domain" />
-    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast:3.7.8" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="module" module-name="cache" />
     <orderEntry type="module" module-name="database" />
@@ -128,13 +127,15 @@
     <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.6.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-zookeeper:3.6.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-x-discovery:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-client:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
-    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-zookeeper:3.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-client:3.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test:1.5.9.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:1.5.9.RELEASE" level="project" />

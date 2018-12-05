@@ -2,8 +2,12 @@ package hello;
 
 import java.util.*;
 
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.HazelcastInstance;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
@@ -14,6 +18,17 @@ import org.slf4j.LoggerFactory;
 public class SayHelloApplication {
 
     private static Logger log = LoggerFactory.getLogger(SayHelloApplication.class);
+
+    	@Bean
+	// @Profile("client")
+        HazelcastInstance hazelcastInstance() {
+
+		return HazelcastClient.newHazelcastClient();
+
+	}
+
+	@Autowired
+	private HazelcastInstance hazelcastInstance;
 
     @RequestMapping(value = "/greeting")
     public String greet() {
