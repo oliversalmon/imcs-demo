@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.M4</version>
+		<version>1.5.9.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -23,10 +23,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<start-class>com.example.mu.pricequeryservice.controllers.StartUp</start-class>
-		<docker.skip>false</docker.skip>
-		<docker.repository>docker.io</docker.repository>
-		<docker.image.prefix>dineshpillai</docker.image.prefix>
-		<docker.artifact.id>mu-pricequery-service</docker.artifact.id>
+		<!--<docker.skip>false</docker.skip>-->
+		<!--<docker.repository>docker.io</docker.repository>-->
+		<!--<docker.image.prefix>dineshpillai</docker.image.prefix>-->
+		<!--<docker.artifact.id>mu-pricequery-service</docker.artifact.id>-->
 	</properties>
 	<scm>
 		<connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
@@ -73,27 +73,29 @@
 			<groupId>org.apache.curator</groupId>
 			<artifactId>curator-test</artifactId>
 			<version>3.3.0</version>
+			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-x-discovery</artifactId>
-			<version>3.3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast</artifactId>
-			<version>3.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast-client</artifactId>
-			<version>3.8.1</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.apache.curator</groupId>-->
+			<!--<artifactId>curator-x-discovery</artifactId>-->
+			<!--<version>3.3.0</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.hazelcast</groupId>-->
+			<!--<artifactId>hazelcast</artifactId>-->
+			<!--<version>3.8.1</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.hazelcast</groupId>-->
+			<!--<artifactId>hazelcast-client</artifactId>-->
+			<!--<version>3.8.1</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>bddtestutilityservices</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.cucumber</groupId>
