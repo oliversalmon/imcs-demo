@@ -10,12 +10,13 @@ cd ../
 docker login -u dineshpillai -p Pill2017
 
 
-cd ./pricequeryservice
+cd ./hello-service
 mvn clean package -DskipTests
-docker build -t dineshpillai/mu-pricequery-service .
-docker push dineshpillai/mu-pricequery-service
+docker build -t dineshpillai/hello-service .
+docker push dineshpillai/hello-service
 
 kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:default
 
-kubectl apply -f price-query-configmap.yml
-kubectl apply -f price-service.yaml
+kubectl create -f manifests/hello-service-configmap.yml
+kubectl create -f manifests/hello-service.yml
+
