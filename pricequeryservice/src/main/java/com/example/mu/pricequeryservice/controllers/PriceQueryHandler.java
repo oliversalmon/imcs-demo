@@ -1,6 +1,6 @@
 package com.example.mu.pricequeryservice.controllers;
 
-import com.example.mu.domain.Price;
+//import com.example.mu.domain.Price;
 import com.example.mu.pricequeryservice.repository.PriceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +37,12 @@ public class PriceQueryHandler {
 
 
 	final Logger LOG = LoggerFactory.getLogger(PriceQueryHandler.class);
-	@Autowired
-	private PriceRepository priceRepo;
-	
+//	@Autowired
+//	private PriceRepository priceRepo;
+//
 
 
-	@RequestMapping("/hi")
+	@RequestMapping(value = "/hi")
 	public String hi() {
 		return "Price service says a hi " ;
 	}
@@ -83,9 +83,9 @@ public class PriceQueryHandler {
 //	}
 	
 
-	public static void main(String[] args) {
-		SpringApplication.run(PriceQueryHandler.class, args);
-
-	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(PriceQueryHandler.class, args);
+//
+//	}
 
 }

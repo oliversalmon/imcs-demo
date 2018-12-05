@@ -1,10 +1,10 @@
 package com.example.mu.pricequeryservice.repository;
 
-import com.example.mu.domain.Price;
+//import com.example.mu.domain.Price;
 //import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.query.Predicate;
+//import com.hazelcast.core.HazelcastInstance;
+//import com.hazelcast.core.IMap;
+//import com.hazelcast.query.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static com.hazelcast.query.Predicates.equal;
+//import static com.hazelcast.query.Predicates.equal;
 
 @Repository
 
@@ -27,7 +27,7 @@ public class PriceRepository {
 
 	final Logger LOG = LoggerFactory.getLogger(PriceRepository.class);
 	public final static String PRICE_MAP = "price";
-	private static ConcurrentLinkedQueue<Price> listOfPrices = new ConcurrentLinkedQueue<Price>();
+	//private static ConcurrentLinkedQueue<Price> listOfPrices = new ConcurrentLinkedQueue<Price>();
 
 
 //	@Bean
