@@ -3,6 +3,7 @@ package hello;
 import java.util.*;
 
 import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +24,7 @@ public class SayHelloApplication {
 	// @Profile("client")
         HazelcastInstance hazelcastInstance() {
 
-		return HazelcastClient.newHazelcastClient();
+		return Hazelcast.newHazelcastInstance();
 
 	}
 
