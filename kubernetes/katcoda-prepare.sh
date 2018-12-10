@@ -29,4 +29,4 @@ docker build -t dpillai/hello-client-service .
 docker push dpillai/hello-client-service
 
 kubectl create -f manifests/hello-client-configmap.yml
-kubectl create -f manifests/hello-client-service.yml
+kubectl create -f manifests/hello-client.yml
