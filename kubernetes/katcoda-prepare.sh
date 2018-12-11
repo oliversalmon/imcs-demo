@@ -19,7 +19,7 @@ docker push dineshpillai/hello-service
 
 
 kubectl create namespace hw
-kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:hw
+kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:default
 
 kubectl create -f manifests/hello-service-configmap.yml
 kubectl create -f manifests/hello-service.yml
@@ -30,3 +30,5 @@ docker push dineshpillai/hello-client-service
 
 kubectl create -f manifests/hello-client-configmap.yml
 kubectl create -f manifests/hello-client.yml
+
+
