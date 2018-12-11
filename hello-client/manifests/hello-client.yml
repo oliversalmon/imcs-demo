@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: hello-client-service
-  #namespace: hw
+  namespace: hw
   labels:
     app: hello-client-service
 spec:
@@ -33,7 +33,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-client-service
-  #namespace: hw
+  namespace: hw
   labels:
     app: hello-client-service
 spec:

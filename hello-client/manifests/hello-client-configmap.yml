@@ -4,7 +4,7 @@ metadata:
   name: hello-client-service
   labels:
     app: hello-client-service
-  #namespace: hw
+  namespace: hw
 data:
   application.yml: |-
     endpoints.trace.sensitive: false
