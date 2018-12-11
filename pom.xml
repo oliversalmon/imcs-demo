@@ -13,7 +13,7 @@
     <module>cache</module>
     <!--  module>streamprocessor</module-->
     <!--<module>tradequerymicroservice</module>-->
-    <!--<module>positionqueryservice</module>-->
+    <module>positionqueryservice</module>
     <!--<module>pricequeryservice</module>-->
     <!--<module>trade-imdg</module>-->
     <!--<module>trade-injector</module>-->
