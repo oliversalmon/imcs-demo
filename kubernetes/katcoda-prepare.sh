@@ -25,8 +25,8 @@ kubectl create -f manifests/hello-service-configmap.yml
 kubectl create -f manifests/hello-service.yml
 
 cd ../hello-client
-docker build -t dpillai/hello-client-service .
-docker push dpillai/hello-client-service
+docker build -t dineshpillai/hello-client-service .
+docker push dineshpillai/hello-client-service
 
 kubectl create -f manifests/hello-client-configmap.yml
 kubectl create -f manifests/hello-client.yml

@@ -17,7 +17,7 @@ spec:
       - name: registry-secret
       containers:
       - name: hello-client-service
-        image: dpillai/hello-client-service:latest
+        image: dineshpillai/hello-client-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8899
