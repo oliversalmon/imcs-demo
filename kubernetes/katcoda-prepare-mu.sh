@@ -40,9 +40,12 @@ cd ~/imcs-demo/kubernetes
 kubectl apply -f run-mzk.yaml
 hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$hzformated"|kubectl apply -f -
-queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
-echo "$queryMicroservices"|kubectl apply -f -
+#queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
+#echo "$queryMicroservices"|kubectl apply -f -
 
+cd ~/imcs-demo/positionqueryservice
+kubectl create -f manifests/position-query.yml
+kubectl create -f manifests/position-query-config.yml
 
 
 

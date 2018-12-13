@@ -3,4 +3,4 @@ spring:
     name: position-query
 
 server:
-  port: 8093
+  port: 8090
