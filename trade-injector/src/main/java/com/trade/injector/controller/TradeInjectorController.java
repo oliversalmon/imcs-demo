@@ -81,654 +81,655 @@ import java.util.stream.Stream;
 
 public class TradeInjectorController extends WebSecurityConfigurerAdapter {
 
-	final Logger LOG = LoggerFactory.getLogger(TradeInjectorController.class);
+    final Logger LOG = LoggerFactory.getLogger(TradeInjectorController.class);
 
-	@Autowired
-	private PriceServiceClient priceClient;
+    @Autowired
+    private PriceServiceClient priceClient;
 
-	@Autowired
-	private PositionServiceClient positionClient;
-	
-	@Autowired
-	private TradeServiceClient tradeServiceClient;
-	
-	@Bean
-	HazelcastInstance hazelcastInstance() {
+    @Autowired
+    private PositionServiceClient positionClient;
 
-		// for client HazelcastInstance LocalMapStatistics will not available
+    @Autowired
+    private TradeServiceClient tradeServiceClient;
 
-		return HazelcastClient.newHazelcastClient();
+    @Bean
+    HazelcastInstance hazelcastInstance() {
 
-		// return Hazelcast.newHazelcastInstance();
+        // for client HazelcastInstance LocalMapStatistics will not available
 
-	}
+        return HazelcastClient.newHazelcastClient();
 
-	@FeignClient(name = "priceQueryService")
-	interface PriceServiceClient {
-		@RequestMapping(value = "/hi", method = RequestMethod.GET)
-		@ResponseBody
-		String hi();
+        // return Hazelcast.newHazelcastInstance();
 
-		
+    }
 
-	}
+    @FeignClient(name = "priceQueryService")
+    interface PriceServiceClient {
+        @RequestMapping(value = "/hi", method = RequestMethod.GET)
+        @ResponseBody
+        String hi();
 
-	@FeignClient(name = "position-query")
-	interface PositionServiceClient {
 
-		@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
-		@ResponseBody
-		Resource getAllPositionAccounts();
+    }
 
-		@RequestMapping(method = RequestMethod.GET, value = "/hi_getall", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-		List<String> hi();
+    @FeignClient(name = "position-query")
+    interface PositionServiceClient {
 
-	}
-	
+        @RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
+        @ResponseBody
+        Resource getAllPositionAccounts();
 
-	@FeignClient(name = "tradequeryservice")
-	interface TradeServiceClient {
+        @RequestMapping(method = RequestMethod.GET, value = "/hi_getall", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+        List<String> hi();
 
-		@RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
-		@ResponseBody
-		Resource getTradesForPositionAccountAndInstrument(@PathVariable ("positionAccountId") String positionAccountId,
-				@PathVariable ("instrumentId") String instrumentId);
+    }
 
-	}
 
-	@RequestMapping(value = "/pingPosition", method = RequestMethod.GET)
-	public List<String> pingPosition() {
-		return positionClient.hi();
-	}
+    @FeignClient(name = "tradequeryservice")
+    interface TradeServiceClient {
 
-	@RequestMapping(value = "/getAllPositions", method = RequestMethod.GET)
-	public Resource getAllPositions() {
+        @RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
+        @ResponseBody
+        Resource getTradesForPositionAccountAndInstrument(@PathVariable("positionAccountId") String positionAccountId,
+                                                          @PathVariable("instrumentId") String instrumentId);
 
-		return positionClient.getAllPositionAccounts();
-	}
-	
-	@RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
-	public Resource getTradesForPositionAccountAndInstrument(@PathVariable String positionAccountId,
-			@PathVariable String instrumentId) {
+    }
 
-		return tradeServiceClient.getTradesForPositionAccountAndInstrument(positionAccountId, instrumentId);
-	}
+    @RequestMapping(value = "/pingPosition", method = RequestMethod.GET)
+    public List<String> pingPosition() {
+        return positionClient.hi();
+    }
 
-	@Autowired
-	OAuth2ClientContext oauth2ClientContext;
+    @RequestMapping(value = "/getAllPositions", method = RequestMethod.GET)
+    public Resource getAllPositions() {
 
-	@Autowired
-	private SimpMessagingTemplate messageSender;
+        return positionClient.getAllPositionAccounts();
+    }
 
-	@Autowired
-	private MongoDBTemplate template;
+    @RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
+    public Resource getTradesForPositionAccountAndInstrument(@PathVariable String positionAccountId,
+                                                             @PathVariable String instrumentId) {
 
-	@Autowired
-	private HazelcastInstance hazelcastInstance;
+        return tradeServiceClient.getTradesForPositionAccountAndInstrument(positionAccountId, instrumentId);
+    }
 
-	@Autowired
-	private MongoTemplate coreTemplate;
+    @Autowired
+    OAuth2ClientContext oauth2ClientContext;
 
-	@Autowired
-	GenerateTradeData tradeData;
+    @Autowired
+    private SimpMessagingTemplate messageSender;
 
-	@Autowired
-	GenerateTradeCacheData tradeDataCache;
+    @Autowired
+    private MongoDBTemplate template;
 
-	@Autowired(required = true)
-	private TradeInjectorMessageRepository repo;
+    @Autowired
+    private HazelcastInstance hazelcastInstance;
 
-	@Autowired
-	private TradeReportRepository reportRepo;
+    @Autowired
+    private MongoTemplate coreTemplate;
 
-	@Autowired
-	private TradeInjectorProfileRepository profileRepo;
-
-	@Autowired
-	private KafkaSink sender;
-
-	@Value("${kafka.topic.trade}")
-	private String tradeTopic;
-
-	@RequestMapping("/user")
-	public Principal user(Principal principal) {
-		return principal;
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/**").authorizeRequests()
-				.antMatchers("/", "/login/**", "/webjars/**", "/dist/**", "/scripts/**", "/jumbotron.css",
-						"/injectorUI/**")
-				.permitAll().anyRequest().authenticated().and().logout().logoutSuccessUrl("/").permitAll().and().csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
-
-	}
-
-	private Filter ssoFilter() {
-
-		CompositeFilter filter = new CompositeFilter();
-		List<Filter> filters = new ArrayList<Filter>();
-
-		OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
-				"/login/facebook");
-		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
-		facebookFilter.setRestTemplate(facebookTemplate);
-		UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(),
-				facebook().getClientId());
-		tokenServices.setRestTemplate(facebookTemplate);
-		facebookFilter.setTokenServices(tokenServices);
+    @Autowired
+    GenerateTradeData tradeData;
 
-		filters.add(facebookFilter);
+    @Autowired
+    GenerateTradeCacheData tradeDataCache;
 
-		OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter(
-				"/login/github");
-		OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
-		githubFilter.setRestTemplate(githubTemplate);
-		tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), github().getClientId());
-		tokenServices.setRestTemplate(githubTemplate);
-		githubFilter.setTokenServices(tokenServices);
-		filters.add(githubFilter);
+    @Autowired(required = true)
+    private TradeInjectorMessageRepository repo;
 
-		filter.setFilters(filters);
-		return filter;
+    @Autowired
+    private TradeReportRepository reportRepo;
 
-	}
+    @Autowired
+    private TradeInjectorProfileRepository profileRepo;
+
+    @Autowired
+    private KafkaSink sender;
+
+    @Value("${kafka.topic.trade}")
+    private String tradeTopic;
+
+    @RequestMapping("/user")
+    public Principal user(Principal principal) {
+        return principal;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.antMatcher("/**").authorizeRequests()
+                .antMatchers("/", "/login/**", "/webjars/**", "/dist/**", "/scripts/**", "/jumbotron.css",
+                        "/injectorUI/**")
+                .permitAll().anyRequest().authenticated().and().logout().logoutSuccessUrl("/").permitAll().and().csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
+                .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+
+    }
+
+    private Filter ssoFilter() {
+
+        CompositeFilter filter = new CompositeFilter();
+        List<Filter> filters = new ArrayList<Filter>();
 
-	@Bean
-	@ConfigurationProperties("facebook.client")
-	public AuthorizationCodeResourceDetails facebook() {
-		return new AuthorizationCodeResourceDetails();
-	}
+        OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
+                "/login/facebook");
+        OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
+        facebookFilter.setRestTemplate(facebookTemplate);
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(),
+                facebook().getClientId());
+        tokenServices.setRestTemplate(facebookTemplate);
+        facebookFilter.setTokenServices(tokenServices);
 
-	@Bean
-	@ConfigurationProperties("facebook.resource")
-	public ResourceServerProperties facebookResource() {
-		return new ResourceServerProperties();
-	}
+        filters.add(facebookFilter);
 
-	@Bean
-	public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(filter);
-		registration.setOrder(-100);
-		return registration;
-	}
+        OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter(
+                "/login/github");
+        OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(github(), oauth2ClientContext);
+        githubFilter.setRestTemplate(githubTemplate);
+        tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), github().getClientId());
+        tokenServices.setRestTemplate(githubTemplate);
+        githubFilter.setTokenServices(tokenServices);
+        filters.add(githubFilter);
 
-	@Bean
-	@ConfigurationProperties("github.client")
-	public AuthorizationCodeResourceDetails github() {
-		return new AuthorizationCodeResourceDetails();
-	}
+        filter.setFilters(filters);
+        return filter;
 
-	@Bean
-	@ConfigurationProperties("github.resource")
-	public ResourceServerProperties githubResource() {
-		return new ResourceServerProperties();
-	}
+    }
 
-	@RequestMapping(value = "/tradeMessageStopForProfile", method = RequestMethod.POST)
-	public void tradeStopForProfile(@RequestBody String messageId) {
+    @Bean
+    @ConfigurationProperties("facebook.client")
+    public AuthorizationCodeResourceDetails facebook() {
+        return new AuthorizationCodeResourceDetails();
+    }
 
-		LOG.info("Stop run for the following Id " + messageId);
+    @Bean
+    @ConfigurationProperties("facebook.resource")
+    public ResourceServerProperties facebookResource() {
+        return new ResourceServerProperties();
+    }
 
-		// we need to remove the id= bit from message id
-		messageId = messageId.substring(messageId.indexOf('=') + 1);
+    @Bean
+    public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(filter);
+        registration.setOrder(-100);
+        return registration;
+    }
 
-		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
-				TradeInjectorProfile.class);
+    @Bean
+    @ConfigurationProperties("github.client")
+    public AuthorizationCodeResourceDetails github() {
+        return new AuthorizationCodeResourceDetails();
+    }
 
-		if (profile != null) {
-			profile.setRun_mode(TradeInjectRunModes.STOP.getRunMode());
-			profileRepo.save(profile);
+    @Bean
+    @ConfigurationProperties("github.resource")
+    public ResourceServerProperties githubResource() {
+        return new ResourceServerProperties();
+    }
 
-			// refreshTradeInjectQueue();
+    @RequestMapping(value = "/tradeMessageStopForProfile", method = RequestMethod.POST)
+    public void tradeStopForProfile(@RequestBody String messageId) {
 
-		} else
-			LOG.error("Unable to find message for the following id " + messageId);
+        LOG.info("Stop run for the following Id " + messageId);
 
-	}
+        // we need to remove the id= bit from message id
+        messageId = messageId.substring(messageId.indexOf('=') + 1);
 
-	@RequestMapping(value = "/tradeMessagePlayForProfile", method = RequestMethod.POST)
-	public void tradePlayForProfile(@RequestBody String messageId) throws Exception {
+        TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
+                TradeInjectorProfile.class);
 
-		// we need to remove the id= bit from message id
-		messageId = messageId.substring(messageId.indexOf('=') + 1);
-		LOG.info("Playing for the following Id " + messageId);
+        if (profile != null) {
+            profile.setRun_mode(TradeInjectRunModes.STOP.getRunMode());
+            profileRepo.save(profile);
 
-		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
-				TradeInjectorProfile.class);
+            // refreshTradeInjectQueue();
 
-		if (profile != null) {
-			runTradeInjectForTradeProfileId(profile);
-		} else
-			LOG.error("Unable to find profile for the following id " + messageId);
+        } else
+            LOG.error("Unable to find message for the following id " + messageId);
 
-	}
+    }
 
-	private String getRHSOfString(String equation) {
+    @RequestMapping(value = "/tradeMessagePlayForProfile", method = RequestMethod.POST)
+    public void tradePlayForProfile(@RequestBody String messageId) throws Exception {
 
-		if (equation == null)
-			return null;
+        // we need to remove the id= bit from message id
+        messageId = messageId.substring(messageId.indexOf('=') + 1);
+        LOG.info("Playing for the following Id " + messageId);
 
-		return equation.substring(equation.indexOf('=') + 1);
-	}
+        TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(messageId)),
+                TradeInjectorProfile.class);
 
-	@RequestMapping(value = "/tradeMessageRepeatForProfile", method = RequestMethod.POST)
-	public void repeatRunOnProfile(@RequestBody String profileId) throws Exception {
+        if (profile != null) {
+            runTradeInjectForTradeProfileId(profile);
+        } else
+            LOG.error("Unable to find profile for the following id " + messageId);
 
-		// we need to remove the id= bit from message id
-		profileId = profileId.substring(profileId.indexOf('=') + 1);
-		LOG.info("Running for the following Id " + profileId);
+    }
 
-		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
-				TradeInjectorProfile.class);
+    private String getRHSOfString(String equation) {
 
-		if (profile != null) {
+        if (equation == null)
+            return null;
 
-			// remove the reports for Trade Data
-			TradeReport tradeReport = coreTemplate
-					.findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)), TradeReport.class);
-			if (tradeReport != null)
-				reportRepo.delete(tradeReport);
+        return equation.substring(equation.indexOf('=') + 1);
+    }
 
-			// reset the message count to 0
-			profile.setCurrentMessageCount(0);
-			runTradeInjectForTradeProfileId(profile);
+    @RequestMapping(value = "/tradeMessageRepeatForProfile", method = RequestMethod.POST)
+    public void repeatRunOnProfile(@RequestBody String profileId) throws Exception {
 
-		} else
-			LOG.error("Unable to find message for the following id " + profileId);
+        // we need to remove the id= bit from message id
+        profileId = profileId.substring(profileId.indexOf('=') + 1);
+        LOG.info("Running for the following Id " + profileId);
 
-	}
+        TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
+                TradeInjectorProfile.class);
 
-	@RequestMapping(value = "/tradeRunStart", method = RequestMethod.POST)
-	public void injectTradesOnProfile(@RequestBody TradeInjectorProfile profile) throws Exception {
+        if (profile != null) {
 
-		LOG.info("Running for the following profile... " + profile.id);
-		runTradeInjectForTradeProfileId(profile);
-		LOG.info("Done running for the following Profile " + profile.id);
+            // remove the reports for Trade Data
+            TradeReport tradeReport = coreTemplate
+                    .findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)), TradeReport.class);
+            if (tradeReport != null)
+                reportRepo.delete(tradeReport);
 
-	}
+            // reset the message count to 0
+            profile.setCurrentMessageCount(0);
+            runTradeInjectForTradeProfileId(profile);
 
-	@RequestMapping(value = "/deleteProfile", method = RequestMethod.POST)
-	public void deleteProfile(@RequestBody String profileId) {
+        } else
+            LOG.error("Unable to find message for the following id " + profileId);
 
-		profileId = profileId.substring(profileId.indexOf('=') + 1);
+    }
 
-		// delete any reports associated to this profile
-		TradeReport report = coreTemplate.findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)),
-				TradeReport.class);
+    @RequestMapping(value = "/tradeRunStart", method = RequestMethod.POST)
+    public void injectTradesOnProfile(@RequestBody TradeInjectorProfile profile) throws Exception {
 
-		LOG.info("Deleting TradeReport... " + profileId);
-		if (report != null) {
-			reportRepo.delete(report);
-		} else {
-			LOG.warn("No trade report found with the following profile id " + profileId);
-		}
+        LOG.info("Running for the following profile... " + profile.id);
+        runTradeInjectForTradeProfileId(profile);
+        LOG.info("Done running for the following Profile " + profile.id);
 
-		LOG.info("Deleting profile... " + profileId);
-		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
-				TradeInjectorProfile.class);
+    }
 
-		if (profile != null) {
+    @RequestMapping(value = "/deleteProfile", method = RequestMethod.POST)
+    public void deleteProfile(@RequestBody String profileId) {
 
-			profileRepo.delete(profile);
+        profileId = profileId.substring(profileId.indexOf('=') + 1);
 
-		} else {
-			LOG.warn("No profile found with the following id " + profileId);
-		}
-		LOG.info("Done deleting profile " + profileId);
+        // delete any reports associated to this profile
+        TradeReport report = coreTemplate.findOne(Query.query(Criteria.where("injectorProfileId").is(profileId)),
+                TradeReport.class);
 
-	}
+        LOG.info("Deleting TradeReport... " + profileId);
+        if (report != null) {
+            reportRepo.delete(report);
+        } else {
+            LOG.warn("No trade report found with the following profile id " + profileId);
+        }
 
-	private void runTradeInjectForTradeProfileId(TradeInjectorProfile profile) throws Exception {
+        LOG.info("Deleting profile... " + profileId);
+        TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
+                TradeInjectorProfile.class);
 
-		// List<Instrument> listOfInstruments = new GenerateRandomInstruments()
-		// .createRandomData(new Integer(profile.getNumberOfInstruments()));
-		// List<Party> listOfParties = new GenerateRandomParty()
-		// .createRandomData(new Integer(profile.getNumberOfParties()));
+        if (profile != null) {
 
-		IMap<String, Trade> mapTrades = hazelcastInstance.getMap("trade");
-		IMap<String, Party> partyMap = hazelcastInstance.getMap("party");
+            profileRepo.delete(profile);
 
-		GeneratePartyCache cacheGenerator = new GeneratePartyCache();
-		cacheGenerator.populateMap(profile.getNumberOfParties(), partyMap);
+        } else {
+            LOG.warn("No profile found with the following id " + profileId);
+        }
+        LOG.info("Done deleting profile " + profileId);
 
-		LOG.info("Successfully generated party cache");
+    }
 
-		IMap<String, Instrument> instrumentMap = hazelcastInstance.getMap("instrument");
-		GenerateInstrumentCache insCacheGenerator = new GenerateInstrumentCache();
-		insCacheGenerator.populateMap(profile.getNumberOfInstruments(), instrumentMap);
+    private void runTradeInjectForTradeProfileId(TradeInjectorProfile profile) throws Exception {
 
-		LOG.info("Successfully generated instrument cache");
+        // List<Instrument> listOfInstruments = new GenerateRandomInstruments()
+        // .createRandomData(new Integer(profile.getNumberOfInstruments()));
+        // List<Party> listOfParties = new GenerateRandomParty()
+        // .createRandomData(new Integer(profile.getNumberOfParties()));
 
-		int startFrom = new Integer(profile.getCurrentMessageCount());
-		int numberOfTrades = new Integer(profile.getNumberOfTrades());
+        IMap<String, Trade> mapTrades = hazelcastInstance.getMap("trade");
+        IMap<String, Party> partyMap = hazelcastInstance.getMap("party");
 
-		// set it to run
-		profile.setRun_mode(TradeInjectRunModes.RUNNING.getRunMode());
-		while (startFrom != numberOfTrades) {
+        GeneratePartyCache cacheGenerator = new GeneratePartyCache();
+        cacheGenerator.populateMap(profile.getNumberOfParties(), partyMap);
 
-			startFrom++;
-			Trade[] trades = tradeDataCache.createTrade(startFrom, partyMap, profile.getNumberOfParties(),
-					instrumentMap, profile.getNumberOfInstruments());
+        LOG.info("Successfully generated party cache");
 
-			// send it to the Kafka sink
-			LOG.info("Sending the following trades " + trades[0].toJSON() + " ####### " + trades[1].toJSON());
+        IMap<String, Instrument> instrumentMap = hazelcastInstance.getMap("instrument");
+        GenerateInstrumentCache insCacheGenerator = new GenerateInstrumentCache();
+        insCacheGenerator.populateMap(profile.getNumberOfInstruments(), instrumentMap);
 
-			sender.send(tradeTopic, trades[0].getTradeId(), trades[0].toJSON());
-			sender.send(tradeTopic, trades[1].getTradeId(), trades[1].toJSON());
+        LOG.info("Successfully generated instrument cache");
 
-			// mapTrades.put(trades[0].getExecutionId(), trades[0]); //for buy
-			// mapTrades.put(trades[1].getExecutionId(), trades[1]); //for sell
+        int startFrom = new Integer(profile.getCurrentMessageCount());
+        int numberOfTrades = new Integer(profile.getNumberOfTrades());
 
-			// convertToReportAndSaveForProfile(trades[0], profile.getUserId(),
-			// profile.id);
-			// convertToReportAndSaveForProfile(trades[1], profile.getUserId(),
-			// profile.id);
-			profile.setCurrentMessageCount(startFrom);
+        // set it to run
+        profile.setRun_mode(TradeInjectRunModes.RUNNING.getRunMode());
+        while (startFrom != numberOfTrades) {
 
-			// sleep for simulated wait time
-			profileRepo.save(profile);
-			Thread.sleep(profile.getSimulatedWaitTime());
+            startFrom++;
+            Trade[] trades = tradeDataCache.createTrade(startFrom, partyMap, profile.getNumberOfParties(),
+                    instrumentMap, profile.getNumberOfInstruments());
 
-			// if the kill flag is set by the UI return the process.
-			if (profileRepo.findById(profile.id).get().getRun_mode() == TradeInjectRunModes.STOP.getRunMode())
+            // send it to the Kafka sink
+            LOG.info("Sending the following trades " + trades[0].toJSON() + " ####### " + trades[1].toJSON());
 
-				// kill it and return
+            sender.send(tradeTopic, trades[0].getTradeId(), trades[0].toJSON());
+            sender.send(tradeTopic, trades[1].getTradeId(), trades[1].toJSON());
 
-				break;
-		}
+            // mapTrades.put(trades[0].getExecutionId(), trades[0]); //for buy
+            // mapTrades.put(trades[1].getExecutionId(), trades[1]); //for sell
 
-		// finally mark it as complete
-		if (startFrom == numberOfTrades) {
-			profile.setCurrentMessageCount(startFrom);
-			profile.setRun_mode(TradeInjectRunModes.COMPLETED.getRunMode());
-			profileRepo.save(profile);
-		}
+            // convertToReportAndSaveForProfile(trades[0], profile.getUserId(),
+            // profile.id);
+            // convertToReportAndSaveForProfile(trades[1], profile.getUserId(),
+            // profile.id);
+            profile.setCurrentMessageCount(startFrom);
 
-		LOG.info("Successfully generated trades, quitting");
+            // sleep for simulated wait time
+            profileRepo.save(profile);
+            Thread.sleep(profile.getSimulatedWaitTime());
 
-	}
+            // if the kill flag is set by the UI return the process.
+            TradeInjectorProfile runningProfile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profile.id)),
+                    TradeInjectorProfile.class);
+            if (runningProfile.getRun_mode() == TradeInjectRunModes.STOP.getRunMode())
 
-	private void convertToReportAndSaveForProfile(Trade ack, String username, String injectorProfileId) {
+                // kill it and return
 
-		TradeReport tradeReport = coreTemplate
-				.findOne(Query.query(Criteria.where("injectorProfileId").is(injectorProfileId)), TradeReport.class);
+                break;
+        }
 
-		if (tradeReport == null) {
-			// create a new one
-			tradeReport = new TradeReport();
-			tradeReport.setCurrentTradeProgress(1);
-			tradeReport.setInjectorProfileId(injectorProfileId);
-			tradeReport.setName("Report_" + injectorProfileId);
-			tradeReport.setReportDate(new Date(System.currentTimeMillis()));
-			tradeReport.setTradeCount(1);
-			tradeReport.setUserId(username);
+        // finally mark it as complete
+        if (startFrom == numberOfTrades) {
+            profile.setCurrentMessageCount(startFrom);
+            profile.setRun_mode(TradeInjectRunModes.COMPLETED.getRunMode());
+            profileRepo.save(profile);
+        }
 
-			List<PartyReport> parties = new ArrayList<PartyReport>();
-			PartyReport newParty = new PartyReport();
-			newParty.setCurrentTradeCount(1);
-			newParty.setPreviousTradeCount(1);
-			newParty.setId(ack.getClientId());
-			newParty.setName(ack.getClientId());
-			parties.add(newParty);
+        LOG.info("Successfully generated trades, quitting");
 
-			tradeReport.setParties(parties);
+    }
 
-			// now add the newly created instrument
-			List<InstrumentReport> instruments = new ArrayList<InstrumentReport>();
-			InstrumentReport newInstrument = new InstrumentReport();
-			newInstrument.setId(ack.getInstrumentId());
-			newInstrument.setName(ack.getInstrumentId());
-			newInstrument.setCurrentTradeCount(1);
-			instruments.add(newInstrument);
+    private void convertToReportAndSaveForProfile(Trade ack, String username, String injectorProfileId) {
 
-			tradeReport.setInstruments(instruments);
+        TradeReport tradeReport = coreTemplate
+                .findOne(Query.query(Criteria.where("injectorProfileId").is(injectorProfileId)), TradeReport.class);
 
-		} else {
-			// we have found it now update the all the counters
-			int progress = tradeReport.getCurrentTradeProgress();
-			tradeReport.setCurrentTradeProgress(++progress);
-			List<PartyReport> parties = tradeReport.getParties();
-			List<InstrumentReport> instruments = tradeReport.getInstruments();
+        if (tradeReport == null) {
+            // create a new one
+            tradeReport = new TradeReport();
+            tradeReport.setCurrentTradeProgress(1);
+            tradeReport.setInjectorProfileId(injectorProfileId);
+            tradeReport.setName("Report_" + injectorProfileId);
+            tradeReport.setReportDate(new Date(System.currentTimeMillis()));
+            tradeReport.setTradeCount(1);
+            tradeReport.setUserId(username);
 
-			List<PartyReport> modifiedParties = parties.stream().filter(a -> a.getName().equals(ack.getClientId()))
-					.map(a -> a.incrementCountByOne()).collect(Collectors.toList());
-			List<PartyReport> nonModifiedParties = parties.stream().filter(a -> !a.getName().equals(ack.getClientId()))
-					.collect(Collectors.toList());
+            List<PartyReport> parties = new ArrayList<PartyReport>();
+            PartyReport newParty = new PartyReport();
+            newParty.setCurrentTradeCount(1);
+            newParty.setPreviousTradeCount(1);
+            newParty.setId(ack.getClientId());
+            newParty.setName(ack.getClientId());
+            parties.add(newParty);
 
-			if (modifiedParties.size() == 0) {
-				// add the new Party in
-				PartyReport newParty = new PartyReport();
-				newParty.setCurrentTradeCount(1);
-				newParty.setId(ack.getClientId());
-				newParty.setName(ack.getClientId());
-				modifiedParties.add(newParty);
-			}
+            tradeReport.setParties(parties);
 
-			parties = Stream.concat(modifiedParties.stream(), nonModifiedParties.stream()).collect(Collectors.toList());
+            // now add the newly created instrument
+            List<InstrumentReport> instruments = new ArrayList<InstrumentReport>();
+            InstrumentReport newInstrument = new InstrumentReport();
+            newInstrument.setId(ack.getInstrumentId());
+            newInstrument.setName(ack.getInstrumentId());
+            newInstrument.setCurrentTradeCount(1);
+            instruments.add(newInstrument);
 
-			// now do the same for the instruments
-			List<InstrumentReport> modifiedInstruments = instruments.stream()
-					.filter(a -> a.getId().equals(ack.getInstrumentId())).map(a -> a.incrementCountByOne())
-					.collect(Collectors.toList());
-			List<InstrumentReport> nonModifiedInstruments = instruments.stream()
-					.filter(a -> !a.getId().equals(ack.getInstrumentId())).collect(Collectors.toList());
+            tradeReport.setInstruments(instruments);
 
-			if (modifiedInstruments.size() == 0) {
+        } else {
+            // we have found it now update the all the counters
+            int progress = tradeReport.getCurrentTradeProgress();
+            tradeReport.setCurrentTradeProgress(++progress);
+            List<PartyReport> parties = tradeReport.getParties();
+            List<InstrumentReport> instruments = tradeReport.getInstruments();
 
-				InstrumentReport newInstrument = new InstrumentReport();
-				newInstrument.setId(ack.getInstrumentId());
-				newInstrument.setName(ack.getInstrumentId());
-				newInstrument.setCurrentTradeCount(1);
-				modifiedInstruments.add(newInstrument);
+            List<PartyReport> modifiedParties = parties.stream().filter(a -> a.getName().equals(ack.getClientId()))
+                    .map(a -> a.incrementCountByOne()).collect(Collectors.toList());
+            List<PartyReport> nonModifiedParties = parties.stream().filter(a -> !a.getName().equals(ack.getClientId()))
+                    .collect(Collectors.toList());
 
-			}
+            if (modifiedParties.size() == 0) {
+                // add the new Party in
+                PartyReport newParty = new PartyReport();
+                newParty.setCurrentTradeCount(1);
+                newParty.setId(ack.getClientId());
+                newParty.setName(ack.getClientId());
+                modifiedParties.add(newParty);
+            }
 
-			// finally concat the list
-			instruments = Stream.concat(modifiedInstruments.stream(), nonModifiedInstruments.stream())
-					.collect(Collectors.toList());
+            parties = Stream.concat(modifiedParties.stream(), nonModifiedParties.stream()).collect(Collectors.toList());
 
-			tradeReport.setParties(parties);
-			tradeReport.setInstruments(instruments);
+            // now do the same for the instruments
+            List<InstrumentReport> modifiedInstruments = instruments.stream()
+                    .filter(a -> a.getId().equals(ack.getInstrumentId())).map(a -> a.incrementCountByOne())
+                    .collect(Collectors.toList());
+            List<InstrumentReport> nonModifiedInstruments = instruments.stream()
+                    .filter(a -> !a.getId().equals(ack.getInstrumentId())).collect(Collectors.toList());
 
-		}
+            if (modifiedInstruments.size() == 0) {
 
-		reportRepo.save(tradeReport);
+                InstrumentReport newInstrument = new InstrumentReport();
+                newInstrument.setId(ack.getInstrumentId());
+                newInstrument.setName(ack.getInstrumentId());
+                newInstrument.setCurrentTradeCount(1);
+                modifiedInstruments.add(newInstrument);
 
-	}
+            }
 
-	@Deprecated
-	private void convertToReportAndSaveForProfile(TradeAcknowledge ack, String username) {
+            // finally concat the list
+            instruments = Stream.concat(modifiedInstruments.stream(), nonModifiedInstruments.stream())
+                    .collect(Collectors.toList());
 
-		TradeReport tradeReport = coreTemplate.findOne(
-				Query.query(Criteria.where("injectorProfileId").is(ack.getProfileIdentifier())), TradeReport.class);
+            tradeReport.setParties(parties);
+            tradeReport.setInstruments(instruments);
 
-		if (tradeReport == null) {
-			// create a new one
-			tradeReport = new TradeReport();
-			tradeReport.setCurrentTradeProgress(1);
-			tradeReport.setInjectorMessageId(ack.getInjectIdentifier());
-			tradeReport.setInjectorProfileId(ack.getProfileIdentifier());
-			tradeReport.setName("Report_" + ack.getProfileIdentifier());
-			tradeReport.setReportDate(new Date(System.currentTimeMillis()));
-			tradeReport.setTradeCount(1);
-			tradeReport.setUserId(username);
+        }
 
-			List<PartyReport> parties = new ArrayList<PartyReport>();
-			PartyReport newParty = new PartyReport();
-			newParty.setCurrentTradeCount(1);
-			newParty.setPreviousTradeCount(1);
-			newParty.setId(ack.getClientName());
-			newParty.setName(ack.getClientName());
-			parties.add(newParty);
+        reportRepo.save(tradeReport);
 
-			tradeReport.setParties(parties);
+    }
 
-			// now add the newly created instrument
-			List<InstrumentReport> instruments = new ArrayList<InstrumentReport>();
-			InstrumentReport newInstrument = new InstrumentReport();
-			newInstrument.setId(ack.getInstrumentId());
-			newInstrument.setName(ack.getInstrumentId());
-			newInstrument.setCurrentTradeCount(1);
-			instruments.add(newInstrument);
+    @Deprecated
+    private void convertToReportAndSaveForProfile(TradeAcknowledge ack, String username) {
 
-			tradeReport.setInstruments(instruments);
+        TradeReport tradeReport = coreTemplate.findOne(
+                Query.query(Criteria.where("injectorProfileId").is(ack.getProfileIdentifier())), TradeReport.class);
 
-		} else {
-			// we have found it now update the all the counters
-			int progress = tradeReport.getCurrentTradeProgress();
-			tradeReport.setCurrentTradeProgress(++progress);
-			List<PartyReport> parties = tradeReport.getParties();
-			List<InstrumentReport> instruments = tradeReport.getInstruments();
+        if (tradeReport == null) {
+            // create a new one
+            tradeReport = new TradeReport();
+            tradeReport.setCurrentTradeProgress(1);
+            tradeReport.setInjectorMessageId(ack.getInjectIdentifier());
+            tradeReport.setInjectorProfileId(ack.getProfileIdentifier());
+            tradeReport.setName("Report_" + ack.getProfileIdentifier());
+            tradeReport.setReportDate(new Date(System.currentTimeMillis()));
+            tradeReport.setTradeCount(1);
+            tradeReport.setUserId(username);
 
-			List<PartyReport> modifiedParties = parties.stream().filter(a -> a.getId().equals(ack.getClientName()))
-					.map(a -> a.incrementCountByOne()).collect(Collectors.toList());
-			List<PartyReport> nonModifiedParties = parties.stream().filter(a -> !a.getId().equals(ack.getClientName()))
-					.collect(Collectors.toList());
+            List<PartyReport> parties = new ArrayList<PartyReport>();
+            PartyReport newParty = new PartyReport();
+            newParty.setCurrentTradeCount(1);
+            newParty.setPreviousTradeCount(1);
+            newParty.setId(ack.getClientName());
+            newParty.setName(ack.getClientName());
+            parties.add(newParty);
 
-			if (modifiedParties.size() == 0) {
-				// add the new Party in
-				PartyReport newParty = new PartyReport();
-				newParty.setCurrentTradeCount(1);
-				newParty.setId(ack.getClientName());
-				newParty.setName(ack.getClientName());
-				modifiedParties.add(newParty);
-			}
+            tradeReport.setParties(parties);
 
-			parties = Stream.concat(modifiedParties.stream(), nonModifiedParties.stream()).collect(Collectors.toList());
+            // now add the newly created instrument
+            List<InstrumentReport> instruments = new ArrayList<InstrumentReport>();
+            InstrumentReport newInstrument = new InstrumentReport();
+            newInstrument.setId(ack.getInstrumentId());
+            newInstrument.setName(ack.getInstrumentId());
+            newInstrument.setCurrentTradeCount(1);
+            instruments.add(newInstrument);
 
-			// now do the same for the instruments
-			List<InstrumentReport> modifiedInstruments = instruments.stream()
-					.filter(a -> a.getId().equals(ack.getInstrumentId())).map(a -> a.incrementCountByOne())
-					.collect(Collectors.toList());
-			List<InstrumentReport> nonModifiedInstruments = instruments.stream()
-					.filter(a -> !a.getId().equals(ack.getInstrumentId())).collect(Collectors.toList());
+            tradeReport.setInstruments(instruments);
 
-			if (modifiedInstruments.size() == 0) {
+        } else {
+            // we have found it now update the all the counters
+            int progress = tradeReport.getCurrentTradeProgress();
+            tradeReport.setCurrentTradeProgress(++progress);
+            List<PartyReport> parties = tradeReport.getParties();
+            List<InstrumentReport> instruments = tradeReport.getInstruments();
 
-				InstrumentReport newInstrument = new InstrumentReport();
-				newInstrument.setId(ack.getInstrumentId());
-				newInstrument.setName(ack.getInstrumentId());
-				newInstrument.setCurrentTradeCount(1);
-				modifiedInstruments.add(newInstrument);
+            List<PartyReport> modifiedParties = parties.stream().filter(a -> a.getId().equals(ack.getClientName()))
+                    .map(a -> a.incrementCountByOne()).collect(Collectors.toList());
+            List<PartyReport> nonModifiedParties = parties.stream().filter(a -> !a.getId().equals(ack.getClientName()))
+                    .collect(Collectors.toList());
 
-			}
+            if (modifiedParties.size() == 0) {
+                // add the new Party in
+                PartyReport newParty = new PartyReport();
+                newParty.setCurrentTradeCount(1);
+                newParty.setId(ack.getClientName());
+                newParty.setName(ack.getClientName());
+                modifiedParties.add(newParty);
+            }
 
-			// finally concat the list
-			instruments = Stream.concat(modifiedInstruments.stream(), nonModifiedInstruments.stream())
-					.collect(Collectors.toList());
+            parties = Stream.concat(modifiedParties.stream(), nonModifiedParties.stream()).collect(Collectors.toList());
 
-			tradeReport.setParties(parties);
-			tradeReport.setInstruments(instruments);
+            // now do the same for the instruments
+            List<InstrumentReport> modifiedInstruments = instruments.stream()
+                    .filter(a -> a.getId().equals(ack.getInstrumentId())).map(a -> a.incrementCountByOne())
+                    .collect(Collectors.toList());
+            List<InstrumentReport> nonModifiedInstruments = instruments.stream()
+                    .filter(a -> !a.getId().equals(ack.getInstrumentId())).collect(Collectors.toList());
 
-		}
+            if (modifiedInstruments.size() == 0) {
 
-		reportRepo.save(tradeReport);
+                InstrumentReport newInstrument = new InstrumentReport();
+                newInstrument.setId(ack.getInstrumentId());
+                newInstrument.setName(ack.getInstrumentId());
+                newInstrument.setCurrentTradeCount(1);
+                modifiedInstruments.add(newInstrument);
 
-	}
+            }
 
-	@RequestMapping(value = "/saveTradeInjectProfile", method = RequestMethod.POST)
-	public ResponseEntity<TradeInjectorProfile> saveTradeInjectProfile(@RequestBody TradeInjectorProfile profile) {
+            // finally concat the list
+            instruments = Stream.concat(modifiedInstruments.stream(), nonModifiedInstruments.stream())
+                    .collect(Collectors.toList());
 
-		// set it to stop so that it can show up as play on the profile
-		profile.setRun_mode(TradeInjectRunModes.STOP.getRunMode());
+            tradeReport.setParties(parties);
+            tradeReport.setInstruments(instruments);
 
-		profileRepo.save(profile);
+        }
 
-		return ResponseEntity.ok(profile);
+        reportRepo.save(tradeReport);
 
-	}
+    }
 
-	@RequestMapping(value = "/getAllInjectProfiles", method = RequestMethod.GET)
-	public ResponseEntity<List<TradeInjectorProfile>> saveTradeInjectProfile() {
+    @RequestMapping(value = "/saveTradeInjectProfile", method = RequestMethod.POST)
+    public ResponseEntity<TradeInjectorProfile> saveTradeInjectProfile(@RequestBody TradeInjectorProfile profile) {
 
-		return ResponseEntity.ok(profileRepo.findAll());
+        // set it to stop so that it can show up as play on the profile
+        profile.setRun_mode(TradeInjectRunModes.STOP.getRunMode());
 
-	}
+        profileRepo.save(profile);
 
-	@RequestMapping(value = "/getProfile", method = RequestMethod.POST)
-	public ResponseEntity<TradeInjectorProfile> getProfile(@RequestBody String profileId) {
+        return ResponseEntity.ok(profile);
 
-		profileId = profileId.substring(profileId.indexOf('=') + 1);
+    }
 
-		TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
-				TradeInjectorProfile.class);
+    @RequestMapping(value = "/getAllInjectProfiles", method = RequestMethod.GET)
+    public ResponseEntity<List<TradeInjectorProfile>> saveTradeInjectProfile() {
 
-		if (profile == null)
+        return ResponseEntity.ok(profileRepo.findAll());
 
-			LOG.warn("No profile found with the following id " + profileId);
+    }
 
-		return ResponseEntity.ok(profile);
+    @RequestMapping(value = "/getProfile", method = RequestMethod.POST)
+    public ResponseEntity<TradeInjectorProfile> getProfile(@RequestBody String profileId) {
 
-	}
+        profileId = profileId.substring(profileId.indexOf('=') + 1);
 
-	/**
-	 * Returns the list of instruments available in the cache
-	 * 
-	 * @return ResponseEntity
+        TradeInjectorProfile profile = coreTemplate.findOne(Query.query(Criteria.where("id").is(profileId)),
+                TradeInjectorProfile.class);
+
+        if (profile == null)
+
+            LOG.warn("No profile found with the following id " + profileId);
+
+        return ResponseEntity.ok(profile);
+
+    }
+
+    /**
+     * Returns the list of instruments available in the cache
+     *
+     * @return ResponseEntity
      */
-	@RequestMapping(value = "/getAllInstruments", method = RequestMethod.POST)
-	public ResponseEntity<Collection<InstrumentReport>> getAllInstruments(@RequestBody String pageMarker) {
+    @RequestMapping(value = "/getAllInstruments", method = RequestMethod.POST)
+    public ResponseEntity<Collection<InstrumentReport>> getAllInstruments(@RequestBody String pageMarker) {
 
-		IMap<String, Instrument> mapInstruments = hazelcastInstance.getMap(BusinessServiceCacheNames.INSTRUMENT_CACHE);
+        IMap<String, Instrument> mapInstruments = hazelcastInstance.getMap(BusinessServiceCacheNames.INSTRUMENT_CACHE);
 
-		pageMarker = getRHSOfString(pageMarker);
-		LOG.info("Page Marker is  " + pageMarker);
+        pageMarker = getRHSOfString(pageMarker);
+        LOG.info("Page Marker is  " + pageMarker);
 
-		// no data do not generate
-		if (mapInstruments.size() == 0) {
-			LOG.warn("No instruments found");
-			return ResponseEntity.ok(new ArrayList<InstrumentReport>());
-		}
+        // no data do not generate
+        if (mapInstruments.size() == 0) {
+            LOG.warn("No instruments found");
+            return ResponseEntity.ok(new ArrayList<InstrumentReport>());
+        }
 
-		Predicate predicate = new SqlPredicate(String.format("instrumentId like %s", pageMarker + "%"));
-		Collection<InstrumentReport> ins = mapInstruments.values(predicate).stream()
-				.map(x -> convertInstrumentToReport(x)).collect(Collectors.toList());
-		LOG.info("Number of Instruments to return for following page marker " + pageMarker + " " + ins.size());
+        Predicate predicate = new SqlPredicate(String.format("instrumentId like %s", pageMarker + "%"));
+        Collection<InstrumentReport> ins = mapInstruments.values(predicate).stream()
+                .map(x -> convertInstrumentToReport(x)).collect(Collectors.toList());
+        LOG.info("Number of Instruments to return for following page marker " + pageMarker + " " + ins.size());
 
-		return ResponseEntity.ok(ins);
+        return ResponseEntity.ok(ins);
 
-	}
+    }
 
-	private InstrumentReport convertInstrumentToReport(Instrument ins) {
-		InstrumentReport report = new InstrumentReport();
-		report.setId(ins.getSymbol());
-		report.setName(ins.getIssuer());
+    private InstrumentReport convertInstrumentToReport(Instrument ins) {
+        InstrumentReport report = new InstrumentReport();
+        report.setId(ins.getSymbol());
+        report.setName(ins.getIssuer());
 
-		return report;
-	}
+        return report;
+    }
 
-	@RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
-	public ResponseEntity<List<Object>> getAllPositionAccounts() {
+    @RequestMapping(value = "/getAllPositionAccounts", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> getAllPositionAccounts() {
 
-		RestTemplate restTemplate = new RestTemplate();
-		LOG.info("Pinging the following URL http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts");
+        RestTemplate restTemplate = new RestTemplate();
+        LOG.info("Pinging the following URL http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts");
 
-		// needs to be recoded via zookeeper
-		// TODO: Move to Zookeeper and discover this service
-		return ResponseEntity.ok(restTemplate
-				.getForObject("http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts", List.class));
+        // needs to be recoded via zookeeper
+        // TODO: Move to Zookeeper and discover this service
+        return ResponseEntity.ok(restTemplate
+                .getForObject("http://192.168.1.176:8093/positionqueryservice/getAllPositionAccounts", List.class));
 
-	}
+    }
 
-	/*
-	 * private TradeAcknowledge convertToAckForProfile(Trade aTrade, String id) {
-	 * TradeAcknowledge ack = new TradeAcknowledge(); if (aTrade != null) {
-	 * ack.setProfileIdentifier(id); ack.setClientName(aTrade.getClientName());
-	 * ack.setInstrumentId(aTrade.getInstrumentId()); ack.setSide(aTrade.getSide());
-	 * ack.setTradeDate(aTrade.getTradeDate().toString()); ack.setTradePx(new
-	 * Double(aTrade.getTradePx()).toString()); ack.setTradeQty(new
-	 * Integer(aTrade.getTradeQty()).toString()); }
-	 * 
-	 * return ack; }
-	 */
+    /*
+     * private TradeAcknowledge convertToAckForProfile(Trade aTrade, String id) {
+     * TradeAcknowledge ack = new TradeAcknowledge(); if (aTrade != null) {
+     * ack.setProfileIdentifier(id); ack.setClientName(aTrade.getClientName());
+     * ack.setInstrumentId(aTrade.getInstrumentId()); ack.setSide(aTrade.getSide());
+     * ack.setTradeDate(aTrade.getTradeDate().toString()); ack.setTradePx(new
+     * Double(aTrade.getTradePx()).toString()); ack.setTradeQty(new
+     * Integer(aTrade.getTradeQty()).toString()); }
+     *
+     * return ack; }
+     */
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(TradeInjectorController.class, args);
-	}
+        SpringApplication.run(TradeInjectorController.class, args);
+    }
 
 }

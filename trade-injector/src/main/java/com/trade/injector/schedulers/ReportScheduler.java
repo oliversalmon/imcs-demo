@@ -1,38 +1,32 @@
 package com.trade.injector.schedulers;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.example.mu.domain.Price;
+import com.example.mu.domain.Trade;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.trade.injector.business.service.BusinessServiceCacheNames;
+import com.trade.injector.jto.InstrumentReport;
+import com.trade.injector.jto.TradeInjectorProfile;
+import com.trade.injector.jto.TradeReport;
+import com.trade.injector.jto.repository.TradeInjectorMessageRepository;
+import com.trade.injector.jto.repository.TradeInjectorProfileRepository;
+import com.trade.injector.jto.repository.TradeReportRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import com.example.mu.domain.Price;
-import com.example.mu.domain.Trade;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.trade.injector.business.service.BusinessServiceCacheNames;
-import com.trade.injector.controller.TradeInjectorController;
-import com.trade.injector.jto.InstrumentReport;
-import com.trade.injector.jto.TradeInjectorMessage;
-import com.trade.injector.jto.TradeInjectorProfile;
-import com.trade.injector.jto.TradeReport;
-import com.trade.injector.jto.repository.TradeInjectorMessageRepository;
-import com.trade.injector.jto.repository.TradeInjectorProfileRepository;
-import com.trade.injector.jto.repository.TradeReportRepository;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ReportScheduler {
@@ -75,7 +69,7 @@ public class ReportScheduler {
 	}
 
 	@Scheduled(fixedDelay = 3000)
-	public void pushCountStatistics() throws Exception {
+	public void pushCountStatistics() {
 
 		TradeReport tradeReport = coreTemplate.findOne(Query.query(Criteria.where("injectorProfileId").is(REPORT_NAME)),
 				TradeReport.class);
@@ -156,7 +150,7 @@ public class ReportScheduler {
 
 	}
 
-	private TradeReport createTradeReport() throws Exception {
+	private TradeReport createTradeReport() {
 
 		// initialise the report if not found and create the Instrument report
 		// for each price
