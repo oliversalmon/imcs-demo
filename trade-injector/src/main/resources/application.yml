@@ -3,7 +3,7 @@ kafka.topic.marketData: market_data
 kafka.topic.trade: trade
 
 server:
-  port: 8090
+  port: 8091
 
 feign:
   hystrix:

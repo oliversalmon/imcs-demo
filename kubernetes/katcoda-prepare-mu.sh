@@ -31,6 +31,10 @@ cd ./positionqueryservice
 mvn docker:build
 docker push dineshpillai/imcs-positionqueryservice
 
+cd ../trade-injector
+mvn docker:build
+docker push dineshpillai/innovation-trade-injector
+
 
 
 kubectl create namespace mu-architecture-demo
@@ -48,6 +52,9 @@ positionqueryformatted=`cat "manifests/position-query.yml" | sed -e "s/{{HOSTIPA
 echo "$positionqueryformatted"|kubectl apply -f -
 
 kubectl create -f manifests/position-query-config.yml
+
+cd ~/imcs-demo/kubernetes
+kubectl apply -f run-apps-reports.yaml
 
 
 

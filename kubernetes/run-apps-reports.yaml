@@ -31,18 +31,14 @@ spec:
       labels:
         app: trade-injector
     spec:
-      hostAliases:
-      - ip: "IP_TR_1"
-        hostnames:
-        - "HOST_TR_1"
-      imagePullSecrets:
+       imagePullSecrets:
       - name: registry-secret
       containers:
       - name: trade-injector
         image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
         imagePullPolicy: Always
         ports:
-        - containerPort: 8090
+        - containerPort: 8091
         env:
         - name: kafka.bootstrap-servers
           value: kafka:9092
@@ -67,10 +63,9 @@ metadata:
     app: trade-injector
 spec:
   ports:
-  - port: 8090
-    targetPort: 8090
-    nodePort: 31890
-    protocol: TCP
+  - port: 8091
+    targetPort: 8091
+    nodePort: 31891
   selector:
     app: trade-injector
   type: NodePort
