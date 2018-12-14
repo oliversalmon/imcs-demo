@@ -44,7 +44,9 @@ echo "$hzformated"|kubectl apply -f -
 #echo "$queryMicroservices"|kubectl apply -f -
 
 cd ~/imcs-demo/positionqueryservice
-kubectl create -f manifests/position-query.yml
+positionqueryformatted=`cat "manifests/position-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
+echo "$positionqueryformatted"|kubectl apply -f -
+
 kubectl create -f manifests/position-query-config.yml
 
 

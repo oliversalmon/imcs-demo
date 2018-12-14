@@ -13,6 +13,10 @@ spec:
       labels:
         app: position-query
     spec:
+      hostAliases:
+      - ip: "{{HOSTIPADDRESS}}"
+        hostnames:
+        - "{{HBASECONTAINERID}}"
       imagePullSecrets:
       - name: registry-secret
       containers:
@@ -22,6 +26,8 @@ spec:
         ports:
         - containerPort: 8090
         env:
+        - name: requireHz
+          value: "false"
         - name: SPRING_PROFILES_ACTIVE
           value: native
         - name: VERSION
