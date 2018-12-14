@@ -16,7 +16,7 @@ spec:
       - name: registry-secret
       containers:
       - name: trade-injector
-        image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
+        image: dineshpillai/innovation-trade-injector:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8091

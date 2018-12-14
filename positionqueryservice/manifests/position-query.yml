@@ -21,7 +21,7 @@ spec:
       - name: registry-secret
       containers:
       - name: position-query
-        image: dineshpillai/imcs-positionqueryservice:0.0.1-SNAPSHOT
+        image: dineshpillai/imcs-positionqueryservice:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8090
