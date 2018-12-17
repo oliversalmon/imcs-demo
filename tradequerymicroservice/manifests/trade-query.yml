@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-query
+  namespace: mu-architecture-demo
+  labels:
+    name: trade-query
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: trade-query
+    spec:
+      hostAliases:
+      - ip: "{{HOSTIPADDRESS}}"
+        hostnames:
+        - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - image: dineshpillai/imcs-tradequeryservice:latest
+        name: trade-query
+        imagePullPolicy: Always
+        ports:
+        - name: price-streamer
+          containerPort: 8094
+        env:
+        - name: spring_cloud_zookeeper_connectString
+          value: zoo1:2181
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trade-query
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-query
+spec:
+  type: NodePort
+  ports:
+  - port: 8094
+    targetPort: 8094
+    nodePort: 31094
+  selector:
+    app: trade-query

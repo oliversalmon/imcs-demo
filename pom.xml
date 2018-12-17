@@ -11,7 +11,7 @@
     <module>docker</module>
     <module>cache</module>
     <!--  module>streamprocessor</module-->
-    <!--<module>tradequerymicroservice</module>-->
+    <module>tradequerymicroservice</module>
     <module>positionqueryservice</module>
     <!--<module>pricequeryservice</module>-->
     <!--<module>trade-imdg</module>-->

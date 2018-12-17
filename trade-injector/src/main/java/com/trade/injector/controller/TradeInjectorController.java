@@ -125,7 +125,7 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
     }
 
 
-    @FeignClient(name = "tradequeryservice")
+    @FeignClient(name = "trade-query")
     interface TradeServiceClient {
 
         @RequestMapping(value = "/getTradesForPositionAccountAndInstrument/{positionAccountId}/{instrumentId}", method = RequestMethod.GET)
@@ -133,11 +133,19 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
         Resource getTradesForPositionAccountAndInstrument(@PathVariable("positionAccountId") String positionAccountId,
                                                           @PathVariable("instrumentId") String instrumentId);
 
+        @RequestMapping(method = RequestMethod.GET, value = "/ping", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+        List<String> hi();
+
     }
 
     @RequestMapping(value = "/pingPosition", method = RequestMethod.GET)
     public List<String> pingPosition() {
         return positionClient.hi();
+    }
+
+    @RequestMapping(value = "/pingTrades", method = RequestMethod.GET)
+    public List<String> pingTrades() {
+        return tradeServiceClient.hi();
     }
 
     @RequestMapping(value = "/getAllPositions", method = RequestMethod.GET)

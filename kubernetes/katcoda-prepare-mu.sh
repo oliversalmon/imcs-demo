@@ -35,6 +35,10 @@ cd ../trade-injector
 mvn docker:build
 docker push dineshpillai/innovation-trade-injector
 
+cd ../tradequerymicroservice
+mvn docker:build
+docker push dineshpillai/imcs-tradequeryservice
+
 
 
 kubectl create namespace mu-architecture-demo
@@ -53,6 +57,12 @@ echo "$positionqueryformatted"|kubectl apply -f -
 
 kubectl create -f manifests/position-query-config.yml
 
+
+cd ~/imcs-demo/tradequerymicroservice
+tradequerymicroserviceformatted=`cat "manifests/trade-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
+echo "$tradequerymicroserviceformatted"|kubectl apply -f -
+
+kubectl create -f manifests/trade-query-config.yml
 
 cd ~/imcs-demo/trade-injector
 kubectl apply -f manifests/trade-injector.yml
