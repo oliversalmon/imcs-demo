@@ -23,11 +23,8 @@ spec:
         name: trade-query
         imagePullPolicy: Always
         ports:
-        - name: price-streamer
-          containerPort: 8094
+        - containerPort: 8094
         env:
-        - name: spring_cloud_zookeeper_connectString
-          value: zoo1:2181
         - name: SPRING_PROFILES_ACTIVE
           value: native
         - name: VERSION

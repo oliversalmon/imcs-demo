@@ -8,7 +8,6 @@ import com.hazelcast.query.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -33,8 +32,6 @@ public class TradeQueryService {
 	public final Logger LOG = LoggerFactory.getLogger(TradeQueryService.class);
 	private final static String TRADE_MAP = "trade";
 	
-	@Value("${spring.application.name:tradequeryservice}")
-	private String appName;
 
 	@Bean
 	// @Profile("client")
