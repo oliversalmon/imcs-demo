@@ -38,7 +38,7 @@ docker push dineshpillai/imcs-positionqueryservice
 #Connect up to Hbase to create the tables and schema
 echo "$HOSTIPADDRESS hbasehost" >> /etc/hosts
 cd ~/imcs-demo/database/target
-java -jar database-1.0-SNAPSHOT.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
+java -jar database-1.1.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
 
 kubectl create namespace mu-architecture-demo
 kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:mu-architecture-demo
@@ -69,11 +69,9 @@ echo "$tradequerymicroserviceformatted"|kubectl apply -f -
 kubectl create -f manifests/trade-query-config.yml
 
 cd ~/imcs-demo/trade-injector
-kubectl apply -f manifests/trade-injector.yml
+kubectl apply -f manifests/trade-injector
 kubectl apply -f manifests/trade-injector-configmap.yml
 
 kubectl apply -f jobmanager-controller.yaml
 kubectl apply -f jobmanager-service.yaml
 kubectl apply -f taskmanager-controller.yaml
-
-
