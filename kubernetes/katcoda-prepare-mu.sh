@@ -14,7 +14,7 @@ apt-get install oracle-java8-installer -y
 
 apt install maven -y
 
-cd ../
+
 docker login -u dineshpillai -p Pill2017
 
 docker run -h hbasehost -d -p 2181:2181 -p 60000:60000 -p 60010:60010 -p 60020:60020 -p 60030:60030 -p 60040:60040 nerdammer/hbase
@@ -24,21 +24,20 @@ HBASECONTAINERID=hbasehost
 
 sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
 
+cd ~/imcs-demo
 mvn clean package install -DskipTests
-
-
-cd ./positionqueryservice
+cd ~/imcs-demo/trade-imdg
 mvn docker:build
-docker push dineshpillai/imcs-positionqueryservice
-
-cd ../trade-injector
+docker push dineshpillai/innovation-trade-imdg
+cd ~/imcs-demo/trade-injector
 mvn docker:build
 docker push dineshpillai/innovation-trade-injector
-
-cd ../tradequerymicroservice
+cd ~/imcs-demo/tradequerymicroservice
 mvn docker:build
 docker push dineshpillai/imcs-tradequeryservice
-
+cd ~/imcs-demo/positionqueryservice
+mvn docker:build
+docker push dineshpillai/imcs-positionqueryservice
 
 #Connect up to Hbase to create the tables and schema
 echo "$HOSTIPADDRESS hbasehost" >> /etc/hosts
