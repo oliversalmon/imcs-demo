@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: trade-injector-controller
+  name: trade-injector
   namespace: mu-architecture-demo
   labels:
     app: trade-injector
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: trade-injector-service
+  name: trade-injector
   namespace: mu-architecture-demo
   labels:
     app: trade-injector
