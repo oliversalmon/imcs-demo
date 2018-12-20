@@ -31,21 +31,8 @@ spec:
       labels:
         app: trade-injector
     spec:
-<<<<<<< HEAD
-      hostAliases:
-      - ip: "IP_1"
-        hostnames:
-        - "HOST_1"
-      - ip: "IP_2"
-        hostnames:
-        - "HOST_2"
-      - ip: "IP_TR_1"
-        hostnames:
-        - "HOST_TR_1"
-=======
        imagePullSecrets:
       - name: registry-secret
->>>>>>> feature-kubernetes-lb
       containers:
       - name: trade-injector
         image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
