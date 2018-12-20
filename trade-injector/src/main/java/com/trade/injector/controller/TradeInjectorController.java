@@ -119,13 +119,8 @@ public class TradeInjectorController extends WebSecurityConfigurerAdapter {
         @ResponseBody
         Resource getAllPositionAccounts();
 
-<<<<<<< HEAD
-	@FeignClient(name = "positionqueryservice")
-	interface PositionServiceClient {
-=======
         @RequestMapping(method = RequestMethod.GET, value = "/hi_getall", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
         List<String> hi();
->>>>>>> feature-kubernetes-lb
 
     }
 
