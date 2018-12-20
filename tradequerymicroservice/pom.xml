@@ -1,14 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mu-parent</groupId>
 	<artifactId>tradequerymicroservice</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.2</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.M4</version>
+		<version>1.5.9.RELEASE</version>
 	</parent>
 
 	<dependencies>
@@ -19,17 +18,17 @@
 		<dependency>
 			<groupId>com.example.mu</groupId>
 			<artifactId>domain</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<artifactId>cache</artifactId>
 			<groupId>com.example.mu</groupId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-test</artifactId>
-			<version>3.3.0</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-kubernetes-config</artifactId>
+			<version>0.2.0.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -47,12 +46,35 @@
 			<artifactId>hazelcast-client</artifactId>
 			<version>3.8.1</version>
 		</dependency>
-
-
-		<!-- <dependency> <groupId>org.apache.kafka</groupId> <artifactId>kafka_2.10</artifactId> 
-			<version>0.9.0.0</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
-			<artifactId>slf4j-log4j12</artifactId> </exclusion> </exclusions> </dependency> -->
-		<!-- https://mvnrepository.com/artifact/com.hazelcast.jet/hazelcast-jet-kafka -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-test</artifactId>
+			<version>3.3.0</version>
+			<scope>test</scope>
+		</dependency>
 
 
 		<dependency>
@@ -60,16 +82,15 @@
 			<artifactId>cache-api</artifactId>
 			<version>0.3</version>
 		</dependency>
+
+
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zookeeper-all</artifactId>
-			<version>2.0.0.M4</version>
+			<groupId>com.example</groupId>
+			<artifactId>bddtestutilityservices</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-			<version>2.0.0.M4</version>
-		</dependency>
+
 
 	</dependencies>
 	<properties>

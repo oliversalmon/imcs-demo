@@ -1,0 +1,6 @@
+feign:
+  hystrix:
+    enabled: false
+
+server:
+  port: 8899

@@ -1,285 +1,266 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>mu-parent</groupId>
-	<artifactId>positionqueryservice</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mu-parent</groupId>
+    <artifactId>positionqueryservice</artifactId>
+    <version>1.2</version>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.M4</version>
-	</parent>
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.example.mu</groupId>
+            <artifactId>domain</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <artifactId>cache</artifactId>
+            <groupId>com.example.mu</groupId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-kubernetes-config</artifactId>
+            <version>0.2.0.RELEASE</version>
+        </dependency>
 
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.example.mu</groupId>
-			<artifactId>domain</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<artifactId>cache</artifactId>
-			<groupId>com.example.mu</groupId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-
-       
-		<dependency>
+        <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-x-discovery</artifactId>
             <version>3.3.0</version>
         </dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast</artifactId>
-			<version>3.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast-client</artifactId>
-			<version>3.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>3.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-spring</artifactId>
-			<version>3.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>3.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-test</artifactId>
-			<version>3.3.0</version>
-			<scope>test</scope>
-		</dependency>
-	
-		<!-- 
-		<dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.10</artifactId>
-            <version>0.9.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>3.8.1</version>
         </dependency>
-         -->
-		<!-- https://mvnrepository.com/artifact/com.hazelcast.jet/hazelcast-jet-kafka -->
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-client</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>3.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>3.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>3.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-test</artifactId>
+            <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
 
-	
-		<dependency>
-			<groupId>javax.cache</groupId>
-			<artifactId>cache-api</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zookeeper-all</artifactId>
-			<version>2.0.0.M4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-			<version>2.0.0.M4</version>
-		</dependency>
-		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>bddtestutilityservices</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>0.3</version>
+        </dependency>
 
 
-	</dependencies>
-	<properties>
-		<java.version>1.8</java.version>
-		<start-class>com.example.mu.positionqueryservice.StartUp</start-class>
-		<docker.skip>false</docker.skip>
-		<docker.repository>docker.io</docker.repository>
-		<docker.image.prefix>dineshpillai</docker.image.prefix>
-		<docker.artifact.id>imcs-positionqueryservice</docker.artifact.id>
-		<cucumber-version>1.2.5</cucumber-version>
-	</properties>
-	<scm>
-		<connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
-		<developerConnection>scm:git:https://github.com/dineshgpillai/innovation.git</developerConnection>
-		<tag>spanners-4.1</tag>
-	</scm>
-	<distributionManagement>
-		<repository>
-			<id>internal.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-		</repository>
-	</distributionManagement>
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<finalName>${project.build.finalName}</finalName>
-					<fork>true</fork>
-					<mainClass>${start-class}</mainClass>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>	
-		
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.spotify</groupId>
-					<artifactId>docker-maven-plugin</artifactId>
-					<version>0.4.10</version>
-					<configuration>
-						<imageName>${docker.image.prefix}/${docker.artifact.id}</imageName>
-						<baseImage>java:openjdk-8-jdk-alpine</baseImage>
-						<entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
-						<imageTags>
-							<imageTag>${project.version}</imageTag>
-							<imageTag>latest</imageTag>
-						</imageTags>
-						<serverId>docker-hub</serverId>
-						<skipDockerBuild>${docker.skip}</skipDockerBuild>
-						<resources>
-							<!-- copy the service's jar file from target into the root directory 
-								of the image -->
-							<resource>
-								<targetPath>/</targetPath>
-								<directory>${project.build.directory}</directory>
-								<include>${project.build.finalName}.jar</include>
-							</resource>
-							<!-- Copy contents of project's docker directory, if it exists. Used 
-								to pull in docker build specific application.properties settings -->
-							<resource>
-								<targetPath>/</targetPath>
-								<directory>${project.basedir}</directory>
-								<include>*</include>
-							</resource>
-						</resources>
-					</configuration>
-					<executions>
-						<execution>
-							<id>build-image</id>
-							<phase>package</phase>
-							<goals>
-								<goal>build</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>tag-image-version</id>
-							<phase>deploy</phase>
-							<goals>
-								<goal>tag</goal>
-							</goals>
-							<configuration>
-								<image>${docker.image.prefix}/${docker.artifact.id}</image>
-								<newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:${project.version}</newName>
-								<pushImage>true</pushImage>
-							</configuration>
-						</execution>
-						<execution>
-							<id>tag-image-latest</id>
-							<phase>deploy</phase>
-							<goals>
-								<goal>tag</goal>
-							</goals>
-							<configuration>
-								<image>${docker.image.prefix}/${docker.artifact.id}</image>
-								<newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:latest</newName>
-								<pushImage>true</pushImage>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>bddtestutilityservices</artifactId>
+            <version>1.2</version>
+            <scope>test</scope>
+        </dependency>
 
-		<extensions>
-			<!-- Enabling the use of FTP -->
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>2.9</version>
-			</extension>
-		</extensions>
-		
-	</build>
-	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-	
+
+    </dependencies>
+    <properties>
+        <java.version>1.8</java.version>
+        <start-class>com.example.mu.positionqueryservice.StartUp</start-class>
+        <docker.skip>false</docker.skip>
+        <docker.repository>docker.io</docker.repository>
+        <docker.image.prefix>dineshpillai</docker.image.prefix>
+        <docker.artifact.id>imcs-positionqueryservice</docker.artifact.id>
+        <cucumber-version>1.2.5</cucumber-version>
+    </properties>
+    <scm>
+        <connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
+        <developerConnection>scm:git:https://github.com/dineshgpillai/innovation.git</developerConnection>
+        <tag>spanners-4.1</tag>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Temporary Staging Repository</name>
+            <url>file://${project.build.directory}/mvn-repo</url>
+        </repository>
+    </distributionManagement>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>${project.build.finalName}</finalName>
+                    <fork>true</fork>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.4.10</version>
+                    <configuration>
+                        <imageName>${docker.image.prefix}/${docker.artifact.id}</imageName>
+                        <baseImage>java:openjdk-8-jdk-alpine</baseImage>
+                        <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+                        <imageTags>
+                            <imageTag>${project.version}</imageTag>
+                            <imageTag>latest</imageTag>
+                        </imageTags>
+                        <serverId>docker-hub</serverId>
+                        <skipDockerBuild>${docker.skip}</skipDockerBuild>
+                        <resources>
+                            <!-- copy the service's jar file from target into the root directory
+                                of the image -->
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                            <!-- Copy contents of project's docker directory, if it exists. Used
+                                to pull in docker build specific application.properties settings -->
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.basedir}</directory>
+                                <include>*</include>
+                            </resource>
+                        </resources>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>build-image</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>tag-image-version</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>tag</goal>
+                            </goals>
+                            <configuration>
+                                <image>${docker.image.prefix}/${docker.artifact.id}</image>
+                                <newName>
+                                    ${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:${project.version}
+                                </newName>
+                                <pushImage>true</pushImage>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>tag-image-latest</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>tag</goal>
+                            </goals>
+                            <configuration>
+                                <image>${docker.image.prefix}/${docker.artifact.id}</image>
+                                <newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:latest
+                                </newName>
+                                <pushImage>true</pushImage>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <extensions>
+            <!-- Enabling the use of FTP -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.9</version>
+            </extension>
+        </extensions>
+
+    </build>
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
 </project>
