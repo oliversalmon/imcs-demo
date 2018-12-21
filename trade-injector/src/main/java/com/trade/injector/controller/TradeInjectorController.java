@@ -22,8 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -266,11 +264,11 @@ public class TradeInjectorController  {
 //        return new AuthorizationCodeResourceDetails();
 //    }
 
-    @Bean
-    @ConfigurationProperties("github.resource")
-    public ResourceServerProperties githubResource() {
-        return new ResourceServerProperties();
-    }
+//    @Bean
+//    @ConfigurationProperties("github.resource")
+//    public ResourceServerProperties githubResource() {
+//        return new ResourceServerProperties();
+//    }
 
     @RequestMapping(value = "/tradeMessageStopForProfile", method = RequestMethod.POST)
     public void tradeStopForProfile(@RequestBody String messageId) {
