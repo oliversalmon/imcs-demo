@@ -129,7 +129,7 @@ public class TradeInjectorController  {
                                                           @PathVariable("instrumentId") String instrumentId);
 
         @RequestMapping(method = RequestMethod.GET, value = "/ping", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-        List<String> hi();
+        String hi();
 
     }
 
@@ -139,7 +139,7 @@ public class TradeInjectorController  {
     }
 
     @RequestMapping(value = "/pingTrades", method = RequestMethod.GET)
-    public List<String> pingTrades() {
+    public String pingTrades() {
         return tradeServiceClient.hi();
     }
 
