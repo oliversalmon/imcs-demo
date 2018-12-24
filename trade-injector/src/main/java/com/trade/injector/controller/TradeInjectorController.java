@@ -38,7 +38,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -192,10 +191,10 @@ public class TradeInjectorController  {
     @Value("${kafka.topic.trade}")
     private String tradeTopic;
 
-    @RequestMapping("/user")
-    public Principal user(Principal principal) {
-        return principal;
-    }
+//    @RequestMapping("/user")
+//    public Principal user(Principal principal) {
+//        return principal;
+//    }
 
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
