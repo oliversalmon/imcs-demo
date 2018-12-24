@@ -279,7 +279,7 @@ app.controller('ModalCreateNewController', [
 
 			$scope.showStatus = [];
 			$scope.user=[];
-			var profileUser=["userId:fdummy"];
+			var profileUser="dummy";
 			$scope.isEdit=[];
 			// $scope.tradeInjectorProfile={};
 			$scope.isEdit = isEdit;
