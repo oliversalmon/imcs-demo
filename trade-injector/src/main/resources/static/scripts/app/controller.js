@@ -52,7 +52,7 @@ app.controller("TradeInjectCtrl", function($scope, $http, $location,
 	$scope.totalMsgCount = [ 0 ];
 	$scope.tab = 1;
 	$scope.user = [];
-	$scope.authenticated = false;
+	$scope.authenticated = true;
 	$scope.loginType = [];
 
 	$scope.setTab = function(newTab) {
@@ -75,7 +75,7 @@ app.controller("TradeInjectCtrl", function($scope, $http, $location,
 			  console.log("+++login type +++"+$scope.loginType+" "+$scope.user);
 	  }).error(function(){
 		  $scope.user="N/A";
-		  $scope.authenticated = false;
+		  $scope.authenticated = true;
 	  });
 	
 		 
@@ -279,7 +279,7 @@ app.controller('ModalCreateNewController', [
 
 			$scope.showStatus = [];
 			$scope.user=[];
-			var profileUser=["userId:dummy"];
+			var profileUser=["userId:fdummy"];
 			$scope.isEdit=[];
 			// $scope.tradeInjectorProfile={};
 			$scope.isEdit = isEdit;
