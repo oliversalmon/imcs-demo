@@ -19,8 +19,8 @@
     <module>tradeInjectorFlink</module>
     <module>positionSnapFlinkJob</module>
     <module>priceInjectorFlink</module>
-      <!--<module>hello-service</module>-->
-    <!--<module>hello-client</module>-->
+    <module>hello-service</module>
+    <module>hello-client</module>
 
   </modules>
   <packaging>pom</packaging>
