@@ -1,3 +1,6 @@
+
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
 #Install Java and Maven
 apt install software-properties-common -y
 add-apt-repository ppa:webupd8team/java -y
@@ -30,5 +33,3 @@ docker push dineshpillai/hello-client-service
 
 kubectl create -f manifests/hello-client-configmap.yml
 kubectl create -f manifests/hello-client.yml
-
-
