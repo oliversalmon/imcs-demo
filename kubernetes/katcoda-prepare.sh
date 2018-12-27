@@ -23,7 +23,7 @@ docker push dineshpillai/hello-service
 
 kubectl create namespace hw
 #kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=blah:hw
-kubectl create -f kube-rbac-service-hw.yml
+kubectl create -f ~/imcs-demo/kubernetes/kube-rbac-service-hw.yml
 
 kubectl create -f manifests/hello-service-configmap.yml
 kubectl create -f manifests/hello-service.yml
