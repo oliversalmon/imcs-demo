@@ -42,6 +42,6 @@ spec:
   # the port that this service should serve on
   - port: 8090
     targetPort: 8090
-    nodePort: 31090
+    nodePort: 31091
   selector:
     app: hello-service
