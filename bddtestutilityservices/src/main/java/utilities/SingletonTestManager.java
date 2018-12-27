@@ -2,28 +2,19 @@ package utilities;
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-//import de.flapdoodle.embed.mongo.config.IMongodConfig;
-//import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-//import de.flapdoodle.embed.mongo.config.Net;
-//import de.flapdoodle.embed.mongo.distribution.Version;
-//import de.flapdoodle.embed.process.distribution.Distribution;
-//import de.flapdoodle.embed.process.runtime.Network;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryOneTime;
 import org.apache.curator.test.TestingServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.SocketUtils;
-//import de.flapdoodle.embed.mongo.MongodExecutable;
-//import de.flapdoodle.embed.mongo.MongodStarter;
 
 import java.util.Collections;
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SingletonTestManager {
 
@@ -90,7 +81,9 @@ public class SingletonTestManager {
                     "--requireHz=true",
                     "--spring.cloud.zookeeper.connect-string=localhost:" + 2181,
                     "--kafka.bootstrap-servers=localhost:9092",
-                    "--spring.data.mongodb.host=localhost");
+                    "--spring.data.mongodb.host=localhost",
+                    "--SPRING_PROFILES_ACTIVE=native",
+                    "--VERSION=K8S_TIMESTAMP");
             url = "http://localhost:" + port;
             return context;
         } else return context;

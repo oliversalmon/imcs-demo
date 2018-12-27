@@ -1,3 +1,21 @@
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: trade-injector
+  labels:
+    app: trade-injector
+  namespace: mu-architecture-demo
+data:
+  application.yml: |-
+    endpoints.trace.sensitive: false
+    backend:
+      ribbon:
+        eureka.enabled: false
+        client.enabled: true
+        ServerListRefreshInterval: 15000
+
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -8,30 +26,19 @@ metadata:
     app: trade-injector
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: trade-injector
   template:
     metadata:
       labels:
         app: trade-injector
     spec:
-      hostAliases:
-      - ip: "IP_1"
-        hostnames:
-        - "HOST_1"
-      - ip: "IP_2"
-        hostnames:
-        - "HOST_2"
-      - ip: "IP_TR_1"
-        hostnames:
-        - "HOST_TR_1"
+       imagePullSecrets:
+      - name: registry-secret
       containers:
       - name: trade-injector
         image: dineshpillai/innovation-trade-injector:0.0.1-SNAPSHOT
         imagePullPolicy: Always
         ports:
-        - containerPort: 8090
+        - containerPort: 8091
         env:
         - name: kafka.bootstrap-servers
           value: kafka:9092
@@ -39,8 +46,12 @@ spec:
           value: db
         - name: spring.hazelcast.client.config
           value: mu1-client-config.xml
-        - name: spring_cloud_zookeeper_connectString
-          value: zoo1:2181
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
+      nodeSelector:
+        beta.kubernetes.io/os: linux
 
 ---
 apiVersion: v1
@@ -52,10 +63,9 @@ metadata:
     app: trade-injector
 spec:
   ports:
-  - port: 8090
-    name: trade-injector-port
-    targetPort: 8090
-    protocol: TCP
+  - port: 8091
+    targetPort: 8091
+    nodePort: 31891
   selector:
     app: trade-injector
   type: NodePort

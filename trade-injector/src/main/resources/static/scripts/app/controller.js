@@ -52,16 +52,16 @@ app.controller("TradeInjectCtrl", function($scope, $http, $location,
 	$scope.totalMsgCount = [ 0 ];
 	$scope.tab = 1;
 	$scope.user = [];
-	$scope.authenticated = false;
+	$scope.authenticated = true;
 	$scope.loginType = [];
 
 	$scope.setTab = function(newTab) {
 		$scope.tab = newTab;
-	}
+	};
 
 	$scope.isSet = function(tabNum) {
 		return $scope.tab === tabNum;
-	}
+	};
 
 	// login
 	
@@ -75,7 +75,7 @@ app.controller("TradeInjectCtrl", function($scope, $http, $location,
 			  console.log("+++login type +++"+$scope.loginType+" "+$scope.user);
 	  }).error(function(){
 		  $scope.user="N/A";
-		  $scope.authenticated = false;
+		  $scope.authenticated = true;
 	  });
 	
 		 
@@ -85,7 +85,7 @@ app.controller("TradeInjectCtrl", function($scope, $http, $location,
 			$scope.authenticated = false;
 			$location.path("/");
 		}).error(function(data) {
-			console.log("Logout failed")
+			console.log("Logout failed");
 			$scope.authenticated = false;
 		});
 	};
@@ -104,7 +104,7 @@ app.controller("TradeInjectCtrl", function($scope, $http, $location,
 		$scope.totalMsgCount = [ 0 ];
 		console.log('Before sending ' + $scope.tradeInjectorMessage);
 		// set the user id
-		$scope.tradeInjectorMessage.userId = $scope.user
+		$scope.tradeInjectorMessage.userId = $scope.user;
 		TradeInjectorService.send($scope.tradeInjectorMessage);
 	};
 
@@ -168,7 +168,7 @@ app
 														data,
 														{
 															injectorProfileId : injectId
-														})
+														});
 												console
 														.log("data received "
 																+ data[0].injectorProfileId);
@@ -225,9 +225,7 @@ app
 														}
 
 													}
-													;
-
-													// do the same for
+                                                    // do the same for
 													// instruments
 
 													
@@ -260,8 +258,7 @@ app
 																			instrument.id)
 														}
 													}
-													;
-												}
+                                                }
 
 											});
 
@@ -282,15 +279,15 @@ app.controller('ModalCreateNewController', [
 
 			$scope.showStatus = [];
 			$scope.user=[];
-			var profileUser=[];
+			var profileUser="dummy";
 			$scope.isEdit=[];
 			// $scope.tradeInjectorProfile={};
 			$scope.isEdit = isEdit;
-			UserService.getUser().success(function(user){
-				profileUser=UserService.user;
-			  }).error(function(){
-				  profileUser="N/A";
-			  });
+			// UserService.getUser().success(function(user){
+			// 	profileUser=UserService.user;
+			//   }).error(function(){
+			// 	  profileUser="N/A";
+			//   });
 			
 			// console.log("user in create profile is "+profileUser);
 			
@@ -304,7 +301,7 @@ app.controller('ModalCreateNewController', [
 					headers : {
 						'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 					}
-				}
+				};
 
 				$http
 						.post('/getProfile', data,
@@ -347,7 +344,7 @@ app.controller('ModalCreateNewController', [
 						headers : {
 							'Content-Type' : 'application/json;'
 						}
-					}
+					};
 
 					$http.post('/saveTradeInjectProfile', data, config)
 							.success(
@@ -414,7 +411,7 @@ app
 							headers : {
 								'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 							}
-						}
+						};
 
 						$http
 								.post('/tradeMessageStopForProfile', data,
@@ -435,7 +432,7 @@ app
 
 						// $http.post('/tradeMessageStop');
 
-					}
+					};
 
 					// repeat the run
 					$scope.repeat = function(profileId) {
@@ -447,7 +444,7 @@ app
 							headers : {
 								'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 							}
-						}
+						};
 
 						$http.post('/tradeMessageRepeatForProfile', data,
 								config).success(
@@ -462,7 +459,7 @@ app
 											+ "<hr />config: " + config;
 								});
 
-					}
+					};
 
 					// play button
 					$scope.play = function(profileId) {
@@ -474,7 +471,7 @@ app
 							headers : {
 								'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 							}
-						}
+						};
 
 						$http
 								.post('/tradeMessagePlayForProfile', data,
@@ -493,7 +490,7 @@ app
 													+ config;
 										});
 
-					}
+					};
 					
 					// delete the profile
 					$scope.delete=function(profileId){
@@ -506,7 +503,7 @@ app
 							headers : {
 								'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 							}
-						}
+						};
 
 						$http
 								.post('/deleteProfile', data,
@@ -527,7 +524,7 @@ app
 
 
 						
-					}
+					};
 					
 					// Receives the trade inject messages
 					TradeInjectorService.receiveTradeInjectMessage().then(
@@ -621,15 +618,15 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 	
 	$scope.setTab = function(newTab) {
 		$scope.tab = newTab;
-	}
+	};
 
 	$scope.isTab = function(tabNum) {
 		return $scope.tab === tabNum;
-	}
+	};
 	
 	$scope.isPageActive = function(page) {
 		return $scope.pageActive === page;
-	}
+	};
 	
 	$scope.clickOnPage=function(pageMarker){
 		
@@ -643,7 +640,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 			headers : {
 				'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'
 			}
-		}
+		};
 
 		$http
 				.post('/getAllInstruments', data,
@@ -664,7 +661,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 
 
 		
-	}
+	};
 	
 	$scope.refreshTrades = function(){
 		
@@ -683,7 +680,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 				  $scope.ResponseDetails = "Response: "+ response.data + "<hr />";
 			  });
 		
-	}
+	};
 	
 	$scope.showtable = function(accountid, instrumentid,  rowIndex){
 		$scope.showtableView=!$scope.showtableView;
@@ -708,7 +705,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 		}
 		
 		
-	}
+	};
 	
 	
 	
@@ -729,7 +726,7 @@ app.controller("ReportStaticController", function($scope, $http, $location, Trad
 				  $scope.ResponseDetails = "Response: "+ response.data + "<hr />";
 			  });
 		
-	}
+	};
 	
 	
 

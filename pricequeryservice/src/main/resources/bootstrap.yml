@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: priceQueryService
-  cloud:
-    zookeeper:
-      discovery:
-        enabled: true

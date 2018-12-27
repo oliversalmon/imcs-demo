@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: trade-query
+
+server:
+  port: 8094

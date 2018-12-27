@@ -17,8 +17,10 @@ spec:
       - ip: "{{HOSTIPADDRESS}}"
         hostnames:
         - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
       containers:
-      - image: dineshpillai/innovation-trade-imdg:0.0.1-SNAPSHOT
+      - image: dineshpillai/innovation-trade-imdg:latest
         name: trade-imdg
         imagePullPolicy: Always
         ports:

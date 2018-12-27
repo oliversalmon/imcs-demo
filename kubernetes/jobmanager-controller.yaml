@@ -11,6 +11,8 @@ spec:
         app: flink
         component: jobmanager
     spec:
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - name: jobmanager
         image: flink:latest

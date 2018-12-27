@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-injector
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-injector
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: trade-injector
+    spec:
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - name: trade-injector
+        image: dineshpillai/innovation-trade-injector:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8091
+        env:
+        - name: kafka.bootstrap-servers
+          value: kafka:9092
+        - name: spring.data.mongodb.host
+          value: db
+        - name: spring.hazelcast.client.config
+          value: mu1-client-config.xml
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trade-injector
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-injector
+spec:
+  ports:
+  - port: 8091
+    targetPort: 8091
+    nodePort: 31891
+  selector:
+    app: trade-injector
+  type: NodePort
