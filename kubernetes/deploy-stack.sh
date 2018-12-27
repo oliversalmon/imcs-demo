@@ -49,12 +49,6 @@ kubectl apply -f run-mzk.yaml
 hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$hzformated"|kubectl apply -f -
 
-#queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
-#echo "$queryMicroservices"|kubectl apply -f -
-#sleep 60s
-#./setKubeIP.sh
-#kubectl apply -f run-apps-reports-dep.yaml
-
 cd ~/imcs-demo/positionqueryservice
 positionqueryformatted=`cat "manifests/position-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$positionqueryformatted"|kubectl apply -f -
