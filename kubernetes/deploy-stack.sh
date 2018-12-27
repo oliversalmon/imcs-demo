@@ -41,7 +41,7 @@ cd ~/imcs-demo/database/target
 java -jar database-1.1.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
 
 kubectl create namespace mu-architecture-demo
-kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=default:mu-architecture-demo
+kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=mu-architecture-demo:default
 
 #Deploy to Kubernetes
 cd ~/imcs-demo/kubernetes
