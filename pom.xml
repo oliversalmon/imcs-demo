@@ -3,13 +3,14 @@
 
   <groupId>com.example.mu</groupId>
   <artifactId>mu-parent</artifactId>
-  <version>1.2</version>
+  <version>1.2-SNAPSHOT</version>
   <modules>
-    <module>bddtestutilityservices</module>
+
     <module>domain</module>
     <module>database</module>
     <module>docker</module>
     <module>cache</module>
+    <module>bddtestutilityservices</module>
     <!--  module>streamprocessor</module-->
     <module>tradequerymicroservice</module>
     <module>positionqueryservice</module>

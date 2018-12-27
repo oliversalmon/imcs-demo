@@ -13,7 +13,7 @@
 # The version to be released
 releaseVersion=1.3
 # The next development version
-developmentVersion=1.2-SNAPSHOT
+developmentVersion=1.3-SNAPSHOT
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix='MU-111 Release of version1.3: '
 
