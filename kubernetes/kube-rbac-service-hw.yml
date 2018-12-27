@@ -1,0 +1,25 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: fabric8-admin
+  namespace: hw
+rules:
+# Just an example, feel free to change it
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: fabric8-rbac
+  namespace: hw
+subjects:
+- kind: ServiceAccount
+  name: default
+roleRef:
+  kind: Role
+  name: fabric8-admin
+  apiGroup: rbac.authorization.k8s.io
