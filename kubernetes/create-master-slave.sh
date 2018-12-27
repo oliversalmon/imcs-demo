@@ -1,12 +1,12 @@
 #Install Java and Maven
-add-apt-repository ppa:webupd8team/java
-apt-get update
-apt-get install oracle-java8-installer
+add-apt-repository ppa:webupd8team/java -y
+apt-get update -y
+apt-get install oracle-java8-installer -y
 
-apt install maven
+apt install maven -y
 
 # Install Docker from Ubuntu's repositories:
-apt-get update
+apt-get update -y
 apt-get install -y docker.io
 
 # or install Docker CE 18.06 from Docker's repositories for Ubuntu or Debian:
@@ -24,7 +24,7 @@ add-apt-repository \
    stable"
 
 ## Install docker.
-apt-get update && apt-get install docker-ce=18.06.0~ce~3-0~ubuntu
+apt-get update && apt-get install docker-ce=18.06.0~ce~3-0~ubuntu -y
 
 # Setup daemon.
 cat > /etc/docker/daemon.json <<EOF
@@ -45,11 +45,11 @@ systemctl daemon-reload
 systemctl restart docker
 
 
-apt-get update && apt-get install -y apt-transport-https curl
+apt-get update && apt-get install -y apt-transport-https curl -y
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-apt-get update
-apt-get install -y kubelet kubeadm kubectl
+apt-get update -y
+apt-get install  kubelet=1.11.3-00 kubeadm=1.11.3-00 kubectl=1.11.3-00 -y
 apt-mark hold kubelet kubeadm kubectl

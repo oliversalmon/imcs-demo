@@ -17,6 +17,8 @@ spec:
       - ip: "{{HOSTIPADDRESS}}"
         hostnames:
         - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - image: dineshpillai/imcs-tradequeryservice:0.0.1-SNAPSHOT
         name: trade-query
@@ -44,6 +46,17 @@ spec:
     name: trade-query-port
     targetPort: 8094
   type: NodePort
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: position-query
+  labels:
+    app: position-query
+  namespace: mu-architecture-demo
+data:
+  application.yml: |-
+    endpoints.trace.sensitive: false
 
 ---
 apiVersion: extensions/v1beta1
@@ -54,7 +67,7 @@ metadata:
   labels:
     name: position-query
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
      name: position-query 
@@ -65,32 +78,39 @@ spec:
       - ip: "{{HOSTIPADDRESS}}"
         hostnames:
         - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
       containers:
       - image: dineshpillai/imcs-positionqueryservice:0.0.1-SNAPSHOT
         name: position-query
         imagePullPolicy: Always
         ports:
-        - name: price-streamer
-          containerPort: 8093
+        - containerPort: 8093
         env:
-        - name: spring_cloud_zookeeper_connectString
-          value: zoo1:2181
         - name: requireHz
           value: "false"
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
         resources: {}
+      nodeSelector:
+        beta.kubernetes.io/os: linux
 
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: position-query-service
+  name: position-query
   namespace: mu-architecture-demo
   labels:
     app: position-query
 spec:
   ports:
   - port: 8093
-    name: position-query-port
     targetPort: 8093
+    nodePort: 31093
   type: NodePort
+  selector:
+    app: position-query

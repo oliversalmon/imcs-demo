@@ -1,0 +1,53 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trade-query
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-query
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: trade-query
+    spec:
+      hostAliases:
+      - ip: "{{HOSTIPADDRESS}}"
+        hostnames:
+        - "{{HBASECONTAINERID}}"
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - name: trade-query
+        image: dineshpillai/imcs-tradequeryservice:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8094
+        env:
+        - name: requireHz
+          value: "false"
+        - name: SPRING_PROFILES_ACTIVE
+          value: native
+        - name: VERSION
+          value: 'K8S_TIMESTAMP'
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trade-query
+  namespace: mu-architecture-demo
+  labels:
+    app: trade-query
+spec:
+  type: NodePort
+  ports:
+  # the port that this service should serve on
+  - port: 8094
+    targetPort: 8094
+    nodePort: 31094
+  selector:
+    app: trade-query

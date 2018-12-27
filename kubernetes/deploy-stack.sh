@@ -38,21 +38,35 @@ docker push dineshpillai/imcs-positionqueryservice
 #Connect up to Hbase to create the tables and schema
 echo "$HOSTIPADDRESS hbasehost" >> /etc/hosts
 cd ~/imcs-demo/database/target
-java -jar database-1.0-SNAPSHOT.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
+java -jar database-1.1.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
 
 kubectl create namespace mu-architecture-demo
+kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=mu-architecture-demo:default
 
 #Deploy to Kubernetes
 cd ~/imcs-demo/kubernetes
 kubectl apply -f run-mzk.yaml
 hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
 echo "$hzformated"|kubectl apply -f -
-queryMicroservices=`cat "run-querymicroservices.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
-echo "$queryMicroservices"|kubectl apply -f -
-sleep 60s
-./setKubeIP.sh
-kubectl apply -f run-apps-reports-dep.yaml
 
+cd ~/imcs-demo/positionqueryservice
+positionqueryformatted=`cat "manifests/position-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
+echo "$positionqueryformatted"|kubectl apply -f -
+
+kubectl create -f manifests/position-query-config.yml
+
+
+cd ~/imcs-demo/tradequerymicroservice
+tradequerymicroserviceformatted=`cat "manifests/trade-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
+echo "$tradequerymicroserviceformatted"|kubectl apply -f -
+
+kubectl create -f manifests/trade-query-config.yml
+
+cd ~/imcs-demo/trade-injector
+kubectl apply -f manifests/trade-injector.yml
+kubectl apply -f manifests/trade-injector-configmap.yml
+
+cd ~/imcs-demo/kubernetes
 kubectl apply -f jobmanager-controller.yaml
 kubectl apply -f jobmanager-service.yaml
 kubectl apply -f taskmanager-controller.yaml

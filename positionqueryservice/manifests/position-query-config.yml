@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: position-query
+
+  labels:
+    app: position-query
+  namespace: mu-architecture-demo
+data:
+  application.yml: |-
+    endpoints.trace.sensitive: false

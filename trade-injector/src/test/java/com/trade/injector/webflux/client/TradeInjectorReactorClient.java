@@ -1,16 +1,12 @@
 package com.trade.injector.webflux.client;
 
+import com.trade.injector.controller.TradeInjectorController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import com.trade.injector.controller.TradeInjectorController;
-
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 
 @RunWith(SpringRunner.class)
@@ -20,16 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 @TestPropertySource(properties = {"kafka.bootstrap-servers=178.62.124.180:9092", "spring.data.mongodb.host=localhost", "webservices.priceservice.baseURL=http://localhost/8095"})
 public class TradeInjectorReactorClient {
 	
-	@Autowired
-	private WebClient webTestClient;
+
 	
 	@Test
-	public void testDummy() throws Exception{
+	public void testDummy() {
 		
 	}
 	
 	@Test
-	public void getPositions() throws Exception{
+	public void getPositions() {
 		
 	}
 

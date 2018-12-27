@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>mu-parent</groupId>
   <artifactId>mu-flink-price-injector</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.2</version>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<flink.version>1.3.2</flink.version>
@@ -53,7 +53,7 @@
 		<dependency>
 			<artifactId>cache</artifactId>
 			<groupId>com.example.mu</groupId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.2</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.zookeeper</groupId>
@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>com.example.mu</groupId>
 			<artifactId>domain</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.curator</groupId>
@@ -194,7 +194,7 @@
 								</goals>
 								<configuration>
 									<artifactSet>
-										<excludes combine.self="override"></excludes>
+										<excludes combine.self="override" />
 									</artifactSet>
 								</configuration>
 							</execution>
@@ -322,8 +322,7 @@
 							<!-- If you want to use ./bin/flink run <quickstart jar> uncomment 
 								the following lines. This will add a Main-Class entry to the manifest file -->
 							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>com.mu.flink.pricestreamer.PriceFlinkStreamer</mainClass>
 								</transformer>
 							</transformers>
