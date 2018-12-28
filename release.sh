@@ -11,11 +11,11 @@
 
 # CHANGE THESE BEFORE RUNNING THE SCRIPT!
 # The version to be released
-releaseVersion=1.3
+releaseVersion=1.4
 # The next development version
-developmentVersion=1.3-SNAPSHOT
+developmentVersion=1.4-SNAPSHOT
 # Provide an optional comment prefix, e.g. for your bug tracking system
-scmCommentPrefix='MU-111 Release of version1.3: '
+scmCommentPrefix='MU-111 Release of version1.4: '
 
 # Start the release by creating a new release branch
 git checkout -b release/$releaseVersion develop/v0.1

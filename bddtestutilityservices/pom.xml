@@ -4,16 +4,16 @@
 
     <groupId>com.example</groupId>
     <artifactId>bddtestutilityservices</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.9.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <artifactId>mu-parent</artifactId>
+        <groupId>com.example.mu</groupId>
+        <version>1.4</version>
     </parent>
+
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -26,12 +26,12 @@
         <dependency>
             <groupId>com.example.mu</groupId>
             <artifactId>domain</artifactId>
-            <version>1.3-SNAPSHOT</version>
+            <version>1.4</version>
         </dependency>
         <dependency>
             <artifactId>cache</artifactId>
             <groupId>com.example.mu</groupId>
-            <version>1.3-SNAPSHOT</version>
+            <version>1.4</version>
         </dependency>
 
 
@@ -135,8 +135,4 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
-  <scm>
-    <tag>v1.3</tag>
-  </scm>
 </project>
