@@ -3,7 +3,7 @@
 
   <groupId>com.example.mu</groupId>
   <artifactId>mu-parent</artifactId>
-  <version>1.3</version>
+  <version>1.3-SNAPSHOT</version>
   <modules>
 
     <module>domain</module>

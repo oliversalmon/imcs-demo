@@ -2,7 +2,7 @@
     <parent>
         <artifactId>mu-parent</artifactId>
         <groupId>com.example.mu</groupId>
-		<version>1.3</version>
+		<version>1.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -93,7 +93,7 @@
 					<outputDirectory>${project.build.directory}/lib</outputDirectory>
 				</configuration>
 			</plugin>
-		 	<!-- 
+		 	<!--
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -135,21 +135,21 @@
 						<serverId>docker-hub</serverId>
 						<skipDockerBuild>${docker.skip}</skipDockerBuild>
 						<resources>
-							<!-- copy the service's jar file from target into the root directory 
+							<!-- copy the service's jar file from target into the root directory
 								of the image -->
 							<resource>
 								<targetPath>/</targetPath>
 								<directory>${project.build.directory}</directory>
 								<include>${project.build.finalName}.jar</include>
 							</resource>
-							<!-- Copy contents of project's docker directory, if it exists. Used 
+							<!-- Copy contents of project's docker directory, if it exists. Used
 								to pull in docker build specific application.properties settings -->
 							<resource>
 								<targetPath>/</targetPath>
 								<directory>${project.build.directory}</directory>
 								<include>*</include>
 								<include>/lib/*.*</include>
-								<!-- <exclude>hbasecreatelogging*.*</exclude> <exclude>*.classpath</exclude> 
+								<!-- <exclude>hbasecreatelogging*.*</exclude> <exclude>*.classpath</exclude>
 									<exclude>*.project</exclude> -->
 							</resource>
 						</resources>

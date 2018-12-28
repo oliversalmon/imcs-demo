@@ -9,7 +9,7 @@
 		<slf4j.version>1.7.7</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<curator.version>4.0.0</curator.version>
-		
+
 		<scala.binary.version>2.10</scala.binary.version>
 	</properties>
 	<repositories>
@@ -53,7 +53,7 @@
 		<dependency>
 			<artifactId>cache</artifactId>
 			<groupId>com.example.mu</groupId>
-			<version>1.3</version>
+			<version>1.3-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.zookeeper</groupId>
@@ -64,12 +64,12 @@
            			 <artifactId>curator-test</artifactId>
 				</exclusion>
 			</exclusions>
-			
+
 		</dependency>
 		<dependency>
 			<groupId>com.example.mu</groupId>
 			<artifactId>domain</artifactId>
-			<version>1.3</version>
+			<version>1.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.curator</groupId>
@@ -98,7 +98,7 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		<!-- dependency> <groupId>com.data-artisans</groupId> <artifactId>flink-training-exercises</artifactId> 
+		<!-- dependency> <groupId>com.data-artisans</groupId> <artifactId>flink-training-exercises</artifactId>
 			<version>0.10.0</version> </dependency -->
 		<dependency>
 			<groupId>org.apache.flink</groupId>
@@ -133,15 +133,15 @@
 			</activation>
 
 			<dependencies>
-				
+
 				<dependency>
 					<groupId>com.hazelcast</groupId>
 					<artifactId>hazelcast</artifactId>
 					<version>3.8.1</version>
-					
+
 				</dependency>
-					
-				
+
+
 				 <dependency>
 					<groupId>org.apache.curator</groupId>
 					<artifactId>curator-x-discovery</artifactId>
@@ -157,9 +157,9 @@
 					<groupId>com.hazelcast</groupId>
 					<artifactId>hazelcast-client</artifactId>
 					<version>3.8.1</version>
-		
+
 				</dependency>
-				
+
 				<dependency>
 					<groupId>com.google.code.gson</groupId>
 					<artifactId>gson</artifactId>
@@ -176,7 +176,7 @@
 				     <artifactId>zookeeper</artifactId>
 				     <version>3.5.1-alpha</version>
 				</dependency>
-				
+
 			</dependencies>
 
 			<build>
@@ -206,12 +206,12 @@
 	</profiles>
 
 	<build>
-		<!-- <resources> <resource> <directory>src/main/resources</directory> </resource> 
+		<!-- <resources> <resource> <directory>src/main/resources</directory> </resource>
 			</resources> -->
 		<plugins>
-			<!-- We use the maven-shade plugin to create a fat jar that contains all 
-				dependencies except flink and its transitive dependencies. The resulting 
-				fat-jar can be executed on a cluster. Change the value of Program-Class if 
+			<!-- We use the maven-shade plugin to create a fat jar that contains all
+				dependencies except flink and its transitive dependencies. The resulting
+				fat-jar can be executed on a cluster. Change the value of Program-Class if
 				your program entry point changes. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -227,7 +227,7 @@
 						<configuration>
 							<artifactSet>
 								<excludes>
-									<!-- This list contains all dependencies of flink-dist Everything 
+									<!-- This list contains all dependencies of flink-dist Everything
 										else will be packaged into the fat-jar -->
 									<exclude>org.apache.flink:flink-annotations</exclude>
 									<exclude>org.apache.flink:flink-shaded-hadoop2</exclude>
@@ -249,8 +249,8 @@
 									<exclude>org.apache.flink:flink-metrics-jmx</exclude>
 									<exclude>org.apache.flink:flink-statebackend-rocksdb_2.10</exclude>
 
-									<!-- Also exclude very big transitive dependencies of Flink WARNING: 
-										You have to remove these excludes if your code relies on other versions of 
+									<!-- Also exclude very big transitive dependencies of Flink WARNING:
+										You have to remove these excludes if your code relies on other versions of
 										these dependencies. -->
 
 									<exclude>log4j:log4j</exclude>
@@ -309,7 +309,7 @@
 									</excludes>
 								</filter>
 								<filter>
-									<!-- Do not copy the signatures in the META-INF folder. Otherwise, 
+									<!-- Do not copy the signatures in the META-INF folder. Otherwise,
 										this might cause SecurityExceptions when using the JAR. -->
 									<artifact>*:*</artifact>
 									<excludes>
@@ -319,7 +319,7 @@
 									</excludes>
 								</filter>
 							</filters>
-							<!-- If you want to use ./bin/flink run <quickstart jar> uncomment 
+							<!-- If you want to use ./bin/flink run <quickstart jar> uncomment
 								the following lines. This will add a Main-Class entry to the manifest file -->
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
@@ -343,6 +343,6 @@
 			</plugin>
 		</plugins>
 
-		
+
 	</build>
 </project>
