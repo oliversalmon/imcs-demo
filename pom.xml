@@ -37,6 +37,12 @@
     <developerConnection>scm:git:https://github.com/oliversalmon/imcs-demo.git</developerConnection>
     <tag>v1.3</tag>
   </scm>
+  <distributionManagement>
+    <repository>
+      <id>absolute directory</id>
+      <url>file:///home/pillaid/murepo</url>
+    </repository>
+  </distributionManagement>
   <build>
     <plugins>
 
