@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>trade-imdg</groupId>
 	<artifactId>trade-imdg</artifactId>
-	<version>1.5</version>
+	<version>1.6-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -18,7 +18,12 @@
 		<dependency>
 			<groupId>com.example.mu</groupId>
 			<artifactId>domain</artifactId>
-			<version>1.5</version>
+			<version>1.6-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<artifactId>cache</artifactId>
+			<groupId>com.example.mu</groupId>
+			<version>1.6-SNAPSHOT</version>
 		</dependency>
 		<dependency>
             <groupId>org.apache.curator</groupId>
@@ -112,7 +117,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
 		<developerConnection>scm:git:https://github.com/dineshgpillai/innovation.git</developerConnection>
-		<tag>v1.5</tag>
+		<tag>spanners-4.1</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
@@ -235,5 +240,9 @@
 		</extensions>
 
 	</build>
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> release/1.6~1
 </project>
