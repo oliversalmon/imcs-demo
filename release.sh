@@ -18,14 +18,14 @@ developmentVersion=1.4-SNAPSHOT
 scmCommentPrefix='MU-111 Release of version1.4: '
 
 # Start the release by creating a new release branch
-git checkout -b release/$releaseVersion develop/v0.1
+git checkout -b release/$releaseVersion integration
 
 # The Maven release
 mvn --batch-mode release:prepare release:perform -DscmCommentPrefix="$scmCommentPrefix" -DreleaseVersion=$releaseVersion -DdevelopmentVersion=$developmentVersion
 
 # Clean up and finish
 # get back to the develop branch
-git checkout develop
+git checkout integration
 
 # merge the version back into develop
 git merge --no-ff -m "$scmCommentPrefix Merge release/$releaseVersion into develop" release/$releaseVersion
@@ -36,6 +36,6 @@ git merge --no-ff -m "$scmCommentPrefix Merge previous version into master to av
 # Removing the release branch
 git branch -D release/$releaseVersion
 # Get back on the develop branch
-git checkout develop
+git checkout integration
 # Finally push everything
 git push --all && git push --tags
