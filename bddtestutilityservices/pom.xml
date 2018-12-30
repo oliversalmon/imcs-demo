@@ -4,14 +4,14 @@
 
     <groupId>com.example</groupId>
     <artifactId>bddtestutilityservices</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
 
     <parent>
         <artifactId>mu-parent</artifactId>
         <groupId>com.example.mu</groupId>
-        <version>1.4</version>
+        <version>1.5</version>
     </parent>
 
     <properties>
@@ -26,12 +26,12 @@
         <dependency>
             <groupId>com.example.mu</groupId>
             <artifactId>domain</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
         </dependency>
         <dependency>
             <artifactId>cache</artifactId>
             <groupId>com.example.mu</groupId>
-            <version>1.4</version>
+            <version>1.5</version>
         </dependency>
 
 
