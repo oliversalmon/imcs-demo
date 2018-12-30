@@ -6,6 +6,15 @@ if [ -z "$1" ]
     exit
 fi
 
+if [ -z "$2" ]
+  then
+    echo "Build version number not provided"
+    exit
+fi
+
+BUILDVERSION=$2
+git checkout $BUILDVERSION
+
 export KUBECONFIG=/etc/kubernetes/admin.conf
 docker login -u dineshpillai -p Pill2017
 
@@ -38,7 +47,7 @@ docker push dineshpillai/imcs-positionqueryservice
 #Connect up to Hbase to create the tables and schema
 echo "$HOSTIPADDRESS hbasehost" >> /etc/hosts
 cd ~/imcs-demo/database/target
-java -jar database-1.1.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
+java -jar database-$BUILDVERSION.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
 
 kubectl create namespace mu-architecture-demo
 kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=mu-architecture-demo:default
