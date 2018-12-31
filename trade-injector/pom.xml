@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>trade-injector</groupId>
     <artifactId>trade-injector</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.7</version>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -84,12 +84,12 @@
         <dependency>
             <groupId>com.example.mu</groupId>
             <artifactId>domain</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.7</version>
         </dependency>
         <dependency>
             <artifactId>cache</artifactId>
             <groupId>com.example.mu</groupId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.7</version>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
@@ -192,7 +192,7 @@
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>bddtestutilityservices</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.7</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -209,12 +209,7 @@
             <artifactId>cache-api</artifactId>
             <version>0.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>bddtestutilityservices</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
+      
 
         <!-- https://mvnrepository.com/artifact/com.hazelcast.jet/hazelcast-jet-core -->
         <!-- dependency> <groupId>com.hazelcast.jet</groupId> <artifactId>hazelcast-jet</artifactId>
@@ -282,7 +277,7 @@
     <scm>
         <connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
         <developerConnection>scm:git:https://github.com/dineshgpillai/innovation.git</developerConnection>
-        <tag>spanners-4.1</tag>
+        <tag>v1.7</tag>
     </scm>
     <distributionManagement>
         <repository>
