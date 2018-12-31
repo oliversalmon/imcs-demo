@@ -26,12 +26,12 @@
         <dependency>
             <groupId>com.example.mu</groupId>
             <artifactId>domain</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.example.mu</groupId>
             <artifactId>database</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.7-SNAPSHOT</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-test -->
