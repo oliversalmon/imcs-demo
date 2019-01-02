@@ -30,14 +30,13 @@ public class SingletonTestManager {
     //private static MongodExecutable mongodExecutable;
 
 
-
-
-
     public static void startUpServices(Class startUpClassName) throws Exception {
         SingletonTestManager.getZooServer();
         SingletonTestManager.getCurator();
         SingletonTestManager.getHz();
-        SingletonTestManager.getApplicationContext(startUpClassName);
+        //only required to start up for Spring Microservices
+        if (startUpClassName != null)
+            SingletonTestManager.getApplicationContext(startUpClassName);
         SingletonTestManager.getRestTemplate();
         SingletonTestManager.getKafkaserver().start();
         //SingletonTestManager.startMongo();
@@ -114,10 +113,10 @@ public class SingletonTestManager {
 
     }
 
-    public static KafkaLocal getKafkaserver() throws Exception{
+    public static KafkaLocal getKafkaserver() throws Exception {
 
 
-        if(kafkaserver==null){
+        if (kafkaserver == null) {
             logger.info("Starting kafka server.");
             Properties kafkaProperties = new Properties();
 
@@ -156,7 +155,6 @@ public class SingletonTestManager {
 //    }
 
 
-
     public static void shutDownServices() throws Exception {
         if (cli != null) {
             cli.close();
@@ -173,7 +171,7 @@ public class SingletonTestManager {
             hazelcastInstanceMember = null;
         }
 
-        if(kafkaserver != null)
+        if (kafkaserver != null)
             SingletonTestManager.getKafkaserver().stop();
 //
 //        if(mongodExecutable != null)
