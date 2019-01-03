@@ -45,9 +45,9 @@ public class TradeFlinkStreamerPositionITSteps {
     }
 
     @After
-    public void after() throws Exception{
+    public void after() {
         hz.shutdown();
-        Thread.sleep(10000);
+
     }
 
 
@@ -91,26 +91,60 @@ public class TradeFlinkStreamerPositionITSteps {
         spotPx.setPriceId(px.get(0).get("priceId"));
         spotPx.setPrice(Double.parseDouble(px.get(0).get("price")));
 
-        IMap<String, Price> mapPrice = hzClient.getMap("price");
-        mapPrice.put(spotPx.getInstrumentId(), spotPx);
+
 
 
 
     }
 
     @Then("the streamer aggregates the following positions and calculates the pnl as follows")
-    public void the_streamer_aggregates_the_following_positions_and_calculates_the_pnl_as_follows(DataTable dataTable) {
+    public void the_streamer_aggregates_the_following_positions_and_calculates_the_pnl_as_follows(DataTable posTable) {
 
-        assert hz.getMap("price").size() ==1;
-        assert hzClient.getMap("price").size()==1;
+        List<Map<String, String>> posDataToCompare = posTable.asMaps(String.class, String.class);
+        PositionAccount posAccControl = new PositionAccount();
+        posAccControl.setAccountId(posDataToCompare.get(0).get("accountId"));
+        posAccControl.setInstrumentid(posDataToCompare.get(0).get("instrumentid"));
+        posAccControl.setPnl(Double.parseDouble(posDataToCompare.get(0).get("pnl")));
+        posAccControl.setSize(Long.parseLong(posDataToCompare.get(0).get("size")));
+
+
+        assert spotPx != null;
         assert listOfInputTrades.size() == 2;
+        TradeFlinkStreamer streamer = new TradeFlinkStreamer();
+
+
+        DataStream<String> stream;
+        Iterator<Trade> iter = listOfInputTrades.iterator();
+
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+        // configure your test environment
+        env.setParallelism(1);
+
+        stream = env.fromElements(iter.next().toJSON(), iter.next().toJSON());
+
+        streamer.streamAndSink(stream, new CollectSink(), new PositionCollectSink());
+
+
+        PositionAccount posAccountActual = PositionCollectSink.values.get(0);
+        assert posAccountActual != null;
+        assert posAccountActual.getPnl()==0;
+        assert posAccountActual.getSize()==100;
 
 
 
     }
 
     @Then("pushes the above position into Position Map in Hz")
-    public void pushes_the_above_position_into_Position_Map_in_Hz(DataTable posData) throws Exception {
+    public void pushes_the_above_position_into_Position_Map_in_Hz(DataTable posTable) throws Exception {
+
+        List<Map<String, String>> posDataToCompare = posTable.asMaps(String.class, String.class);
+        PositionAccount posAccControl = new PositionAccount();
+        posAccControl.setAccountId(posDataToCompare.get(0).get("accountId"));
+        posAccControl.setInstrumentid(posDataToCompare.get(0).get("instrumentid"));
+        posAccControl.setPnl(Double.parseDouble(posDataToCompare.get(0).get("pnl")));
+        posAccControl.setSize(Long.parseLong(posDataToCompare.get(0).get("size")));
+
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         // configure your test environment
@@ -122,21 +156,35 @@ public class TradeFlinkStreamerPositionITSteps {
         stream = env.fromElements(iter.next().toJSON(), iter.next().toJSON());
 
 
-        //SingleOutputStreamOperator<Trade> mainDataStream   = stream.process(new TradeProcess());
-        //mainDataStream.addSink(new HzTradeSink());
-
-
         TradeFlinkStreamer streamer = new TradeFlinkStreamer();
+
+        //Feed in the spot px
+
+        IMap<String, Price> mapPrice = TradeFlinkStreamer.getHzClient().getMap("price");
+        mapPrice.put(spotPx.getInstrumentId(), spotPx);
+
+        //and clear the caches
+        TradeFlinkStreamer.getHzClient().getMap(HzTradeSink.getMapName()).clear();
+        TradeFlinkStreamer.getHzClient().getMap(HzPositionWindowSink.getMapName()).clear();
+
         streamer.streamAndSink(stream, new HzTradeSink(), new HzPositionSink());
 
         // execute
         env.execute();
 
-        //assertEquals(2, hz.getMap(HzTradeSink.getMapName()).size());
-        //assertEquals(1, hz.getMap(HzPositionSink.getMapName()).size());
 
         assertEquals(2, TradeFlinkStreamer.getHzClient().getMap(HzTradeSink.getMapName()).size());
         assertEquals(1, TradeFlinkStreamer.getHzClient().getMap(HzPositionWindowSink.getMapName()).size());
+
+        String posKey = posAccControl.getAccountId()+posAccControl.getInstrumentid();
+        IMap<String, PositionAccount> posMap = TradeFlinkStreamer.getHzClient().getMap(HzPositionWindowSink.getMapName());
+        PositionAccount posAccountActual = posMap.get(posKey);
+
+        assert posAccountActual != null;
+        assert posAccountActual.getPnl()==posAccControl.getPnl();
+        assert posAccountActual.getSize()==posAccControl.getSize();
+
+
 
     }
 
