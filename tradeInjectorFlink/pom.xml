@@ -200,6 +200,36 @@
 	</dependencies>
 	<profiles>
 		<profile>
+			<id>surefire</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.22.0</version>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<excludes>
+										<exclude>none</exclude>
+									</excludes>
+									<includes>
+										<include>**/TradeFlinkStreamerIT</include>
+										<include>**/TradeFlinkStreamerITSteps</include>
+										<include>**/TradeFlinkStreamerPositionIT</include>
+										<include>**/TradeFlinkStreamerPositionITSteps</include>
+									</includes>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<id>failsafe</id>
 			<build>
 				<plugins>
@@ -459,6 +489,20 @@
 				<configuration>
 					<source>1.8</source> <!-- If you want to use Java 8, change this to "1.8" -->
 					<target>1.8</target> <!-- If you want to use Java 8, change this to "1.8" -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
+				<configuration>
+					<excludes>
+
+							<exclude>**/TradeFlinkStreamerIT</exclude>
+							<exclude>**/TradeFlinkStreamerITSteps</exclude>
+							<exclude>**/TradeFlinkStreamerPositionIT</exclude>
+							<exclude>**/TradeFlinkStreamerPositionITSteps</exclude>
+
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

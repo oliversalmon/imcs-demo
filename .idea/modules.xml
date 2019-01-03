@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/pricequeryservice/demo.iml" filepath="$PROJECT_DIR$/pricequeryservice/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/docker/docker.iml" filepath="$PROJECT_DIR$/docker/docker.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hello-client/hello-client.iml" filepath="$PROJECT_DIR$/hello-client/hello-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hello-service/hello-service.iml" filepath="$PROJECT_DIR$/hello-service/hello-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/positionSnapFlinkJob/mu-flink-position-snap.iml" filepath="$PROJECT_DIR$/positionSnapFlinkJob/mu-flink-position-snap.iml" />
       <module fileurl="file://$PROJECT_DIR$/priceInjectorFlink/mu-flink-price-injector.iml" filepath="$PROJECT_DIR$/priceInjectorFlink/mu-flink-price-injector.iml" />
       <module fileurl="file://$PROJECT_DIR$/tradeInjectorFlink/mu-flink-trade-injector.iml" filepath="$PROJECT_DIR$/tradeInjectorFlink/mu-flink-trade-injector.iml" />

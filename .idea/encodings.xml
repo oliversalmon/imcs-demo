@@ -7,6 +7,8 @@
     <file url="file://$PROJECT_DIR$/database" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/docker" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/domain" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hello-client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hello-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/positionSnapFlinkJob" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/positionqueryservice" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/priceInjectorFlink" charset="UTF-8" />
