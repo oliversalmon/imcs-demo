@@ -1,13 +1,10 @@
 package com.mu.flink.streamer.test;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
+import com.example.mu.domain.*;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.mu.flink.streamer.*;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -20,25 +17,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.mu.domain.Instrument;
-import com.example.mu.domain.Party;
-import com.example.mu.domain.PositionAccount;
-import com.example.mu.domain.Price;
-import com.example.mu.domain.Trade;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.mu.flink.streamer.HzPositionSink;
-import com.mu.flink.streamer.HzPositionWindowSink;
-import com.mu.flink.streamer.PositionAggregator;
-import com.mu.flink.streamer.PositionFoldAggregator;
-import com.mu.flink.streamer.TradeFlinkStreamer;
-import com.mu.flink.streamer.TradeTimeStampWaterMarkAssigner;
-import com.mu.flink.streamer.TradeToTupleKeyTrade;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class PositionAggregatorTest {
 
-	private static HazelcastInstance hz = Hazelcast.newHazelcastInstance();
+	HazelcastInstance hz;
 	final static Logger LOG = LoggerFactory.getLogger(PositionAggregatorTest.class);
 	private static final String POSITIONACCOUNTMAP = "position-account";
 	final Configuration config = new Configuration();
@@ -92,7 +77,7 @@ public class PositionAggregatorTest {
 
 		Price price2 = new Price();
 		price2.setInstrumentId(ins2.getSymbol());
-		price2.setPrice((double) Math.random() * 1000 + 1);
+		price2.setPrice(Math.random() * 1000 + 1);
 		price2.setPriceId(UUID.randomUUID().toString());
 		price2.setTimeStamp(System.currentTimeMillis());
 
@@ -143,7 +128,7 @@ public class PositionAggregatorTest {
 		String executingFirmId = "TEST_EX1_" + 1;
 		String executingTraderId = "TEST_TRD1";
 		String executionVenue = "EX1";
-		double trdpx = (double) (Math.random() * 1000 + 1);
+		double trdpx = (Math.random() * 1000 + 1);
 		int quantity = (int) (Math.random() * 100 + 1);
 
 		Party buyParty = map.get("PARTY1");
@@ -288,7 +273,7 @@ public class PositionAggregatorTest {
 			String executingFirmId = "TEST_EX1_" + i;
 			String executingTraderId = "TEST_TRD" + i;
 			String executionVenue = "EX1";
-			double trdpx = (double) (Math.random() * 1000 + 1);
+			double trdpx = (Math.random() * 1000 + 1);
 			int quantity = (int) (Math.random() * 100 + 1);
 
 			String buyKey = UUID.randomUUID().toString();
@@ -495,7 +480,7 @@ public class PositionAggregatorTest {
 			String executingFirmId = "TEST_EX1_" + i;
 			String executingTraderId = "TEST_TRD" + i;
 			String executionVenue = "EX1";
-			double trdpx = (double) (Math.random() * 1000 + 1);
+			double trdpx = (Math.random() * 1000 + 1);
 			int quantity = (int) (Math.random() * 100 + 1);
 
 			String buyKey = UUID.randomUUID().toString();
@@ -620,7 +605,7 @@ public class PositionAggregatorTest {
 		// must be static
 		public static final List<PositionAccount> values = new ArrayList<PositionAccount>();
 
-		public void invoke(PositionAccount arg0) throws Exception {
+		public void invoke(PositionAccount arg0) {
 			values.add(arg0);
 
 		}

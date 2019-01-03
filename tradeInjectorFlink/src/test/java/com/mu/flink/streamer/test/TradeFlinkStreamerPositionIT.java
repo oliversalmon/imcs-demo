@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 
-@CucumberOptions(features = {"src/test/resources/features/connectAndPushToHz.feature"}, plugin = {"pretty", "html:target/reports/cucumber/html",
+@CucumberOptions(features = {"src/test/resources/features/connectAndPushPositionsToHz.feature"}, plugin = {"pretty", "html:target/reports/cucumber/html",
         "json:target/cucumber.json", "usage:target/usage.jsonx", "junit:target/junit.xml"})
-public class TradeFlinkStreamerIT {
+public class TradeFlinkStreamerPositionIT {
 }

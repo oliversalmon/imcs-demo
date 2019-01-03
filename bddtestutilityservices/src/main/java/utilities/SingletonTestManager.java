@@ -178,4 +178,8 @@ public class SingletonTestManager {
 //            mongodExecutable.stop();
 
     }
+
+    public static void main(String args[]) throws Exception{
+        SingletonTestManager.startUpServices(null);
+    }
 }

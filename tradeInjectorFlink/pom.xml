@@ -210,6 +210,8 @@
 							<includes>
 								<include>**/TradeFlinkStreamerIT</include>
 								<include>**/TradeFlinkStreamerITSteps</include>
+								<include>**/TradeFlinkStreamerPositionIT</include>
+								<include>**/TradeFlinkStreamerPositionITSteps</include>
 							</includes>
 						</configuration>
 						<executions>

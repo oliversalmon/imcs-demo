@@ -1,34 +1,26 @@
 package com.mu.flink.streamer;
 
-import java.util.Properties;
-
-import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.functions.KeySelector;
-import org.apache.flink.streaming.api.TimeCharacteristic;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.ProcessFunction;
-import org.apache.flink.streaming.api.functions.sink.SinkFunction;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
-import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
-import org.apache.flink.util.Collector;
-import org.apache.flink.util.OutputTag;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.example.mu.domain.PositionAccount;
 import com.example.mu.domain.Trade;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
+import org.apache.flink.streaming.api.TimeCharacteristic;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.sink.SinkFunction;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
+import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
+import org.apache.flink.util.OutputTag;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
 
 public class TradeFlinkStreamer {
 
@@ -61,16 +53,7 @@ public class TradeFlinkStreamer {
 				consumerConfigs());
 		DataStream<String> stream = env.addSource(kafkaConsumer);
 
-		SingleOutputStreamOperator<Trade> mainDataStream = stream.process(new TradeProcess());
-		mainDataStream.addSink(new HzTradeSink());
-
-		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
-		};
-
-		 DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
-		 sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new
-		 PositionAggregator())
-		 .addSink(new HzPositionSink());
+		streamAndSink(stream, new HzTradeSink(), new HzPositionSink());
 
 		//DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
 		//sideOutputStream.assignTimestampsAndWatermarks(new TradeTimeStampWaterMarkAssigner(Time.seconds(10)))
@@ -78,6 +61,21 @@ public class TradeFlinkStreamer {
 		//		.aggregate(new PositionFoldAggregator()).addSink(new HzPositionWindowSink());
 
 		env.execute();
+	}
+
+	public void streamAndSink(DataStream<String> stream, SinkFunction<Trade> tradeSink, SinkFunction<PositionAccount> positionSink ){
+
+		SingleOutputStreamOperator<Trade> mainDataStream = stream.process(new TradeProcess());
+		mainDataStream.addSink(tradeSink);
+
+		final OutputTag<Trade> outputTag = new OutputTag<Trade>("position-stream") {
+		};
+
+		DataStream<Trade> sideOutputStream = mainDataStream.getSideOutput(outputTag);
+		sideOutputStream.flatMap(new TradeToTupleKeyTrade()).keyBy(0).flatMap(new
+				PositionAggregator())
+				.addSink(positionSink);
+
 	}
 
 	public static HazelcastInstance getHzClient() {
