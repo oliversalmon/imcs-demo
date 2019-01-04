@@ -6,7 +6,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bddtestutilityservices/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bddtestutilityservices/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tradeInjectorFlink/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tradeInjectorFlink/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -24,6 +24,8 @@
     <ignored path="$PROJECT_DIR$/trade-injector/target/" />
     <ignored path="$PROJECT_DIR$/priceInjectorFlink/target/" />
     <ignored path="$PROJECT_DIR$/bddtestutilityservices/target/" />
+    <ignored path="$PROJECT_DIR$/hello-service/target/" />
+    <ignored path="$PROJECT_DIR$/hello-client/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,71 +45,88 @@
     <session id="1125256655">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="16" />
+          <entry key="project.closed" value="25" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="2" />
           <entry key="project.open.time.16" value="2" />
-          <entry key="project.open.time.2" value="4" />
-          <entry key="project.open.time.6" value="4" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.open.time.19" value="1" />
+          <entry key="project.open.time.2" value="5" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.6" value="5" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="32" />
-          <entry key="feature" value="644" />
-          <entry key="java" value="5052" />
+          <entry key="feature" value="1264" />
+          <entry key="java" value="7367" />
+          <entry key="js" value="35" />
           <entry key="md" value="4476" />
-          <entry key="sh" value="966" />
-          <entry key="txt" value="1357" />
-          <entry key="xml" value="227" />
-          <entry key="yaml" value="105" />
-          <entry key="yml" value="9" />
+          <entry key="sh" value="1245" />
+          <entry key="txt" value="2405" />
+          <entry key="xml" value="552" />
+          <entry key="yaml" value="109" />
+          <entry key="yml" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Cucumber" value="644" />
-          <entry key="JAVA" value="5052" />
+          <entry key="Cucumber" value="1264" />
+          <entry key="JAVA" value="7367" />
+          <entry key="JavaScript" value="35" />
           <entry key="Markdown" value="4476" />
-          <entry key="PLAIN_TEXT" value="2355" />
-          <entry key="XML" value="227" />
-          <entry key="YAML" value="114" />
+          <entry key="PLAIN_TEXT" value="3682" />
+          <entry key="XML" value="552" />
+          <entry key="YAML" value="125" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="DEPENDENCIES" value="1" />
-          <entry key="class" value="6" />
-          <entry key="feature" value="8" />
-          <entry key="java" value="97" />
-          <entry key="js" value="3" />
+          <entry key="class" value="7" />
+          <entry key="feature" value="18" />
+          <entry key="html" value="2" />
+          <entry key="iml" value="1" />
+          <entry key="java" value="163" />
+          <entry key="js" value="4" />
           <entry key="json" value="1" />
           <entry key="md" value="4" />
           <entry key="properties" value="12" />
-          <entry key="sh" value="15" />
-          <entry key="xml" value="42" />
-          <entry key="yaml" value="30" />
-          <entry key="yml" value="15" />
+          <entry key="sh" value="40" />
+          <entry key="txt" value="1" />
+          <entry key="xml" value="157" />
+          <entry key="yaml" value="32" />
+          <entry key="yml" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="6" />
-          <entry key="Cucumber" value="8" />
-          <entry key="JAVA" value="97" />
+          <entry key="CLASS" value="7" />
+          <entry key="Cucumber" value="18" />
+          <entry key="HTML" value="2" />
+          <entry key="IDEA_MODULE" value="1" />
+          <entry key="JAVA" value="163" />
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="3" />
+          <entry key="JavaScript" value="4" />
           <entry key="Markdown" value="4" />
-          <entry key="PLAIN_TEXT" value="16" />
+          <entry key="PLAIN_TEXT" value="42" />
           <entry key="Properties" value="12" />
-          <entry key="XML" value="42" />
-          <entry key="YAML" value="45" />
+          <entry key="XML" value="157" />
+          <entry key="YAML" value="64" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="11" />
+          <entry key="git.branch.delete.local" value="3" />
         </counts>
       </usages-collector>
     </session>
@@ -115,79 +134,98 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/kubernetes/run-querymicroservices.yaml">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/resources/features/connectAndPushPositionsToHz.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1380">
-              <caret line="92" column="14" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="14" />
+            <state relative-caret-position="195">
+              <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/kubernetes/run-apps-reports-dep.yaml">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionITSteps.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="183" selection-start-line="183" selection-end-line="183" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4077#4078#0" expanded="true" />
+                <element signature="e#4118#4119#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/kubernetes/run-apps-reports.yaml">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/HzPositionSink.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+            <state relative-caret-position="90">
+              <caret line="24" column="67" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/TradeFlinkStreamer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
+              <folding>
+                <element signature="e#3855#3856#0" expanded="true" />
+                <element signature="e#3877#3878#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/PositionAggregator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="69" selection-start-line="69" selection-end-line="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="211" column="39" selection-start-line="211" selection-start-column="39" selection-end-line="211" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bddtestutilityservices/pom.xml">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PositionAggregatorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
-              <caret line="151" column="25" selection-start-line="151" selection-start-column="25" selection-end-line="151" selection-end-column="25" />
+            <state relative-caret-position="-225">
+              <caret line="89" selection-start-line="89" selection-end-line="89" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trade-imdg/pom.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerITSteps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+            <state relative-caret-position="510">
+              <caret line="100" column="91" selection-start-line="99" selection-start-column="8" selection-end-line="100" selection-end-column="91" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1232#1233#0" expanded="true" />
+                <element signature="e#1249#1250#0" expanded="true" />
+                <element signature="e#3458#3459#0" expanded="true" />
+                <element signature="e#3499#3500#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trade-injector/pom.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pricequeryservice/pom.xml">
+        <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/HzTradeSink.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="882">
-              <caret line="245" column="25" lean-forward="true" selection-start-line="209" selection-start-column="4" selection-end-line="245" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/kubernetes/lb-query-services.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="45" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/controller/TradeInjectorController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="116" column="85" selection-start-line="116" selection-start-column="85" selection-end-line="116" selection-end-column="85" />
+            <state relative-caret-position="270">
+              <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -211,6 +249,9 @@
       <find>hbase_host</find>
       <find>kafka:9092</find>
       <find>PriceMapStore</find>
+      <find>github</find>
+      <find>user</find>
+      <find>successfully</find>
     </findStrings>
     <replaceStrings>
       <replace>CF_PRICE_DETAILS</replace>
@@ -225,48 +266,15 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop/v0.1" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/TradeMapStore.java" />
-        <option value="$PROJECT_DIR$/database/src/main/java/com/example/mu/database/MuSchemaConstants.java" />
-        <option value="$PROJECT_DIR$/kubernetes/initialise-master.sh" />
-        <option value="$PROJECT_DIR$/kubernetes/deploy-stack.sh" />
-        <option value="$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/sinks/KafkaSink.java" />
-        <option value="$PROJECT_DIR$/tradeInjectorFlink/pom.xml" />
-        <option value="$PROJECT_DIR$/priceInjectorFlink/pom.xml" />
-        <option value="$PROJECT_DIR$/kubernetes/loadjarsToFlink.sh" />
-        <option value="$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/schedulers/PriceScheduler.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/PositionAccountTransformer.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/IntegrationTests.java" />
-        <option value="$PROJECT_DIR$/kubernetes/setKubeIP.sh" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/trade-injector/src/test/java/com/trade/injector/controller/TradeInjectorControllerTest.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/resources/features/activateZkHz.feature" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/main/java/com/example/mu/positionqueryservice/PositionQueryServiceRedone.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/main/resources/hazelcast-client.xml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/StartUpTests.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/main/java/com/example/mu/positionqueryservice/StartUp.java" />
-        <option value="$PROJECT_DIR$/trade-injector/src/test/resources/hazelcast-client.xml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/resources/hazelcast-client.xml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/resources/hazelcast.xml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/CucumberRoot.java" />
-        <option value="$PROJECT_DIR$/pricequeryservice/src/main/resources/hazelcast-client.xml" />
-        <option value="$PROJECT_DIR$/pricequeryservice/src/test/resources/hazelcast.xml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/resources/features/getAllPositions.feature" />
-        <option value="$PROJECT_DIR$/kubernetes/run-querymicroservices.yaml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/SingletonTestManager.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/IntegrationTestsAllPositions.java" />
-        <option value="$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/SingletonTestManager.java" />
-        <option value="$PROJECT_DIR$/bddtestutilityservices/src/test/java/com/mu/test/utilities/SingletonTestManager.java" />
-        <option value="$PROJECT_DIR$/bddtestutilityservices/src/main/resources/hazelcast.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/PriceQueryTest.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/pom.xml" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/PositionListSteps.java" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/test/resources/features/getASinglePosition.feature" />
-        <option value="$PROJECT_DIR$/positionqueryservice/src/main/java/com/example/mu/positionqueryservice/PositionQueryService.java" />
         <option value="$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/SinglePositionSteps.java" />
         <option value="$PROJECT_DIR$/pricequeryservice/pom.xml" />
         <option value="$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/IntegrationTestsAll.java" />
@@ -277,9 +285,47 @@
         <option value="$PROJECT_DIR$/pricequeryservice/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/pricequeryservice/src/main/java/com/example/mu/pricequeryservice/controllers/PriceQueryHandler.java" />
         <option value="$PROJECT_DIR$/kubernetes/lb-query-services.yaml" />
-        <option value="$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/controller/TradeInjectorController.java" />
         <option value="$PROJECT_DIR$/kubernetes/run-apps-reports.yaml" />
+        <option value="$PROJECT_DIR$/trade-injector/manifests/trade-injector.yml" />
+        <option value="$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/controller/TradeInjectorController.java" />
+        <option value="$PROJECT_DIR$/trade-injector/src/main/resources/static/scripts/app/controller.js" />
+        <option value="$PROJECT_DIR$/hello-service/manifests/hello-service.yml" />
+        <option value="$PROJECT_DIR$/hello-client/manifests/hello-client.yml" />
+        <option value="$PROJECT_DIR$/kubernetes/kube-rbac-service-hw.yml" />
+        <option value="$PROJECT_DIR$/hello-client/pom.xml" />
+        <option value="$PROJECT_DIR$/kubernetes/katcoda-prepare.sh" />
+        <option value="$PROJECT_DIR$/kubernetes/create-master-slave.sh" />
+        <option value="$PROJECT_DIR$/hello-client/src/main/java/hello/client/FeignClientController.java" />
+        <option value="$PROJECT_DIR$/kubernetes/katcoda-prepare-mu.sh" />
+        <option value="$PROJECT_DIR$/release.sh" />
+        <option value="$PROJECT_DIR$/cache/pom.xml" />
+        <option value="$PROJECT_DIR$/database/pom.xml" />
+        <option value="$PROJECT_DIR$/docker/pom.xml" />
+        <option value="$PROJECT_DIR$/domain/pom.xml" />
+        <option value="$PROJECT_DIR$/hello-service/pom.xml" />
+        <option value="$PROJECT_DIR$/tradequerymicroservice/pom.xml" />
+        <option value="$PROJECT_DIR$/positionqueryservice/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-injector/pom.xml" />
+        <option value="$PROJECT_DIR$/priceInjectorFlink/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/positionSnapFlinkJob/pom.xml" />
+        <option value="$PROJECT_DIR$/kubernetes/deploy-stack.sh" />
+        <option value="$PROJECT_DIR$/trade-imdg/pom.xml" />
         <option value="$PROJECT_DIR$/bddtestutilityservices/pom.xml" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeTransformer.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/resources/features/connectAndPushToHz.feature" />
+        <option value="$PROJECT_DIR$/kubernetes/loadjarsToFlink.sh" />
+        <option value="$PROJECT_DIR$/bddtestutilityservices/src/main/java/utilities/SingletonTestManager.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PriceTransformer.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/TradeFlinkStreamer.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerIT.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionIT.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PositionAggregatorTest.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerTest.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerITSteps.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionITSteps.java" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/src/test/resources/features/connectAndPushPositionsToHz.feature" />
+        <option value="$PROJECT_DIR$/tradeInjectorFlink/pom.xml" />
       </list>
     </option>
   </component>
@@ -298,7 +344,12 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand />
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="mu-flink-trade-injector" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+      </expand>
       <select />
     </treeState>
   </component>
@@ -319,17 +370,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="imcs-demo" type="58d84e3e:PackageViewProjectNode" />
-              <item name="demo" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -345,25 +385,20 @@
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="bddtestutilityservices" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="bddtestutilityservices" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="bddtestutilityservices" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -371,71 +406,98 @@
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="bddtestutilityservices" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="utilities" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="streamer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="pricequeryservice" type="462c0819:PsiDirectoryNode" />
+              <item name="tradeInjectorFlink" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="features" type="462c0819:PsiDirectoryNode" />
             </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
             <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="trade-imdg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="trade-injector" type="462c0819:PsiDirectoryNode" />
+              <item name="imcs-demo" type="58d84e3e:PackageViewProjectNode" />
+              <item name="demo" type="616d4139:PackageViewModuleNode" />
             </path>
           </expand>
           <select />
@@ -704,7 +766,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/cache/target/docker/Dockerfile" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543169644082" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546534829626" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -733,6 +795,7 @@
       <recent name="$PROJECT_DIR$/positionqueryservice/src/test/resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.mu.flink.streamer.test" />
       <recent name="com.test.pricequeryservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -752,7 +815,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.StartUp">
+  <component name="RunManager" selected="JUnit.PositionAggregatorTest">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -902,6 +965,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SingletonTestManager" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="utilities.SingletonTestManager" />
+      <module name="bddtestutilityservices" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utilities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -943,78 +1020,61 @@
       <setting name="depsClasspath" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="IntegrationTestsAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="demo" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.test.pricequeryservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.test.pricequeryservice" />
-      <option name="MAIN_CLASS_NAME" value="com.test.pricequeryservice.IntegrationTestsAll" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="IntegrationTestsAllPositions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="positionqueryservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.mu.positionqueryservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.mu.positionqueryservice" />
-      <option name="MAIN_CLASS_NAME" value="com.example.mu.positionqueryservice.IntegrationTestsAllPositions" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PriceQueryAllFeature" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="demo" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.test.pricequeryservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.test.pricequeryservice" />
-      <option name="MAIN_CLASS_NAME" value="com.test.pricequeryservice.PriceQueryAllFeature" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PriceQueryAllFeature.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="demo" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="utilities.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.test.pricequeryservice" />
-      <option name="MAIN_CLASS_NAME" value="com.test.pricequeryservice.PriceQueryAllFeature" />
-      <option name="METHOD_NAME" value="contextLoads" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TradeInjectorControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="IntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="trade-injector" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.trade.injector.controller.*" />
+          <option name="PATTERN" value="com.trade.injector.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.trade.injector.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.trade.injector.controller.TradeInjectorControllerTest" />
+      <option name="PACKAGE_NAME" value="com.trade.injector" />
+      <option name="MAIN_CLASS_NAME" value="com.trade.injector.IntegrationTest" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PositionAggregatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mu-flink-trade-injector" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mu.flink.streamer.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mu.flink.streamer.test" />
+      <option name="MAIN_CLASS_NAME" value="com.mu.flink.streamer.test.PositionAggregatorTest" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TradeFlinkStreamerIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mu-flink-trade-injector" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mu.flink.streamer.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mu.flink.streamer.test" />
+      <option name="MAIN_CLASS_NAME" value="com.mu.flink.streamer.test.TradeFlinkStreamerIT" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TradeFlinkStreamerPositionIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mu-flink-trade-injector" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mu.flink.streamer.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mu.flink.streamer.test" />
+      <option name="MAIN_CLASS_NAME" value="com.mu.flink.streamer.test.TradeFlinkStreamerPositionIT" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -1026,9 +1086,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FeignClientController" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="hello-client" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hello.client.FeignClientController" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="trade-imdg" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.trade.imdg.hazelcast.Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SayHelloApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="hello-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="hello.SayHelloApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -1093,19 +1167,21 @@
       <item itemvalue="Spring Boot.Main" />
       <item itemvalue="Spring Boot.StartUp (2)" />
       <item itemvalue="Spring Boot.TradeInjectorController" />
-      <item itemvalue="JUnit.IntegrationTestsAllPositions" />
-      <item itemvalue="JUnit.TradeInjectorControllerTest" />
-      <item itemvalue="JUnit.PriceQueryAllFeature.contextLoads" />
-      <item itemvalue="JUnit.PriceQueryAllFeature" />
-      <item itemvalue="JUnit.IntegrationTestsAll" />
+      <item itemvalue="Spring Boot.FeignClientController" />
+      <item itemvalue="Spring Boot.SayHelloApplication" />
+      <item itemvalue="JUnit.TradeFlinkStreamerIT" />
+      <item itemvalue="JUnit.IntegrationTest" />
+      <item itemvalue="JUnit.PositionAggregatorTest" />
+      <item itemvalue="Application.SingletonTestManager" />
+      <item itemvalue="JUnit.TradeFlinkStreamerPositionIT" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.IntegrationTestsAll" />
-        <item itemvalue="JUnit.IntegrationTestsAllPositions" />
-        <item itemvalue="JUnit.PriceQueryAllFeature" />
-        <item itemvalue="JUnit.PriceQueryAllFeature.contextLoads" />
-        <item itemvalue="JUnit.TradeInjectorControllerTest" />
+        <item itemvalue="JUnit.PositionAggregatorTest" />
+        <item itemvalue="JUnit.TradeFlinkStreamerPositionIT" />
+        <item itemvalue="JUnit.TradeFlinkStreamerIT" />
+        <item itemvalue="JUnit.IntegrationTest" />
+        <item itemvalue="Application.SingletonTestManager" />
       </list>
     </recent_temporary>
   </component>
@@ -1153,181 +1229,16 @@
       <workItem from="1542905851511" duration="1356000" />
       <workItem from="1543165136966" duration="2271000" />
       <workItem from="1543237799307" duration="73000" />
-    </task>
-    <task id="LOCAL-00001" summary="cleanup">
-      <created>1493725631187</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1493725631188</updated>
-    </task>
-    <task id="LOCAL-00002" summary="cleanup">
-      <created>1493754623356</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1493754623356</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added readme">
-      <created>1493754793384</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1493754793384</updated>
-    </task>
-    <task id="LOCAL-00004" summary="added readme">
-      <created>1493754884457</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1493754884457</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Added MuCacheFactory&#10;Added cache config files for server and client&#10;Completed Schema constants&#10;Added gitignore&#10;Added PositionAccount domain object">
-      <created>1493827378238</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1493827378238</updated>
-    </task>
-    <task id="LOCAL-00006" summary="cleaning up repo">
-      <created>1493827548169</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1493827548169</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Created TradeMapStore and registered it in the cache configuration file">
-      <created>1493877503394</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1493877503394</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Created PartyMapStore and registered it in the cache configuration file">
-      <created>1493879281204</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1493879281204</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Added Price, PositionAccount &amp; Party MapStores and registered them with Hz in the cache config&#10;Added PositionAccount table to HBase schema&#10;Added PositionAccount schema constants&#10;Updated cache pom to include docker image build">
-      <created>1493969232812</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1493969232812</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Added positionAccountId to Party with required adjustments to the Schema constants and PartyMapStore">
-      <created>1493994572578</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1493994572578</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Updated Cache POM to generate the docker file from the hazlecast/hazelcast image">
-      <created>1494000908838</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1494000908838</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Updated Cache POM to generate the docker file from the hazlecast/hazelcast image">
-      <created>1494003023705</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1494003023705</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Added architecure overview diagram to wiki-images directory">
-      <created>1494233783379</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1494233783379</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Updated README">
-      <created>1494234488292</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1494234488292</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Updated README">
-      <created>1542110235349</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1542110235349</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Removed any hard coding of HBASE Host and ZK Host">
-      <created>1542117967945</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1542117967945</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Added the deploy script to deploy all components">
-      <created>1542119594198</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1542119594198</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Further changes to the deploy scripts">
-      <created>1542129648022</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1542129648022</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Deploy scripts remove any hardcoding to hbase containers">
-      <created>1542181955233</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1542181955233</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Modify deploy scripts adn readme.md">
-      <created>1542186454182</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1542186454182</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Modified deploy and setKubIP scripts">
-      <created>1542190154146</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1542190154146</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Further documentation updates">
-      <created>1542214731540</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1542214731540</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Modified the script bake in hbase host and container id">
-      <created>1542217159634</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1542217159634</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Modified the script bake in hbase host and container id">
-      <created>1542218825295</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1542218825295</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Modified deployed-stack to correct the hbase_host container">
-      <created>1542274407425</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1542274407426</updated>
+      <workItem from="1545380870714" duration="2009000" />
+      <workItem from="1545639504545" duration="1113000" />
+      <workItem from="1545644659101" duration="751000" />
+      <workItem from="1545650113004" duration="2596000" />
+      <workItem from="1545897550025" duration="13567000" />
+      <workItem from="1545986907380" duration="6822000" />
+      <workItem from="1546247000212" duration="12000" />
+      <workItem from="1546420067493" duration="14871000" />
+      <workItem from="1546449436551" duration="726000" />
+      <workItem from="1546505772854" duration="20042000" />
     </task>
     <task id="LOCAL-00026" summary="Further modification to markdown">
       <created>1542276252215</created>
@@ -1497,43 +1408,218 @@
       <option name="project" value="LOCAL" />
       <updated>1543169156616</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Fixed merged conflicts">
+      <created>1545316530298</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1545316530298</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Remove the messed up appreports">
+      <created>1545316847999</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1545316847999</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Still several fixes to get all the deployments to work">
+      <created>1545318769511</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1545318769511</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Removed security">
+      <created>1545320310995</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1545320310995</updated>
+    </task>
+    <task id="LOCAL-00054" summary="removed config property on github">
+      <created>1545382290378</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1545382290379</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Fixed Trade return String">
+      <created>1545383706155</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1545383706155</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Switched off security on UI">
+      <created>1545640244378</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1545640244379</updated>
+    </task>
+    <task id="LOCAL-00057" summary="setting authenticated to true">
+      <created>1545640764024</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1545640764025</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Hard coding the user id">
+      <created>1545644946050</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1545644946051</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Fixed ports for hello service and client">
+      <created>1545897647763</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1545897647763</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Adding hw service account">
+      <created>1545903281815</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1545903281815</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Added the service account">
+      <created>1545903836563</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1545903836563</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Correcting path to kube-r8">
+      <created>1545904982896</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1545904982896</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Bringing down the version to 1.11">
+      <created>1545907310187</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1545907310187</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Corrected the cluster role binding">
+      <created>1545909279926</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1545909279926</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Tweaking of the service account">
+      <created>1545917750719</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1545917750719</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Committing the release definition scripts">
+      <created>1545922729873</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1545922729873</updated>
+    </task>
+    <task id="LOCAL-00067" summary="Changed versions across all Pom to use Snapshot">
+      <created>1545929343705</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1545929343705</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Incremented the snapshot version to 1.3-SNAPSHOT">
+      <created>1545931692925</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1545931692925</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Added distribution management">
+      <created>1545993449949</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1545993449949</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Added SL4j depdencies to Flink Tests">
+      <created>1546003074617</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1546003074617</updated>
+    </task>
+    <task id="LOCAL-00071" summary="MU-112 added build version input to scripts and corrected trade-imdg dependencies">
+      <created>1546015164108</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1546015164108</updated>
+    </task>
+    <task id="LOCAL-00072" summary="MU-113 - Added BDD testing to Trade Injector Flink">
+      <created>1546439098822</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1546439098823</updated>
+    </task>
+    <task id="LOCAL-00073" summary="MU-113 - Major changes to BDD testing for Trade Flink Streamer">
+      <created>1546528349426</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1546528349427</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Finalised testing with BDD">
+      <created>1546532234139</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1546532234139</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="IntegrationTestsAllPositions - 2018.11.22 at 13h 54m 53s.xml">
-      <configuration name="IntegrationTestsAllPositions" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 05m 56s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 14h 24m 31s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 06m 35s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 14h 33m 55s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 07m 54s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 14h 46m 40s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 08m 33s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 14h 47m 25s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 09m 14s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 14h 49m 09s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 10m 06s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 14h 59m 33s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 10m 53s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 15h 02m 08s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 12m 05s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 15h 56m 12s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="TradeFlinkStreamerPositionIT - 2019.01.03 at 16h 12m 20s.xml">
+      <configuration name="TradeFlinkStreamerPositionIT" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="IntegrationTestsAll - 2018.11.22 at 16h 25m 44s.xml">
-      <configuration name="IntegrationTestsAll" configurationId="JUnit" />
+    <history-entry file="PositionAggregatorTest - 2019.01.03 at 16h 50m 13s.xml">
+      <configuration name="PositionAggregatorTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170336000" />
+    <option name="totallyTimeSpent" value="236288000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1545,10 +1631,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
     <layout>
-      <window_info active="true" id="Project" order="0" visible="true" weight="0.24973376" />
+      <window_info id="Project" order="0" visible="true" weight="0.29605964" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1558,28 +1643,29 @@
       <window_info id="Nl-Palette" order="7" />
       <window_info id="ZooKeeper" order="8" weight="0.32930514" />
       <window_info id="Web" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3253012" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49697885" weight="0.646988" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.48313254" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5030211" side_tool="true" weight="0.3338898" />
-      <window_info anchor="bottom" id="SBT Console" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="OpenShift Origin" order="9" show_stripe_button="false" weight="0.32888147" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.25421688" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.24939759" />
-      <window_info anchor="bottom" id="Java Enterprise" order="13" />
-      <window_info anchor="bottom" id="Spring" order="14" />
-      <window_info anchor="bottom" id="Graph Database Console" order="15" />
-      <window_info anchor="bottom" id="Database Changes" order="16" show_stripe_button="false" />
+      <window_info anchor="bottom" id="GraphQL" order="0" weight="0.32891566" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.3253012" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49697885" visible="true" weight="0.5762376" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4821782" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32891566" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5030211" side_tool="true" weight="0.3338898" />
+      <window_info anchor="bottom" id="SBT Console" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="OpenShift Origin" order="10" show_stripe_button="false" weight="0.32888147" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.25346535" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32891566" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.24859393" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" />
+      <window_info anchor="bottom" id="Spring" order="15" />
+      <window_info anchor="bottom" id="Graph Database Console" order="16" />
+      <window_info anchor="bottom" id="Database Changes" order="17" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" show_stripe_button="false" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" visible="true" weight="0.25452608" />
+      <window_info active="true" anchor="right" id="Maven Projects" order="4" visible="true" weight="0.1368477" />
       <window_info anchor="right" id="Properties" order="5" />
       <window_info anchor="right" id="Mongo Explorer" order="6" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="7" show_stripe_button="false" />
@@ -1591,6 +1677,51 @@
       <window_info anchor="right" id="Graph Database" order="13" />
       <window_info anchor="right" id="Bean Validation" order="14" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Project" order="0" weight="0.29605964" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Nl-Palette" order="7" />
+      <window_info id="ZooKeeper" order="8" weight="0.32930514" />
+      <window_info id="Web" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="GraphQL" order="0" weight="0.32891566" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.3253012" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49697885" visible="true" weight="0.5762376" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4821782" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32891566" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5030211" side_tool="true" weight="0.3338898" />
+      <window_info anchor="bottom" id="SBT Console" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="OpenShift Origin" order="10" show_stripe_button="false" weight="0.32888147" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.25346535" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32891566" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.24859393" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" />
+      <window_info anchor="bottom" id="Spring" order="15" />
+      <window_info anchor="bottom" id="Graph Database Console" order="16" />
+      <window_info anchor="bottom" id="Database Changes" order="17" show_stripe_button="false" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" show_stripe_button="false" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="4" visible="true" weight="0.1368477" />
+      <window_info anchor="right" id="Properties" order="5" />
+      <window_info anchor="right" id="Mongo Explorer" order="6" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Capture Analysis" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info anchor="right" id="Docker" order="11" weight="0.32854986" />
+      <window_info anchor="right" id="PlantUML" order="12" />
+      <window_info anchor="right" id="Graph Database" order="13" />
+      <window_info anchor="right" id="Bean Validation" order="14" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -1629,32 +1760,32 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Further documentation updates" />
-    <MESSAGE value="Modified the script bake in hbase host and container id" />
-    <MESSAGE value="Modified deployed-stack to correct the hbase_host container" />
-    <MESSAGE value="Further modification to markdown" />
-    <MESSAGE value="Further modification to deployment script and changed directory" />
-    <MESSAGE value="Added further documentation" />
-    <MESSAGE value="Fixed hbase host and loadjars" />
-    <MESSAGE value="Added logging to Kafka send" />
-    <MESSAGE value="Switched off pricecheduler" />
-    <MESSAGE value="Added Kafka test" />
-    <MESSAGE value="Further modification to flink streamers to pick up zookeeper" />
-    <MESSAGE value="load jars should build the flink jars correctly and put the price scheduler back" />
-    <MESSAGE value="Fixed error on Price scheduler" />
-    <MESSAGE value="Introducing Cucumber BDD to positionQueryService" />
-    <MESSAGE value="Added TradeQuery Service to setKubeIP + Added documentation" />
-    <MESSAGE value="More documentation" />
-    <MESSAGE value="Initial run of embedded Hz in cucumber testing" />
-    <MESSAGE value="Got the tests to run; moving to embedded zoo" />
-    <MESSAGE value="Got the tests to run on embedded zoo and hz. need fixing on shutting down" />
-    <MESSAGE value="Implemented the final test and will include more features" />
-    <MESSAGE value="Set require hz" />
-    <MESSAGE value="Have multiple cucumber tests running" />
-    <MESSAGE value="Add Cucumber BDD to Price Query" />
-    <MESSAGE value="Changing to a kubernetes load balance" />
-    <MESSAGE value="Add pom.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add pom.xml" />
+    <MESSAGE value="Fixed merged conflicts" />
+    <MESSAGE value="Remove the messed up appreports" />
+    <MESSAGE value="Still several fixes to get all the deployments to work" />
+    <MESSAGE value="Removed security" />
+    <MESSAGE value="removed config property on github" />
+    <MESSAGE value="Fixed Trade return String" />
+    <MESSAGE value="Switched off security on UI" />
+    <MESSAGE value="setting authenticated to true" />
+    <MESSAGE value="Hard coding the user id" />
+    <MESSAGE value="Fixed ports for hello service and client" />
+    <MESSAGE value="Adding hw service account" />
+    <MESSAGE value="Added the service account" />
+    <MESSAGE value="Correcting path to kube-r8" />
+    <MESSAGE value="Bringing down the version to 1.11" />
+    <MESSAGE value="Corrected the cluster role binding" />
+    <MESSAGE value="Tweaking of the service account" />
+    <MESSAGE value="Committing the release definition scripts" />
+    <MESSAGE value="Changed versions across all Pom to use Snapshot" />
+    <MESSAGE value="Incremented the snapshot version to 1.3-SNAPSHOT" />
+    <MESSAGE value="Added distribution management" />
+    <MESSAGE value="Added SL4j depdencies to Flink Tests" />
+    <MESSAGE value="MU-112 added build version input to scripts and corrected trade-imdg dependencies" />
+    <MESSAGE value="MU-113 - Added BDD testing to Trade Injector Flink" />
+    <MESSAGE value="MU-113 - Major changes to BDD testing for Trade Flink Streamer" />
+    <MESSAGE value="Finalised testing with BDD" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finalised testing with BDD" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1668,9 +1799,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/positionqueryservice/src/main/java/com/example/mu/positionqueryservice/PositionQueryService.java</url>
-          <line>76</line>
+          <line>47</line>
           <properties />
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerITSteps.java</url>
+          <line>107</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionITSteps.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionITSteps.java</url>
+          <line>183</line>
+          <properties />
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1680,299 +1829,383 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/main/resources/hazelcast-client.xml">
+    <entry file="file://$PROJECT_DIR$/hello-service/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="25" column="67" selection-start-line="25" selection-start-column="67" selection-end-line="25" selection-end-column="67" />
+        <state relative-caret-position="660">
+          <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trade-injector/src/test/java/com/trade/injector/controller/TradeInjectorControllerTest.java">
+    <entry file="file://$PROJECT_DIR$/hello-client/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
-          <caret line="200" column="55" selection-start-line="200" selection-start-column="49" selection-end-line="200" selection-end-column="55" />
+        <state relative-caret-position="630">
+          <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/resources/features/getAllPositions.feature">
+    <entry file="file://$PROJECT_DIR$/tradequerymicroservice/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="61" lean-forward="true" selection-end-line="11" selection-end-column="61" />
+        <state relative-caret-position="975">
+          <caret line="65" column="24" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/main/resources/application.properties">
+    <entry file="file://$PROJECT_DIR$/priceInjectorFlink/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="40" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="40" />
+        <state relative-caret-position="1065">
+          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/main/resources/hazelcast-client.xml">
+    <entry file="file://$PROJECT_DIR$/positionSnapFlinkJob/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="24" column="55" selection-start-line="24" selection-start-column="55" selection-end-line="24" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/resources/bootstrap.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="40" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/resources/bootstrap.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/main/resources/bootstrap.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/SingletonTestManagerDeprecated.java" />
-    <entry file="file://$PROJECT_DIR$/kubernetes/run-hz-jet-cluster.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/price-streamer-deployment.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-137" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/setKubeIP.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/loadjarsToFlink.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/deploy-stack.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-318" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bddtestutilityservices/src/main/java/utilities/SingletonTestManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bddtestutilityservices/src/main/resources/hazelcast.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6480">
-          <caret line="432" column="33" selection-start-line="432" selection-start-column="33" selection-end-line="432" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/resources/hazelcast-client.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/resources/hazelcast.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6450">
-          <caret line="430" column="86" selection-start-line="430" selection-start-column="86" selection-end-line="430" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/resources/features/getASinglePosition.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="52" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/CucumberRoot.java" />
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/SinglePositionSteps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/PriceQuerySingleFeature.java" />
-    <entry file="file://$PROJECT_DIR$/cache/src/main/java/com/example/mu/cachemapstore/PriceMapStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-891">
-          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="71" column="21" selection-start-line="54" selection-start-column="8" selection-end-line="71" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/IntegrationTestsAllPositions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/PositionAccountTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="29" column="10" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="29" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Price.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/resources/features/getAllPrices.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="50" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/resources/application.yml" />
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/main/resources/application.yml" />
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/main/java/com/example/mu/pricequeryservice/controllers/PriceQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="116" selection-start-line="116" selection-end-line="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/main/resources/bootstrap.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="27" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/main/java/com/example/mu/pricequeryservice/repository/PriceRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/IntegrationTestsAll.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/PriceQueryAllFeature.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="63" column="55" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/src/test/java/com/test/pricequeryservice/PriceTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="1590">
+          <caret line="106" column="19" selection-start-line="106" selection-start-column="19" selection-end-line="106" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/positionqueryservice/src/main/java/com/example/mu/positionqueryservice/PositionQueryService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="106" column="5" selection-start-line="94" selection-start-column="3" selection-end-line="106" selection-end-column="5" />
+        <state relative-caret-position="390">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/PositionListSteps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="71" column="9" selection-start-line="63" selection-start-column="8" selection-end-line="71" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/run-querymicroservices.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="92" column="14" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/run-apps-reports-dep.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/kubernetes/run-apps-reports.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+        <state relative-caret-position="525">
+          <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trade-imdg/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trade-injector/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/lb-query-services.yaml">
+    <entry file="file://$PROJECT_DIR$/kubernetes/deploy-stack.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="45" />
+          <caret line="14" column="15" selection-start-line="14" selection-end-line="14" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/controller/TradeInjectorController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
-          <caret line="116" column="85" selection-start-line="116" selection-start-column="85" selection-end-line="116" selection-end-column="85" />
+          <caret line="99" column="44" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5594#5595#0" expanded="true" />
+            <element signature="e#5636#5637#0" expanded="true" />
+            <element signature="e#5741#5742#0" expanded="true" />
+            <element signature="e#5787#5788#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/trade-injector/src/main/java/com/trade/injector/business/service/GenerateTradeCacheData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="47" column="35" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trade-imdg/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1205">
+          <caret line="15" column="66" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trade-injector/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="92" column="21" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/positionqueryservice/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="92" column="21" selection-start-line="87" selection-start-column="8" selection-end-line="92" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/resources/features/writeAndReadHzQueue.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="47" lean-forward="true" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/IntegrationTestsAllPositions.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+          <caret line="10" column="91" lean-forward="true" selection-start-line="7" selection-end-line="10" selection-end-column="91" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pricequeryservice/pom.xml">
+    <entry file="file://$PROJECT_DIR$/trade-injector/src/test/java/com/trade/injector/IntegrationTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="245" column="25" lean-forward="true" selection-start-line="209" selection-start-column="4" selection-end-line="245" selection-end-column="25" />
+        <state relative-caret-position="135">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/SinglePositionSteps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/resources/features/getAllPositions.feature">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trade-injector/src/test/resources/features/InjectTrades.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trade-injector/src/test/java/com/trade/injector/TradeTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trade-injector/src/test/java/com/trade/injector/InjectTradeFeature.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="29" column="5" selection-start-line="22" selection-start-column="4" selection-end-line="29" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/positionqueryservice/src/test/java/com/example/mu/positionqueryservice/PositionListSteps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="45" column="9" selection-start-line="40" selection-start-column="8" selection-end-line="45" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bddtestutilityservices/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="151" column="25" selection-start-line="151" selection-start-column="25" selection-end-line="151" selection-end-column="25" />
+        <state relative-caret-position="-491">
+          <caret line="24" column="21" selection-start-line="21" selection-start-column="8" selection-end-line="24" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/resources/hazelcast.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-564" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/target/failsafe-reports/failsafe-summary.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/target/failsafe-reports/com.mu.flink.streamer.test.TradeFlinkStreamerIT.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/target/failsafe-reports/TEST-com.mu.flink.streamer.test.TradeFlinkStreamerIT.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bddtestutilityservices/src/main/java/utilities/KafkaLocal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kubernetes/loadjarsToFlink.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/TradeProcess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bddtestutilityservices/src/main/java/utilities/SingletonTestManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="185" selection-start-line="185" selection-end-line="185" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/PositionAccount.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="23" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PositionTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/example/mu/domain/Price.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="15" column="27" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PriceTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="27" column="81" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/resources/features/connectAndPushToHz.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="34" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionIT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="81" selection-start-line="8" selection-start-column="81" selection-end-line="8" selection-end-column="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerIT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="91" selection-start-line="6" selection-end-line="9" selection-end-column="91" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/Assert.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="333" selection-start-line="333" selection-end-line="333" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/TradeFlinkStreamer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
+          <folding>
+            <element signature="e#3855#3856#0" expanded="true" />
+            <element signature="e#3877#3878#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6499">
+          <caret line="527" column="107" selection-start-line="526" selection-start-column="8" selection-end-line="527" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/HzTradeSink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerITSteps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="100" column="91" selection-start-line="99" selection-start-column="8" selection-end-line="100" selection-end-column="91" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1232#1233#0" expanded="true" />
+            <element signature="e#1249#1250#0" expanded="true" />
+            <element signature="e#3458#3459#0" expanded="true" />
+            <element signature="e#3499#3500#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/HzPositionSink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="24" column="67" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/PositionAggregator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/TradeFlinkStreamerPositionITSteps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="183" selection-start-line="183" selection-end-line="183" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4077#4078#0" expanded="true" />
+            <element signature="e#4118#4119#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/resources/features/connectAndPushPositionsToHz.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="211" column="39" selection-start-line="211" selection-start-column="39" selection-end-line="211" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PositionAggregatorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-225">
+          <caret line="89" selection-start-line="89" selection-end-line="89" />
         </state>
       </provider>
     </entry>
@@ -2067,6 +2300,22 @@
   </component>
   <component name="mavenExecuteGoalHistory">
     <option value="$PROJECT_DIR$" />
+    <option value="verify -Psurefire" />
+    <option value="clean package" />
+    <option value="verify -Pfailsafe" />
+    <option value="clean compile package verify -Pfailsafe" />
+    <option value="clean compile package" />
+    <option value="clean compile package -DskipTests" />
+    <option value="release:clean release:prepare" />
+    <option value="release:prepare" />
+    <option value="release:perform" />
+    <option value="release:prepare -Dtag=1.2" />
+    <option value="release:prepare -DautoVersionSubmodules:true" />
+    <option value="release:prepare autoVersionSubmodules:true" />
+    <option value="clean verify -B" />
+    <option value="clean compile package install -DskipTests" />
+    <option value="clean compile package install docker:build -DskipTests" />
+    <option value="clean compile" />
     <option value="clean compile package install -DskipTests" />
     <option value="clean compile package -DskipTests" />
     <option value="clean compile package" />

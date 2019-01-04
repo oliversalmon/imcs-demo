@@ -1,62 +1,34 @@
 package com.mu.flink.streamer.test;
 
-import static org.junit.Assert.*;
-
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
-
+import com.example.mu.domain.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.mu.flink.streamer.*;
 import org.apache.flink.streaming.api.TimeCharacteristic;
-//import org.I0Itec.zkclient.ZkClient;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.ProcessFunction;
-import org.apache.flink.streaming.api.functions.ProcessFunction.Context;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010.FlinkKafkaProducer010Configuration;
-import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
-import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
-import org.apache.kafka.common.serialization.StringDeserializer;
-
-//import kafka.utils.ZKStringSerializer$;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.mu.domain.Instrument;
-import com.example.mu.domain.Party;
-import com.example.mu.domain.PositionAccount;
-import com.example.mu.domain.Price;
-import com.example.mu.domain.Trade;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.mu.flink.streamer.HzPositionSink;
-import com.mu.flink.streamer.HzPositionWindowSink;
-import com.mu.flink.streamer.HzTradeSink;
-import com.mu.flink.streamer.PositionAggregator;
-import com.mu.flink.streamer.PositionFoldAggregator;
-import com.mu.flink.streamer.TradeFlinkStreamer;
-import com.mu.flink.streamer.TradeProcess;
-import com.mu.flink.streamer.TradeTimeStampWaterMarkAssigner;
-import com.mu.flink.streamer.TradeToTupleKeyTrade;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+
+//import org.I0Itec.zkclient.ZkClient;
+//import kafka.utils.ZKStringSerializer$;
 
 //import kafka.admin.TopicCommand;
 //import kafka.consumer.ConsumerConfig;
@@ -76,7 +48,7 @@ import com.mu.flink.streamer.TradeToTupleKeyTrade;
 //import kafka.zk.EmbeddedZookeeper;
 
 public class TradeFlinkStreamerTest {
-	HazelcastInstance hz = Hazelcast.newHazelcastInstance();
+	HazelcastInstance hz;
 	final static Logger LOG = LoggerFactory.getLogger(TradeFlinkStreamerTest.class);
 	private static Gson gson = new GsonBuilder().create();
 	private static final String POSITIONACCOUNTMAP = "position-account";
@@ -131,6 +103,7 @@ public class TradeFlinkStreamerTest {
 		
 		//consumer = kafka.consumer.Consumer.createJavaConsumerConnector(new ConsumerConfig(consumerProperties));
 
+		hz = Hazelcast.newHazelcastInstance();
 		// set up Test Data
 		// create new Trades, Instruments, Prices, Parties
 		Party party1 = new Party();
@@ -177,7 +150,7 @@ public class TradeFlinkStreamerTest {
 
 		Price price2 = new Price();
 		price2.setInstrumentId(ins2.getSymbol());
-		price2.setPrice((double) Math.random() * 1000 + 1);
+		price2.setPrice(Math.random() * 1000 + 1);
 		price2.setPriceId(UUID.randomUUID().toString());
 		price2.setTimeStamp(System.currentTimeMillis());
 
@@ -258,7 +231,7 @@ public class TradeFlinkStreamerTest {
 		String executingFirmId = "TEST_EX1_" + 1;
 		String executingTraderId = "TEST_TRD1";
 		String executionVenue = "EX1";
-		double trdpx = (double) (Math.random() * 1000 + 1);
+		double trdpx = (Math.random() * 1000 + 1);
 		int quantity = (int) (Math.random() * 100 + 1);
 
 		Party buyParty = map.get("PARTY1");
@@ -455,7 +428,7 @@ public class TradeFlinkStreamerTest {
 		String executingFirmId = "TEST_EX1_" + 1;
 		String executingTraderId = "TEST_TRD1";
 		String executionVenue = "EX1";
-		double trdpx = (double) (Math.random() * 1000 + 1);
+		double trdpx = (Math.random() * 1000 + 1);
 		int quantity = (int) (Math.random() * 100 + 1);
 
 		Party buyParty = map.get("PARTY1");
@@ -566,7 +539,9 @@ public class TradeFlinkStreamerTest {
 //		zkClient.close();
 //		zkServer.shutdown();
 
-		hz.shutdown();
+		if (hz != null)
+			hz.shutdown();
+
 	}
 
 }

@@ -4,7 +4,7 @@ if [ -z "$1" ]
     exit
 fi
 
-BUILDVERSION=$2
+BUILDVERSION=$1
 
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
