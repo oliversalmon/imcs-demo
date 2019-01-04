@@ -3,7 +3,7 @@
 
   <groupId>com.example.mu</groupId>
   <artifactId>mu-parent</artifactId>
-  <version>1.8-SNAPSHOT</version>
+  <version>1.8</version>
 
   <parent>
       <groupId>org.springframework.boot</groupId>
@@ -43,7 +43,7 @@
   <scm>
     <connection>scm:git:https://github.com/oliversalmon/imcs-demo.git</connection>
     <developerConnection>scm:git:https://github.com/oliversalmon/imcs-demo.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.8</tag>
   </scm>
   <distributionManagement>
     <repository>
