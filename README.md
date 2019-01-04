@@ -26,10 +26,14 @@ apt-get update
 apt-get install git-core
 ```
 
-* Download Repository
+* Download Repository and checkout the tagged releasable version
 ```
 git clone https://github.com/oliversalmon/imcs-demo.git
+cd ~/imcs-demo
+git checkout v1.8
 ```
+
+In the above example the tagged version is 1.8
 
 ## Install Kubernetes and Run in each droplet
 
@@ -42,8 +46,8 @@ Run the following shell script to install the following components
 * Kubelet
 
 ```
-cd imcs-demo/kubernetes/
-chmod +x *.sh
+cd ~/imcs-demo/kubernetes/
+
 ./create-master-slave.sh
 ```
 
@@ -88,9 +92,9 @@ on the kubernetes cloud
 * Flink Cluster and Job Manager to stream and manage state of Trades and Positions
 
 ```
-./deploy-stack.sh <Public IP address of master>
+./deploy-stack.sh <Public IP address of master> <deployable tagged version number>
 ```
-Note: The public IP address will be obtained from the Digital Ocean console 
+Note: The public IP address will be obtained from the Digital Ocean console and the tag version will be the number without 'v'. For Eg v1.8 will be 1.8
 
 **Confirm if the applications run successfully**
 
@@ -113,7 +117,7 @@ position-query-684b6cf7cd-7dx4q              1/1     Running            0       
 position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
 trade-imdg-7789965756-snl79                  1/1     Running            0          39m
 trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
-trade-query-5f964dd46d-h7bx8                 0/1     CrashLoopBackOff   10         39m
+trade-query-5f964dd46d-h7bx8                 0/1     Running            0          39m
 zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
 
 ```
@@ -126,10 +130,11 @@ Run the following command from the kubernetes directory
 ```
 cd ~/imcs-demo/kubernetes
 
-./loadjarsToFlink.sh
+./loadjarsToFlink.sh <deployable git release tag>
 
 ```
 
+Note: The release tag will be the git release tag without the 'v'. For eg: v1.8 will be 1.8
 
 **Run the UI and set up login credentials with FB**
 
@@ -144,13 +149,13 @@ flink-jobmanager         ClusterIP   10.104.186.26    <none>        6123/TCP,612
 kafka                    ClusterIP   10.105.185.120   <none>        9092/TCP                                       40m
 position-query-service   NodePort    10.100.121.27    <none>        8093:31633/TCP                                 40m
 trade-imdg-service       ClusterIP   10.104.51.125    <none>        5701/TCP                                       40m
-trade-injector-service   NodePort    10.100.45.79     <none>        8090:31435/TCP                                 39m
+trade-injector-service   NodePort    10.100.45.79     <none>        8090:31891/TCP                                 39m
 trade-query-service      NodePort    10.103.202.20    <none>        8094:31111/TCP                                 40m
 zoo1                     NodePort    10.101.90.222    <none>        2181:32021/TCP,2888:32076/TCP,3888:30751/TCP   40m
 ```
 
 Take a note of the ports used in trade-injector-service. Ignore 8090 and use the port number to the left of it. In the
-above example it is 31435
+above example it is 31891
 
 Login to Trade Injector UI with the following URL
 
@@ -158,11 +163,7 @@ Login to Trade Injector UI with the following URL
 http://<public ip of master DO>:<port number obtained from the above step>
 ```
 
-You will see the Login page of Trade Injector UI showing a Facebook or Github login. Login with facebook.
-Before you login; you will need to register the above URL in facebook/developer. Please speak to the authors of this 
-application to register the URL
-
-Once you have logged in; you can start to generate test trades and view the position reports.
+You can now start to generate test trades and view the position reports.
 
 You have successfully deployed and have the application running at this point.
 
@@ -197,9 +198,9 @@ $ kubectl logs -f kafka-broker-bnq7g  -n=mu-architecture-demo
 ```
 The last line will tail the logs for the kafka broker
 
-*Kafka Test*
+*E2E Testing*
 
-Test if kafka works. This can be done with a simple utility called kafkacat
+Test end to end by injecting trades into Kafka topics. This can be done with a simple utility called kafkacat
 
 ```
 $ apt-get install kafkacat
