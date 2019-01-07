@@ -15,7 +15,7 @@ RUN sed -i "s/httpredir.debian.org/mirrors.163.com/g" /etc/apt/sources.list
 # build LZO
 WORKDIR /tmp
 RUN apt-get update && \
-    apt-get install -y build-essential maven2 lzop liblzo2-2 && \
+    apt-get install -y build-essential maven lzop liblzo2-2 && \
     wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.09.tar.gz && \
     tar zxvf lzo-2.09.tar.gz && \
     cd lzo-2.09 && \
@@ -24,7 +24,7 @@ RUN apt-get update && \
     cd .. && git clone https://github.com/twitter/hadoop-lzo.git && cd hadoop-lzo && \
     git checkout release-0.4.20 && \
     C_INCLUDE_PATH=/usr/local/lzo-2.09/include LIBRARY_PATH=/usr/local/lzo-2.09/lib mvn clean package && \
-    apt-get remove -y build-essential maven2 && \
+    apt-get remove -y build-essential maven && \
     apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache.log}/ && \
