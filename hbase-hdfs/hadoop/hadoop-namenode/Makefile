@@ -1,5 +1,7 @@
 all: push clean
 
+IMAGE_BASE_URL=dineshpillai
+IMAGE_TAG=2.7.7
 
 IMAGE_NAME=${IMAGE_BASE_URL}/hadoop-namenode
 BASE_IMAGE=$(IMAGE_BASE_URL)/hadoop-base:${IMAGE_TAG}
