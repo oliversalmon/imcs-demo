@@ -28,5 +28,6 @@ RUN chmod a+x /usr/local/sbin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/sbin/docker-entrypoint.sh"]
 #CMD  ["/usr/sbin/sshd"]
+CMD ["bin/hdfs", "namenode", "-format"]
 CMD ["bin/hdfs", "namenode"]
 #CMD ["./sbin/start-dfs.sh"]
