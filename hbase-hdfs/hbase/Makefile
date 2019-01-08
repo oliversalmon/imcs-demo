@@ -10,6 +10,7 @@ build: addconf
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 
 push: build
+	docker login -u dineshpillai -p Pill2017
 	docker push $(IMAGE_NAME):$(IMAGE_TAG)
 
 clean:
