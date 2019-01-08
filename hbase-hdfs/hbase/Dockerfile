@@ -23,7 +23,7 @@ RUN apt-get update && \
     make && make install && \
     cd .. && git clone https://github.com/twitter/hadoop-lzo.git && cd hadoop-lzo && \
     git checkout release-0.4.20 && \
-    C_INCLUDE_PATH=/usr/local/lzo-2.09/include LIBRARY_PATH=/usr/local/lzo-2.09/lib mvn clean package && \
+    C_INCLUDE_PATH=/usr/local/lzo-2.09/include LIBRARY_PATH=/usr/local/lzo-2.09/lib mvn -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 clean package && \
     apt-get remove -y build-essential maven && \
     apt-get clean autoclean && \
     apt-get autoremove --yes && \
