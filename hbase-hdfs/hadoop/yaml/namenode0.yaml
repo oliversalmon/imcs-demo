@@ -27,7 +27,7 @@ spec:
   #   kubernetes.io/hostname: kube-node-7
   containers:
   - name: namenode
-    image: dineshpillai/hadoop-namenode
+    image: dineshpillai/hadoop-namenode:2.7.7
     imagePullPolicy: Always
     ports:
     - containerPort: 8020

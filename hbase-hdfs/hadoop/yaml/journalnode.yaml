@@ -62,7 +62,7 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
-    image: dineshpillai/hadoop-journalnode
+    image: dineshpillai/hadoop-journalnode:2.7.7
     imagePullPolicy: Always
     ports:
     - containerPort: 8485
@@ -87,7 +87,7 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
-    image: dineshpillai/hadoop-journalnode
+    image: dineshpillai/hadoop-journalnode:2.7.7
     imagePullPolicy: Always
     ports:
     - containerPort: 8485
@@ -112,7 +112,7 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
-    image: dineshpillai/hadoop-journalnode
+    image: dineshpillai/hadoop-journalnode:2.7.7
     imagePullPolicy: Always
     ports:
     - containerPort: 8485
