@@ -77,15 +77,15 @@ public class Schema {
 
     public static void main(String... args) throws IOException {
         
-    		String hbaseHost = args[0].substring(args[0].indexOf('=')+1, args[0].length());
-		String zkHost = args[1].substring(args[1].indexOf('=')+1, args[1].length());
+    		String hbaseHost = args[0].substring(args[0].indexOf('=')+1);
+		String zkHost = args[1].substring(args[1].indexOf('=')+1);
 		
 		 System.out.println("Connection to Hbase: "+hbaseHost);
 		 System.out.println("Connection to zk: "+zkHost);		
     	
     		Configuration config =  HBaseConfiguration.create();
         config.setInt("timeout", 120000);
-        config.set("hbase.master", hbaseHost + ":60000");
+        config.set("hbase.master", hbaseHost + ":16000");
         config.set("hbase.zookeeper.quorum",zkHost);
         config.set("hbase.zookeeper.property.clientPort", "2181");
         createSchemaTables(config);

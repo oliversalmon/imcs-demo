@@ -1,5 +1,10 @@
 #!/bin/bash
 
+HOSTIPADDRESS=zoo1
+HBASECONTAINERID=hbase-master-a
+
+sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
+
 #Create the docker images
 docker login -u dineshpillai -p Pill2017
 
@@ -32,5 +37,13 @@ sleep 60s
 cd ~/imcs-demo/hbase-hdfs
 kubectl create -f hmaster.yaml
 kubectl create -f region.yaml
+
+
+cd ~/imcs-demo
+mvn clean package install -DskipTests
+
+cd ~/imcs-demo/database/target
+java -jar database-1.1.jar hbasehost=$HBASECONTAINERID zkhost=$HOSTIPADDRESS
+
 
 
