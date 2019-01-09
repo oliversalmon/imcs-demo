@@ -3,6 +3,14 @@
 HOSTIPADDRESS=zoo1
 HBASECONTAINERID=hbase-master-a
 
+#Install Java and Maven
+apt install software-properties-common -y
+add-apt-repository ppa:webupd8team/java -y
+apt-get update -y
+apt-get install oracle-java8-installer -y
+
+apt install maven -y
+
 sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
 
 #Create the docker images
@@ -42,8 +50,10 @@ kubectl create -f region.yaml
 cd ~/imcs-demo
 mvn clean package install -DskipTests
 
-cd ~/imcs-demo/database/target
-java -jar database-1.1.jar hbasehost=$HBASECONTAINERID zkhost=$HOSTIPADDRESS
+cd ~/imcs-demo/database
+mvn docker:build
+
+kubectl create -f yaml/database-connect.yaml
 
 
 

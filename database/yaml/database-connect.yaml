@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database-utility
+  namespace: mu-architecture-demo
+  labels:
+    purpose: set up database tables
+spec:
+  containers:
+  - name: database-utility
+    image: dineshpillai/database:latest
+    args: ["hbasehost=hbase-master-a", "zkhost=zoo1"]
+  restartPolicy: OnFailure
