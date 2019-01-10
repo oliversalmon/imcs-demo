@@ -52,6 +52,8 @@ mvn clean package install -DskipTests
 
 cd ~/imcs-demo/database
 mvn docker:build
+docker push dineshpillai/innovation-mu-database-utility
+
 
 kubectl create -f yaml/database-connect.yaml
 
