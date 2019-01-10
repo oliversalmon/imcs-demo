@@ -13,10 +13,6 @@ spec:
       labels:
         name: trade-imdg
     spec:
-      hostAliases:
-      - ip: "{{HOSTIPADDRESS}}"
-        hostnames:
-        - "{{HBASECONTAINERID}}"
       imagePullSecrets:
       - name: registry-secret
       containers:
