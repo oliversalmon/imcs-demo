@@ -73,6 +73,10 @@ cd ~/imcs-demo/hbase-hdfs
 kubectl create -f hmaster.yaml
 kubectl create -f region.yaml
 
+sleep 60s
+cd ~/imcs-demo/database
+kubectl create -f yaml/database-connect.yaml
+
 #Deploy the rest of the stack to Kubernetes
 cd ~/imcs-demo/kubernetes
 kubectl apply -f run-mzk.yaml
@@ -96,8 +100,6 @@ cd ~/imcs-demo/trade-injector
 kubectl apply -f manifests/trade-injector.yml
 kubectl apply -f manifests/trade-injector-configmap.yml
 
-cd ~/imcs-demo/database
-kubectl create -f yaml/database-connect.yaml
 
 cd ~/imcs-demo/kubernetes
 kubectl apply -f jobmanager-controller.yaml

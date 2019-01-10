@@ -15,10 +15,10 @@ do
     fi
 done
 
-if [ ! -f ${HDFS_NAMENODE_ROOT_DIR}/current/VERSION ]; then
+#if [ ! -f ${HDFS_NAMENODE_ROOT_DIR}/current/VERSION ]; then
     echo Formatting namenode root fs in ${HDFS_NAMENODE_ROOT_DIR}
     bin/hdfs namenode -format -nonInteractive
-fi
+#fi
 
 if [ "${HDFS_INIT_NAMENODE}" = "true" ]; then
     echo forcing initialize shared edits...
