@@ -4,7 +4,7 @@ metadata:
   name: database-utility
   namespace: mu-architecture-demo
   labels:
-    purpose: set up database tables
+    name: database-utility
 spec:
   containers:
   - name: database-utility
