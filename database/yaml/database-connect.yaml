@@ -8,6 +8,6 @@ metadata:
 spec:
   containers:
   - name: database-utility
-    image: dineshpillai/database:latest
+    image: dineshpillai/innovation-mu-database-utility:latest
     args: ["hbasehost=hbase-master-a", "zkhost=zoo1"]
   restartPolicy: OnFailure

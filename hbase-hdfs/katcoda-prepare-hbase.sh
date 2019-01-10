@@ -1,8 +1,5 @@
 #!/bin/bash
 
-HOSTIPADDRESS=zoo1
-HBASECONTAINERID=hbase-master-a
-
 #Install Java and Maven
 apt install software-properties-common -y
 add-apt-repository ppa:webupd8team/java -y
@@ -10,6 +7,9 @@ apt-get update -y
 apt-get install oracle-java8-installer -y
 
 apt install maven -y
+
+HOSTIPADDRESS=zoo1
+HBASECONTAINERID=hbase-master-a
 
 sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
 
