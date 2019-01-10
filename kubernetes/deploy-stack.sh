@@ -17,30 +17,9 @@ HOSTIPADDRESS=zoo1
 HBASECONTAINERID=hbase-master-a
 
 
-
 #Bake the Hbase Host and Container Id in MuSchema constants
 sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
 
-#Connect up to Hbase to create the tables and schema
-
-#Do all the builds, create the containers and push
-cd ../
-mvn clean package install -DskipTests
-cd ./trade-imdg
-mvn docker:build
-docker push dineshpillai/innovation-trade-imdg
-cd ../trade-injector
-mvn docker:build
-docker push dineshpillai/innovation-trade-injector
-cd ../tradequerymicroservice
-mvn docker:build
-docker push dineshpillai/imcs-tradequeryservice
-cd ../positionqueryservice
-mvn docker:build
-docker push dineshpillai/imcs-positionqueryservice
-cd ~/imcs-demo/database
-mvn docker:build
-docker push dineshpillai/innovation-mu-database-utility
 
 #Build hbase,hadoop-base, hadoop-journal, hadoop-namenode
 cd ~/imcs-demo/hbase-hdfs/hadoop
@@ -48,11 +27,7 @@ make
 cd ~/imcs-demo/hbase-hdfs/hbase
 make
 
-#Connect up to Hbase to create the tables and schema
-#echo "$HOSTIPADDRESS hbasehost" >> /etc/hosts
-#cd ~/imcs-demo/database/target
-#java -jar database-$BUILDVERSION.jar hbasehost=$HOSTIPADDRESS zkhost=$HOSTIPADDRESS
-
+#Create the namespace and provide default admin access to all pods and services under this namespace
 kubectl create namespace mu-architecture-demo
 kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=mu-architecture-demo:default
 
@@ -73,27 +48,40 @@ cd ~/imcs-demo/hbase-hdfs
 kubectl create -f hmaster.yaml
 kubectl create -f region.yaml
 
-sleep 60s
+#Do all the builds, create the containers and push while hbase cluster is spinning up
+cd ../
+mvn clean package install -DskipTests
+cd ./trade-imdg
+mvn docker:build
+docker push dineshpillai/innovation-trade-imdg
+cd ../trade-injector
+mvn docker:build
+docker push dineshpillai/innovation-trade-injector
+cd ../tradequerymicroservice
+mvn docker:build
+docker push dineshpillai/imcs-tradequeryservice
+cd ../positionqueryservice
+mvn docker:build
+docker push dineshpillai/imcs-positionqueryservice
+cd ~/imcs-demo/database
+mvn docker:build
+docker push dineshpillai/innovation-mu-database-utility
+
+#Create the tables in hbase
 cd ~/imcs-demo/database
 kubectl create -f yaml/database-connect.yaml
 
 #Deploy the rest of the stack to Kubernetes
 cd ~/imcs-demo/kubernetes
 kubectl apply -f run-mzk.yaml
-hzformated=`cat "run-hz-jet-cluster.yaml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
-echo "$hzformated"|kubectl apply -f -
+kubectl apply -f run-hz-jet-cluster.yaml
 
 cd ~/imcs-demo/positionqueryservice
-positionqueryformatted=`cat "manifests/position-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
-echo "$positionqueryformatted"|kubectl apply -f -
-
+kubectl apply -f  manifests/position-query.yaml
 kubectl create -f manifests/position-query-config.yml
 
-
 cd ~/imcs-demo/tradequerymicroservice
-tradequerymicroserviceformatted=`cat "manifests/trade-query.yml" | sed -e "s/{{HOSTIPADDRESS}}/$HOSTIPADDRESS/g; s/{{HBASECONTAINERID}}/$HBASECONTAINERID/g"`
-echo "$tradequerymicroserviceformatted"|kubectl apply -f -
-
+kubectl apply -f - manifests/trade-query.yml
 kubectl create -f manifests/trade-query-config.yml
 
 cd ~/imcs-demo/trade-injector
