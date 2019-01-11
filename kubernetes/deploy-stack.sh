@@ -70,6 +70,15 @@ docker push dineshpillai/innovation-mu-database-utility
 #Create the tables in hbase
 cd ~/imcs-demo/database
 kubectl create -f yaml/database-connect.yaml
+sleep 30s
+
+#Quit if it completes
+while $DB_UTILITY_RUNNING='Running'
+do
+    DB_UTILITY_RUNNING=$(kubectl get pods -n=mu-architecture-demo | grep database-utility |  awk '{print $3}')
+    echo $DB_UTILITY_RUNNING
+    sleep 10s
+done
 
 #Deploy the rest of the stack to Kubernetes
 cd ~/imcs-demo/kubernetes
