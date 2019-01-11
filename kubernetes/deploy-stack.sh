@@ -22,6 +22,10 @@ sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINER
 
 
 #Build hbase,hadoop-base, hadoop-journal, hadoop-namenode
+
+d ~/imcs-demo/kubernetes
+kubectl apply -f run-mzk.yaml
+
 cd ~/imcs-demo/hbase-hdfs/hadoop
 make
 cd ~/imcs-demo/hbase-hdfs/hbase
@@ -82,7 +86,6 @@ done
 
 #Deploy the rest of the stack to Kubernetes
 cd ~/imcs-demo/kubernetes
-kubectl apply -f run-mzk.yaml
 kubectl apply -f run-hz-jet-cluster.yaml
 
 cd ~/imcs-demo/positionqueryservice
