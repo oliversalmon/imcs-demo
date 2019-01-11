@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hbase-region-a
+  namespace: mu-architecture-demo
+spec:
+  clusterIP: None
+  selector:
+    app: hbase-region-a
+  ports:
+  - name: p1
+    port: 16020
+  - name: p2
+    port: 16030
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hbase-region-b
+  namespace: mu-architecture-demo
+spec:
+  clusterIP: None
+  selector:
+    app: hbase-region-b
+  ports:
+  - name: p1
+    port: 16020
+  - name: p2
+    port: 16030
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: hbase-region-a
+  name: hbase-region-a
+  namespace: mu-architecture-demo
+spec:
+  containers:
+  - env:
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: HBASE_SERVER_TYPE
+      value: regionserver
+    - name: HDFS_PATH
+      value: mycluster
+    - name: ZOOKEEPER_SERVICE_LIST
+      value: zoo1
+    - name: ZOOKEEPER_PORT
+      value: "2181"
+    - name: ZNODE_PARENT
+      value: hbase
+    image: dineshpillai/hbase-hdfs
+    imagePullPolicy: Always
+    name: hbase-region-a
+    ports:
+    - containerPort: 16020
+      protocol: TCP
+    - containerPort: 16030
+      protocol: TCP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: hbase-region-b
+  name: hbase-region-b
+  namespace: mu-architecture-demo
+spec:
+  containers:
+  - env:
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: HBASE_SERVER_TYPE
+      value: regionserver
+    - name: HDFS_PATH
+      value: mycluster
+    - name: ZOOKEEPER_SERVICE_LIST
+      value: zoo1
+    - name: ZOOKEEPER_PORT
+      value: "2181"
+    - name: ZNODE_PARENT
+      value: hbase
+    image: dineshpillai/hbase-hdfs
+    imagePullPolicy: Always
+    name: hbase-region-b
+    ports:
+    - containerPort: 16020
+      protocol: TCP
+    - containerPort: 16030
+      protocol: TCP

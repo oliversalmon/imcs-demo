@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mu-parent</groupId>
 	<artifactId>tradequerymicroservice</artifactId>
-	<version>1.8</version>
+	<version>1.9</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -18,12 +18,12 @@
 		<dependency>
 			<groupId>com.example.mu</groupId>
 			<artifactId>domain</artifactId>
-			<version>1.8</version>
+			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<artifactId>cache</artifactId>
 			<groupId>com.example.mu</groupId>
-			<version>1.8</version>
+			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>bddtestutilityservices</artifactId>
-			<version>1.8</version>
+			<version>1.9</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -104,7 +104,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/dineshgpillai/innovation.git</connection>
 		<developerConnection>scm:git:https://github.com/dineshgpillai/innovation.git</developerConnection>
-		<tag>v1.8</tag>
+		<tag>v1.9</tag>
 	</scm>
 	<distributionManagement>
 		<repository>

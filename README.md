@@ -15,7 +15,7 @@ to run HBase and hold all the data
 Note: Minimum requirement to run the architecture
 
 * Master - 4GB Memory
-* Slaves - 8GB Memory (collectively)
+* Slaves - 16GB Memory (collectively)
 
 ## Install Git and download repository
 
@@ -26,10 +26,14 @@ apt-get update
 apt-get install git-core
 ```
 
-* Download Repository
+* Download Repository and checkout the tagged releasable version
 ```
 git clone https://github.com/oliversalmon/imcs-demo.git
+cd ~/imcs-demo
+git checkout v1.8
 ```
+
+In the above example the tagged version is 1.8
 
 ## Install Kubernetes and Run in each droplet
 
@@ -42,12 +46,12 @@ Run the following shell script to install the following components
 * Kubelet
 
 ```
-cd imcs-demo/kubernetes/
-chmod +x *.sh
+cd ~/imcs-demo/kubernetes/
+
 ./create-master-slave.sh
 ```
 
-You will be prompted to enter Y/n while it is installing components; please enter Y.
+You will be prompted to enter Y/n while it is installing certain components; please enter Y.
 
 **Start up Kubeadm in master**
 
@@ -88,9 +92,9 @@ on the kubernetes cloud
 * Flink Cluster and Job Manager to stream and manage state of Trades and Positions
 
 ```
-./deploy-stack.sh <Public IP address of master>
+./deploy-stack.sh  <deployable tagged version number>
 ```
-Note: The public IP address will be obtained from the Digital Ocean console 
+Note: The tag version will be the number without 'v'. For Eg v1.8 will be 1.8
 
 **Confirm if the applications run successfully**
 
@@ -101,20 +105,30 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 kubectl get pods -n=mu-architecture-demo
 
-NAME                                         READY   STATUS             RESTARTS   AGE
-db                                           1/1     Running            0          39m
-flink-jobmanager-676d7f5fb5-kwsg4            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-9tcf7            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-jlmdt            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-vzpt2            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-zz952            1/1     Running            0          38m
-kafka-broker-bnq7g                           1/1     Running            0          39m
-position-query-684b6cf7cd-7dx4q              1/1     Running            0          39m
-position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
-trade-imdg-7789965756-snl79                  1/1     Running            0          39m
-trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
-trade-query-5f964dd46d-h7bx8                 0/1     CrashLoopBackOff   10         39m
-zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
+NAME                                 READY     STATUS      RESTARTS   AGE
+database-utility                     0/1       Completed   0          10m
+db                                   1/1       Running     0          24m
+flink-jobmanager-547ffbc9dc-hqtst    1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-26m8w   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-592mr   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-6bwq7   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-b22t9   1/1       Running     0          10m
+hadoop-datanode-1                    1/1       Running     0          17m
+hadoop-datanode-2                    1/1       Running     0          17m
+hadoop-journalnode-0                 1/1       Running     0          18m
+hadoop-journalnode-1                 1/1       Running     0          18m
+hadoop-journalnode-2                 1/1       Running     0          18m
+hadoop-namenode-0                    1/1       Running     0          18m
+hadoop-namenode-1                    1/1       Running     1          18m
+hbase-master-a                       1/1       Running     0          17m
+hbase-region-a                       1/1       Running     0          17m
+hbase-region-b                       1/1       Running     0          17m
+kafka-broker-d47bk                   1/1       Running     1          24m
+position-query-6449587cd4-rrgv4      1/1       Running     0          10m
+trade-imdg-689cc8fcf8-zx2wr          1/1       Running     0          10m
+trade-injector-7f8d7c57f7-gmwkw      1/1       Running     0          10m
+trade-query-6d4b566f95-6qq8v         1/1       Running     0          10m
+
 
 ```
 **Install the Trade and Price Flink jars**
@@ -126,10 +140,11 @@ Run the following command from the kubernetes directory
 ```
 cd ~/imcs-demo/kubernetes
 
-./loadjarsToFlink.sh
+./loadjarsToFlink.sh <deployable git release tag>
 
 ```
 
+Note: The release tag will be the git release tag without the 'v'. For eg: v1.8 will be 1.8
 
 **Run the UI and set up login credentials with FB**
 
@@ -144,13 +159,13 @@ flink-jobmanager         ClusterIP   10.104.186.26    <none>        6123/TCP,612
 kafka                    ClusterIP   10.105.185.120   <none>        9092/TCP                                       40m
 position-query-service   NodePort    10.100.121.27    <none>        8093:31633/TCP                                 40m
 trade-imdg-service       ClusterIP   10.104.51.125    <none>        5701/TCP                                       40m
-trade-injector-service   NodePort    10.100.45.79     <none>        8090:31435/TCP                                 39m
+trade-injector-service   NodePort    10.100.45.79     <none>        8090:31891/TCP                                 39m
 trade-query-service      NodePort    10.103.202.20    <none>        8094:31111/TCP                                 40m
 zoo1                     NodePort    10.101.90.222    <none>        2181:32021/TCP,2888:32076/TCP,3888:30751/TCP   40m
 ```
 
 Take a note of the ports used in trade-injector-service. Ignore 8090 and use the port number to the left of it. In the
-above example it is 31435
+above example it is 31891
 
 Login to Trade Injector UI with the following URL
 
@@ -158,11 +173,7 @@ Login to Trade Injector UI with the following URL
 http://<public ip of master DO>:<port number obtained from the above step>
 ```
 
-You will see the Login page of Trade Injector UI showing a Facebook or Github login. Login with facebook.
-Before you login; you will need to register the above URL in facebook/developer. Please speak to the authors of this 
-application to register the URL
-
-Once you have logged in; you can start to generate test trades and view the position reports.
+You can now start to generate test trades and view the position reports.
 
 You have successfully deployed and have the application running at this point.
 
@@ -177,29 +188,38 @@ $ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 $ kubectl get pods -n=mu-architecture-demo
 
-NAME                                         READY   STATUS             RESTARTS   AGE
-db                                           1/1     Running            0          39m
-flink-jobmanager-676d7f5fb5-kwsg4            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-9tcf7            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-jlmdt            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-vzpt2            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-zz952            1/1     Running            0          38m
-kafka-broker-bnq7g                           1/1     Running            0          39m
-position-query-684b6cf7cd-7dx4q              1/1     Running            0          39m
-position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
-trade-imdg-7789965756-snl79                  1/1     Running            0          39m
-trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
-trade-query-5f964dd46d-h7bx8                 1/1     Running            10         39m
-zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
+NAME                                 READY     STATUS      RESTARTS   AGE
+database-utility                     0/1       Completed   0          10m
+db                                   1/1       Running     0          24m
+flink-jobmanager-547ffbc9dc-hqtst    1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-26m8w   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-592mr   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-6bwq7   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-b22t9   1/1       Running     0          10m
+hadoop-datanode-1                    1/1       Running     0          17m
+hadoop-datanode-2                    1/1       Running     0          17m
+hadoop-journalnode-0                 1/1       Running     0          18m
+hadoop-journalnode-1                 1/1       Running     0          18m
+hadoop-journalnode-2                 1/1       Running     0          18m
+hadoop-namenode-0                    1/1       Running     0          18m
+hadoop-namenode-1                    1/1       Running     1          18m
+hbase-master-a                       1/1       Running     0          17m
+hbase-region-a                       1/1       Running     0          17m
+hbase-region-b                       1/1       Running     0          17m
+kafka-broker-d47bk                   1/1       Running     1          24m
+position-query-6449587cd4-rrgv4      1/1       Running     0          10m
+trade-imdg-689cc8fcf8-zx2wr          1/1       Running     0          10m
+trade-injector-7f8d7c57f7-gmwkw      1/1       Running     0          10m
+trade-query-6d4b566f95-6qq8v         1/1       Running     0          10m
 
-$ kubectl logs -f kafka-broker-bnq7g  -n=mu-architecture-demo
+$ kubectl logs -f kafka-broker-d47bk  -n=mu-architecture-demo
 
 ```
 The last line will tail the logs for the kafka broker
 
-*Kafka Test*
+*E2E Testing*
 
-Test if kafka works. This can be done with a simple utility called kafkacat
+Test end to end by injecting trades into Kafka topics. This can be done with a simple utility called kafkacat
 
 ```
 $ apt-get install kafkacat

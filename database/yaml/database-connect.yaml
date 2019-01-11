@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database-utility
+  namespace: mu-architecture-demo
+  labels:
+    name: database-utility
+spec:
+  containers:
+  - name: database-utility
+    image: dineshpillai/innovation-mu-database-utility:latest
+    args: ["hbasehost=hbase-master-a", "zkhost=zoo1"]
+  restartPolicy: OnFailure
