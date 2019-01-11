@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #Install Java and Maven
 add-apt-repository ppa:webupd8team/java -y
 apt-get update -y

@@ -57,5 +57,16 @@ docker push dineshpillai/innovation-mu-database-utility
 
 kubectl create -f yaml/database-connect.yaml
 
+DB_UTILITY_RUNNING=$(kubectl get pods -n=mu-architecture-demo | grep database-utility |  awk '{print $3}')
+
+echo $DB_UTILITY_RUNNING
+
+#Quit if it completes
+while $DB_UTILITY_RUNNING='Running'
+do
+    DB_UTILITY_RUNNING=$(kubectl get pods -n=mu-architecture-demo | grep database-utility |  awk '{print $3}')
+    echo $DB_UTILITY_RUNNING
+    sleep 10s
+done
 
 
