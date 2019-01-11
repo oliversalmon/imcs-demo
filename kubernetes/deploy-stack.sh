@@ -21,19 +21,22 @@ HBASECONTAINERID=hbase-master-a
 sed -i "s/{HOSTIPADDRESS}/$HOSTIPADDRESS/g; s/{HBASECONTAINERID}/$HBASECONTAINERID/g" ~/imcs-demo/database/src/main/java/com/example/mu/database/MuSchemaConstants.java
 
 
-#Build hbase,hadoop-base, hadoop-journal, hadoop-namenode
 
-d ~/imcs-demo/kubernetes
+#Create the namespace and provide default admin access to all pods and services under this namespace
+kubectl create namespace mu-architecture-demo
+kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=mu-architecture-demo:default
+
+#Runn zookeeper, kafka and mongod
+cd ~/imcs-demo/kubernetes
 kubectl apply -f run-mzk.yaml
 
+#Build hbase,hadoop-base, hadoop-journal, hadoop-namenode
 cd ~/imcs-demo/hbase-hdfs/hadoop
 make
 cd ~/imcs-demo/hbase-hdfs/hbase
 make
 
-#Create the namespace and provide default admin access to all pods and services under this namespace
-kubectl create namespace mu-architecture-demo
-kubectl create clusterrolebinding default-admin --clusterrole cluster-admin --serviceaccount=mu-architecture-demo:default
+
 
 #Deploy hbase, hadoop cluster
 cd ~/imcs-demo/hbase-hdfs/hadoop
