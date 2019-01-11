@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #Install Java and Maven
 add-apt-repository ppa:webupd8team/java -y
 apt-get update -y
@@ -8,6 +9,7 @@ apt install maven -y
 # Install Docker from Ubuntu's repositories:
 apt-get update -y
 apt-get install -y docker.io
+apt-get install -y make
 
 # or install Docker CE 18.06 from Docker's repositories for Ubuntu or Debian:
 
