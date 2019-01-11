@@ -15,7 +15,7 @@ to run HBase and hold all the data
 Note: Minimum requirement to run the architecture
 
 * Master - 4GB Memory
-* Slaves - 8GB Memory (collectively)
+* Slaves - 16GB Memory (collectively)
 
 ## Install Git and download repository
 
@@ -51,7 +51,7 @@ cd ~/imcs-demo/kubernetes/
 ./create-master-slave.sh
 ```
 
-You will be prompted to enter Y/n while it is installing components; please enter Y.
+You will be prompted to enter Y/n while it is installing certain components; please enter Y.
 
 **Start up Kubeadm in master**
 
@@ -92,9 +92,9 @@ on the kubernetes cloud
 * Flink Cluster and Job Manager to stream and manage state of Trades and Positions
 
 ```
-./deploy-stack.sh <Public IP address of master> <deployable tagged version number>
+./deploy-stack.sh  <deployable tagged version number>
 ```
-Note: The public IP address will be obtained from the Digital Ocean console and the tag version will be the number without 'v'. For Eg v1.8 will be 1.8
+Note: The tag version will be the number without 'v'. For Eg v1.8 will be 1.8
 
 **Confirm if the applications run successfully**
 
@@ -105,20 +105,30 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 kubectl get pods -n=mu-architecture-demo
 
-NAME                                         READY   STATUS             RESTARTS   AGE
-db                                           1/1     Running            0          39m
-flink-jobmanager-676d7f5fb5-kwsg4            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-9tcf7            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-jlmdt            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-vzpt2            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-zz952            1/1     Running            0          38m
-kafka-broker-bnq7g                           1/1     Running            0          39m
-position-query-684b6cf7cd-7dx4q              1/1     Running            0          39m
-position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
-trade-imdg-7789965756-snl79                  1/1     Running            0          39m
-trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
-trade-query-5f964dd46d-h7bx8                 0/1     Running            0          39m
-zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
+NAME                                 READY     STATUS      RESTARTS   AGE
+database-utility                     0/1       Completed   0          10m
+db                                   1/1       Running     0          24m
+flink-jobmanager-547ffbc9dc-hqtst    1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-26m8w   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-592mr   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-6bwq7   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-b22t9   1/1       Running     0          10m
+hadoop-datanode-1                    1/1       Running     0          17m
+hadoop-datanode-2                    1/1       Running     0          17m
+hadoop-journalnode-0                 1/1       Running     0          18m
+hadoop-journalnode-1                 1/1       Running     0          18m
+hadoop-journalnode-2                 1/1       Running     0          18m
+hadoop-namenode-0                    1/1       Running     0          18m
+hadoop-namenode-1                    1/1       Running     1          18m
+hbase-master-a                       1/1       Running     0          17m
+hbase-region-a                       1/1       Running     0          17m
+hbase-region-b                       1/1       Running     0          17m
+kafka-broker-d47bk                   1/1       Running     1          24m
+position-query-6449587cd4-rrgv4      1/1       Running     0          10m
+trade-imdg-689cc8fcf8-zx2wr          1/1       Running     0          10m
+trade-injector-7f8d7c57f7-gmwkw      1/1       Running     0          10m
+trade-query-6d4b566f95-6qq8v         1/1       Running     0          10m
+
 
 ```
 **Install the Trade and Price Flink jars**
@@ -178,22 +188,31 @@ $ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 $ kubectl get pods -n=mu-architecture-demo
 
-NAME                                         READY   STATUS             RESTARTS   AGE
-db                                           1/1     Running            0          39m
-flink-jobmanager-676d7f5fb5-kwsg4            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-9tcf7            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-jlmdt            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-vzpt2            1/1     Running            0          38m
-flink-taskmanager-9bf7c94bc-zz952            1/1     Running            0          38m
-kafka-broker-bnq7g                           1/1     Running            0          39m
-position-query-684b6cf7cd-7dx4q              1/1     Running            0          39m
-position-query-684b6cf7cd-w5fnz              1/1     Running            0          39m
-trade-imdg-7789965756-snl79                  1/1     Running            0          39m
-trade-injector-controller-7bc6fdd8d6-t5vq8   1/1     Running            0          38m
-trade-query-5f964dd46d-h7bx8                 1/1     Running            10         39m
-zookeeper-controller-1-rjcn2                 1/1     Running            0          39m
+NAME                                 READY     STATUS      RESTARTS   AGE
+database-utility                     0/1       Completed   0          10m
+db                                   1/1       Running     0          24m
+flink-jobmanager-547ffbc9dc-hqtst    1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-26m8w   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-592mr   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-6bwq7   1/1       Running     0          10m
+flink-taskmanager-6bd5d97489-b22t9   1/1       Running     0          10m
+hadoop-datanode-1                    1/1       Running     0          17m
+hadoop-datanode-2                    1/1       Running     0          17m
+hadoop-journalnode-0                 1/1       Running     0          18m
+hadoop-journalnode-1                 1/1       Running     0          18m
+hadoop-journalnode-2                 1/1       Running     0          18m
+hadoop-namenode-0                    1/1       Running     0          18m
+hadoop-namenode-1                    1/1       Running     1          18m
+hbase-master-a                       1/1       Running     0          17m
+hbase-region-a                       1/1       Running     0          17m
+hbase-region-b                       1/1       Running     0          17m
+kafka-broker-d47bk                   1/1       Running     1          24m
+position-query-6449587cd4-rrgv4      1/1       Running     0          10m
+trade-imdg-689cc8fcf8-zx2wr          1/1       Running     0          10m
+trade-injector-7f8d7c57f7-gmwkw      1/1       Running     0          10m
+trade-query-6d4b566f95-6qq8v         1/1       Running     0          10m
 
-$ kubectl logs -f kafka-broker-bnq7g  -n=mu-architecture-demo
+$ kubectl logs -f kafka-broker-d47bk  -n=mu-architecture-demo
 
 ```
 The last line will tail the logs for the kafka broker
