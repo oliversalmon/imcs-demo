@@ -49,7 +49,7 @@ kubectl create -f yaml/namenode1.yaml
 sleep 30s
 
 kubectl create -f yaml/datanode.yaml
-sleep 60s
+sleep 30s
 
 cd ~/imcs-demo/hbase-hdfs
 kubectl create -f hmaster.yaml
@@ -80,23 +80,23 @@ kubectl create -f yaml/database-connect.yaml
 sleep 30s
 
 #Quit if it completes
-while $DB_UTILITY_RUNNING='Running'
-do
-    DB_UTILITY_RUNNING=$(kubectl get pods -n=mu-architecture-demo | grep database-utility |  awk '{print $3}')
-    echo $DB_UTILITY_RUNNING
-    sleep 10s
-done
+#while $DB_UTILITY_RUNNING='Running'
+#do
+    #DB_UTILITY_RUNNING=$(kubectl get pods -n=mu-architecture-demo | grep database-utility |  awk '{print $3}')
+    #echo $DB_UTILITY_RUNNING
+    #sleep 10s
+#done
 
 #Deploy the rest of the stack to Kubernetes
 cd ~/imcs-demo/kubernetes
 kubectl apply -f run-hz-jet-cluster.yaml
 
 cd ~/imcs-demo/positionqueryservice
-kubectl apply -f  manifests/position-query.yaml
+kubectl apply -f  manifests/position-query.yml
 kubectl create -f manifests/position-query-config.yml
 
 cd ~/imcs-demo/tradequerymicroservice
-kubectl apply -f - manifests/trade-query.yml
+kubectl apply -f manifests/trade-query.yml
 kubectl create -f manifests/trade-query-config.yml
 
 cd ~/imcs-demo/trade-injector
