@@ -3,13 +3,13 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>hello-client</artifactId>
-    <version>1.9</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <parent>
         <artifactId>mu-parent</artifactId>
         <groupId>com.example.mu</groupId>
-        <version>1.9</version>
+        <version>1.10-SNAPSHOT</version>
     </parent>
 
 
