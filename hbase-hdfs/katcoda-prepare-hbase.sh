@@ -31,6 +31,7 @@ kubectl apply -f run-mzk.yaml
 
 
 cd ~/imcs-demo/hbase-hdfs/hadoop
+kubectl create -f yaml/config.yaml
 kubectl create -f yaml/journalnode.yaml
 sleep 10s
 
