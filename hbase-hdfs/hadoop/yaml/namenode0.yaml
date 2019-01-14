@@ -16,7 +16,7 @@ spec:
     port: 50470
 ---
 apiVersion: v1
-kind: Pod
+kind: StatefulSet
 metadata:
   name: hadoop-namenode-0
   namespace: mu-architecture-demo
@@ -41,6 +41,14 @@ spec:
         fieldRef:
           fieldPath: metadata.namespace
     - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+    volumeMounts:
+    - name: config
+      mountPath: "/opt/hadoop/etc/hadoop"
+      readOnly: true
+  volumes:
+  - name: config
+    configMap:
+      name: hadoopconf
