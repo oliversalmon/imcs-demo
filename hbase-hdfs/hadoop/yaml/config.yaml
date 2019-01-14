@@ -147,3 +147,4 @@ data:
 kind: ConfigMap
 metadata:
   name: hadoopconf
+  namespace: mu-architecture-demo
