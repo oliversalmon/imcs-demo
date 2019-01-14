@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1beta1
 kind: Service
 metadata:
   name: hadoop-namenode-0
@@ -15,7 +15,7 @@ spec:
   - name: p2
     port: 50470
 ---
-apiVersion: v1
+apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: hadoop-namenode-0

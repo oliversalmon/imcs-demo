@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1beta1
 kind: Service
 metadata:
   name: hadoop-datanode-2
@@ -17,7 +17,7 @@ spec:
   - name: p4
     port: 50475
 ---
-apiVersion: v1
+apiVersion: apps/v1beta1
 kind: Service
 metadata:
   name: hadoop-datanode-1
@@ -36,7 +36,7 @@ spec:
   - name: p4
     port: 50475
 ---
-apiVersion: v1
+apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: hadoop-datanode-1
@@ -74,7 +74,7 @@ spec:
     configMap:
       name: hadoopconf
 ---
-apiVersion: v1
+apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: hadoop-datanode-2
