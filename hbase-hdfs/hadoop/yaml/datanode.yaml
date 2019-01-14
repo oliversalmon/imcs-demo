@@ -46,6 +46,12 @@ metadata:
 spec:
   # nodeSelector:
   #   kubernetes.io/hostname: kube-node-6
+  serviceName: hadoop-datanode-1
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: hadoop-datanode-1
   containers:
   - name: hadoop-datanode-1
     image: dineshpillai/hadoop-datanode:2.7.7
@@ -83,6 +89,12 @@ metadata:
 spec:
   # nodeSelector:
   #   kubernetes.io/hostname: kube-node-7
+  serviceName: hadoop-datanode-2
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: hadoop-datanode-2
   containers:
   - name: hadoop-datanode-2
     image: dineshpillai/hadoop-datanode:2.7.7

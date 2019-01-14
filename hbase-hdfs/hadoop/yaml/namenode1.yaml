@@ -25,6 +25,12 @@ metadata:
 spec:
   # nodeSelector:
   #   kubernetes.io/hostname: kube-node-6
+  serviceName: hadoop-namenode-1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hadoop-namenode-1
   containers:
   - name: namenode
     image: dineshpillai/hadoop-namenode:2.7.7
