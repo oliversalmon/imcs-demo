@@ -31,30 +31,31 @@ spec:
       metadata:
         labels:
           app: hadoop-namenode-0
-  containers:
-  - name: namenode
-    image: dineshpillai/hadoop-namenode:2.7.7
-    imagePullPolicy: Always
-    ports:
-    - containerPort: 8020
-    - containerPort: 50070
-    - containerPort: 50470
-    env:
-    - name: HDFS_INIT_NAMENODE
-      value: "true"
-    - name: POD_NAMESPACE
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.namespace
-    - name: POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-    volumeMounts:
-    - name: config
-      mountPath: "/opt/hadoop/etc/hadoop"
-      readOnly: true
-  volumes:
-  - name: config
-    configMap:
-      name: hadoopconf
+      spec:
+        containers:
+        - name: namenode
+          image: dineshpillai/hadoop-namenode:2.7.7
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8020
+          - containerPort: 50070
+          - containerPort: 50470
+          env:
+          - name: HDFS_INIT_NAMENODE
+            value: "true"
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+          - name: config
+            mountPath: "/opt/hadoop/etc/hadoop"
+            readOnly: true
+        volumes:
+        - name: config
+          configMap:
+            name: hadoopconf
