@@ -23,9 +23,7 @@ metadata:
   labels:
     component: hadoop-namenode-0
 spec:
-  # nodeSelector:
-  #   kubernetes.io/hostname: kube-node-7
-  serviceName: hadoop-namenode-0
+    serviceName: hadoop-namenode-0
     replicas: 1
     template:
       metadata:
