@@ -88,10 +88,6 @@ data:
             <value>false</value>
         </property>
         <property>
-            <name>dfs.name.dir</name>
-            <value>file:///var/hdfs/name</value>
-        </property>
-        <property>
             <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
             <value>false</value>
         </property>
@@ -113,11 +109,11 @@ data:
         </property>
         <property>
             <name>dfs.datanode.data.dir</name>
-            <value>/var/hdfs/data/datanode</value>
+            <value>/var/hdfs/data</value>
         </property>
        <property>
              <name>dfs.namenode.name.dir</name>
-             <value>/var/hdfs/data/namenode</value>
+             <value>/var/hdfs/name</value>
        </property>
     </configuration>
   log4j.properties: |-
