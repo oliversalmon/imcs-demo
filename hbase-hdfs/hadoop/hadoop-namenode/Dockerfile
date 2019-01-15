@@ -1,6 +1,6 @@
 FROM $BASE_IMAGE
 
-#ENV  HDFS_NAMENODE_ROOT_DIR=/var/hdfs/name
+ENV  HDFS_NAMENODE_ROOT_DIR=/var/hdfs/name
 ENV  JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 #ADD  conf/core-site.xml  ${HADOOP_INSTALL_DIR}/etc/hadoop/core-site.xml
@@ -11,7 +11,7 @@ COPY  conf/id_rsa.pub /root/.ssh/id_rsa.pub
 
 ADD  docker-entrypoint.sh /usr/local/sbin/docker-entrypoint.sh
 
-#VOLUME  ["${HDFS_NAMENODE_ROOT_DIR}"]
+VOLUME  ["${HDFS_NAMENODE_ROOT_DIR}"]
 
 RUN \
     mkdir /var/run/sshd && \

@@ -1,6 +1,6 @@
 FROM $BASE_IMAGE
 
-#ENV  HDFS_DATANODE_ROOT_DIR=/var/hdfs/datanode
+ENV  HDFS_DATANODE_ROOT_DIR=/var/hdfs/data
 ENV  HDFS_NAMENODE_RPC_HOST=0.0.0.0
 ENV  HDFS_NAMENODE_RPC_PORT=8020
 ENV  JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -17,7 +17,7 @@ RUN \
     chmod 0755 /var/run/sshd && \
     service ssh start
 
-#VOLUME  ["${HDFS_DATANODE_ROOT_DIR}"]
+VOLUME  ["${HDFS_DATANODE_ROOT_DIR}"]
 
 
 # TCP  50010  dfs.datanode.address    port for data transfer

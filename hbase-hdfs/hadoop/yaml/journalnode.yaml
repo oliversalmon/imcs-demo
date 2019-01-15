@@ -43,77 +43,122 @@ spec:
   - name: ipc
     port: 8485
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: hadoop-journalnode-1
   namespace: mu-architecture-demo
   labels:
     component: hadoop-journalnode-1
 spec:
-  containers:
-  - name: journalnode
-    env:
-    - name: POD_NAMESPACE
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.namespace
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
-    image: dineshpillai/hadoop-journalnode:2.7.7
-    imagePullPolicy: Always
-    ports:
-    - containerPort: 8485
-    - containerPort: 8480
+  serviceName: hadoop-journalnode-1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hadoop-journalnode-1
+    spec:
+      containers:
+      - name: journalnode
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: dineshpillai/hadoop-journalnode:2.7.7
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8485
+        - containerPort: 8480
+        volumeMounts:
+        - name: config
+          mountPath: "/opt/hadoop/etc/hadoop"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: hadoopconf
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: hadoop-journalnode-2
   namespace: mu-architecture-demo
   labels:
     component: hadoop-journalnode-2
 spec:
-  containers:
-  - name: journalnode
-    env:
-    - name: POD_NAMESPACE
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.namespace
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
-    image: dineshpillai/hadoop-journalnode:2.7.7
-    imagePullPolicy: Always
-    ports:
-    - containerPort: 8485
-    - containerPort: 8480
+  serviceName: hadoop-journalnode-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hadoop-journalnode-2
+    spec:
+      containers:
+      - name: journalnode
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: dineshpillai/hadoop-journalnode:2.7.7
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8485
+        - containerPort: 8480
+        volumeMounts:
+        - name: config
+          mountPath: "/opt/hadoop/etc/hadoop"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: hadoopconf
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: hadoop-journalnode-0
   namespace: mu-architecture-demo
   labels:
     component: hadoop-journalnode-0
 spec:
-  containers:
-  - name: journalnode
-    env:
-    - name: POD_NAMESPACE
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.namespace
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
-    image: dineshpillai/hadoop-journalnode:2.7.7
-    imagePullPolicy: Always
-    ports:
-    - containerPort: 8485
-    - containerPort: 8480
+  serviceName: hadoop-journalnode-0
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hadoop-journalnode-0
+    spec:
+      containers:
+      - name: journalnode
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: dineshpillai/hadoop-journalnode:2.7.7
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8485
+        - containerPort: 8480
+        volumeMounts:
+        - name: config
+          mountPath: "/opt/hadoop/etc/hadoop"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: hadoopconf
