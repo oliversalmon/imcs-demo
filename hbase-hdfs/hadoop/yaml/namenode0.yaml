@@ -46,9 +46,9 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           volumeMounts:
           - name: config
             mountPath: "/opt/hadoop/etc/hadoop"
