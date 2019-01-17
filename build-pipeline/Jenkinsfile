@@ -1,16 +1,34 @@
 node{
     def mvnHome
-    stage ('Preparation'{
+    stage ('Preparation'){
         //Get the maven tool configured in the Global Configuration in Jenkins
         mvnHome= tool 'Jenkins Maven'
     }
     stage ('Build'){
         //run the maven build
         if(isUnix()){
-            sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+            sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean compile"
         }else{
             //code for windows
         }
+
+    }
+    stage ('Unit Test'){
+            //run the maven build
+            if(isUnix()){
+                sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore package"
+            }else{
+                //code for windows
+            }
+
+    }
+    stage ('Integration Test'){
+                //run the maven build
+                if(isUnix()){
+                    sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore verify -Psurefire"
+                }else{
+                    //code for windows
+                }
 
     }
     stage("Results"){
