@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c3eb1be5-e707-4cf1-94bc-ca77a5717eac" name="Default" comment="MU115 Fixed kube version">
+    <list default="true" id="c3eb1be5-e707-4cf1-94bc-ca77a5717eac" name="Default" comment="MU115 namespace on cubeconfig + correction of version numbers on service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/datanode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/datanode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode0.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode0.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode1.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode1.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -45,9 +41,9 @@
     <session id="1125256655">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="31" />
+          <entry key="project.closed" value="34" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
@@ -60,14 +56,14 @@
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.6" value="7" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="34" />
+          <entry key="project.open.time.8" value="3" />
+          <entry key="project.open.time.9" value="4" />
+          <entry key="project.opened" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Dockerfile" value="74" />
+          <entry key="Dockerfile" value="81" />
           <entry key="Makefile" value="168" />
           <entry key="dummy" value="32" />
           <entry key="feature" value="1264" />
@@ -75,9 +71,9 @@
           <entry key="js" value="35" />
           <entry key="md" value="5061" />
           <entry key="sh" value="1433" />
-          <entry key="txt" value="3010" />
+          <entry key="txt" value="3392" />
           <entry key="xml" value="640" />
-          <entry key="yaml" value="315" />
+          <entry key="yaml" value="502" />
           <entry key="yml" value="16" />
         </counts>
       </usages-collector>
@@ -88,15 +84,15 @@
           <entry key="JAVA" value="7369" />
           <entry key="JavaScript" value="35" />
           <entry key="Markdown" value="5061" />
-          <entry key="PLAIN_TEXT" value="4700" />
+          <entry key="PLAIN_TEXT" value="5089" />
           <entry key="XML" value="640" />
-          <entry key="YAML" value="331" />
+          <entry key="YAML" value="518" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="DEPENDENCIES" value="1" />
-          <entry key="Dockerfile" value="20" />
+          <entry key="Dockerfile" value="22" />
           <entry key="Makefile" value="17" />
           <entry key="class" value="7" />
           <entry key="feature" value="18" />
@@ -109,16 +105,16 @@
           <entry key="md" value="5" />
           <entry key="properties" value="12" />
           <entry key="pub" value="1" />
-          <entry key="sh" value="58" />
+          <entry key="sh" value="62" />
           <entry key="txt" value="1" />
-          <entry key="xml" value="167" />
-          <entry key="yaml" value="44" />
+          <entry key="xml" value="168" />
+          <entry key="yaml" value="48" />
           <entry key="yml" value="33" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Bash" value="5" />
+          <entry key="Bash" value="9" />
           <entry key="CLASS" value="7" />
           <entry key="Cucumber" value="18" />
           <entry key="HTML" value="2" />
@@ -127,10 +123,10 @@
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="4" />
           <entry key="Markdown" value="5" />
-          <entry key="PLAIN_TEXT" value="94" />
+          <entry key="PLAIN_TEXT" value="96" />
           <entry key="Properties" value="12" />
-          <entry key="XML" value="167" />
-          <entry key="YAML" value="77" />
+          <entry key="XML" value="168" />
+          <entry key="YAML" value="81" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -144,93 +140,81 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml">
+        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2235">
-              <caret line="149" column="33" selection-start-line="149" selection-start-column="33" selection-end-line="149" selection-end-column="33" />
+            <state relative-caret-position="195">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/katcoda-prepare-hbase.sh">
+        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/docker-entrypoint.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+            <state relative-caret-position="495">
+              <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-journalnode/docker-entrypoint.sh">
+        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hbase/start-k8s-hbase.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+            <state relative-caret-position="450">
+              <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-journalnode/Dockerfile">
+        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hbase/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+            <state relative-caret-position="195">
+              <caret line="13" column="58" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode0.yaml">
+        <entry file="file://$PROJECT_DIR$/release.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+            <state relative-caret-position="345">
+              <caret line="23" column="161" selection-start-line="23" selection-end-line="23" selection-end-column="161" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/datanode.yaml">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="42" column="33" lean-forward="true" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="33" />
+            <state relative-caret-position="780">
+              <caret line="52" column="27" selection-start-line="42" selection-start-column="1" selection-end-line="52" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/journalnode.yaml">
+        <entry file="file://$PROJECT_DIR$/kubernetes/setKubeIP.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="114" column="48" selection-start-line="114" selection-start-column="48" selection-end-line="114" selection-end-column="48" />
+            <state relative-caret-position="360">
+              <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kubernetes/run-hz-jet-cluster.yaml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode1.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="13" lean-forward="true" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/kubernetes/jobmanager-controller.yaml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-datanode/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="43" lean-forward="true" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="43" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/kubernetes/jobmanager-service.yaml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -323,17 +307,17 @@
         <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-datanode/Makefile" />
         <option value="$PROJECT_DIR$/hbase-hdfs/hmaster.yaml" />
         <option value="$PROJECT_DIR$/hbase-hdfs/region.yaml" />
-        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/journalnode.yaml" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/Dockerfile" />
         <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/conf/config.yaml" />
-        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-journalnode/Dockerfile" />
-        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-datanode/Dockerfile" />
         <option value="$PROJECT_DIR$/hbase-hdfs/katcoda-prepare-hbase.sh" />
-        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode0.yaml" />
         <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/datanode.yaml" />
-        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml" />
         <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode1.yaml" />
+        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode0.yaml" />
+        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml" />
+        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-journalnode/Dockerfile" />
+        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/Dockerfile" />
+        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-datanode/Dockerfile" />
+        <option value="$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/journalnode.yaml" />
       </list>
     </option>
   </component>
@@ -366,10 +350,10 @@
       <path value="$PROJECT_DIR$/marketDataUI/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="813" />
+    <option name="width" value="1920" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -379,92 +363,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="imcs-demo" type="58d84e3e:PackageViewProjectNode" />
-              <item name="demo" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop-base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop-datanode" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop-journalnode" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop-namenode" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase-hdfs" type="462c0819:PsiDirectoryNode" />
-              <item name="hadoop" type="462c0819:PsiDirectoryNode" />
-              <item name="yaml" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="tradequerymicroservice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
-              <item name="tradequerymicroservice" type="462c0819:PsiDirectoryNode" />
-              <item name="manifests" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Production'; set:Production; class com.intellij.psi.search.scope.ProjectProductionScope">
           <expand>
@@ -716,6 +614,33 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="kubernetes" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="imcs-demo" type="58d84e3e:PackageViewProjectNode" />
+              <item name="demo" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -728,7 +653,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/cache/target/docker/Dockerfile" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547485255018" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547573307798" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -1207,70 +1132,10 @@
       <workItem from="1547024376543" duration="6437000" />
       <workItem from="1547460483455" duration="540000" />
       <workItem from="1547464201876" duration="118000" />
-      <workItem from="1547464883305" duration="5478000" />
-    </task>
-    <task id="LOCAL-00043" summary="Got the tests to run on embedded zoo and hz. need fixing on shutting down">
-      <created>1542796122145</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1542796122145</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Implemented the final test and will include more features">
-      <created>1542798104085</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1542798104085</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Set require hz">
-      <created>1542874731756</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1542874731757</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Have multiple cucumber tests running">
-      <created>1542882789569</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1542882789569</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Add Cucumber BDD to Price Query">
-      <created>1542906050431</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1542906050431</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Changing to a kubernetes load balance">
-      <created>1543166467544</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1543166467544</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Add pom.xml">
-      <created>1543169156616</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1543169156616</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Fixed merged conflicts">
-      <created>1545316530298</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1545316530298</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Remove the messed up appreports">
-      <created>1545316847999</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1545316847999</updated>
+      <workItem from="1547464883305" duration="6805000" />
+      <workItem from="1547546479227" duration="7746000" />
+      <workItem from="1547629149366" duration="2879000" />
+      <workItem from="1547715615423" duration="1376000" />
     </task>
     <task id="LOCAL-00052" summary="Still several fixes to get all the deployments to work">
       <created>1545318769511</created>
@@ -1552,7 +1417,70 @@
       <option name="project" value="LOCAL" />
       <updated>1547484914043</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="MU115 namespace on cubeconfig + correction of version numbers on service">
+      <created>1547485293585</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1547485293585</updated>
+    </task>
+    <task id="LOCAL-00093" summary="MU115 Added template section under spec">
+      <created>1547486039617</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1547486039617</updated>
+    </task>
+    <task id="LOCAL-00094" summary="MU115 Fixed the template spec">
+      <created>1547546750706</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1547546750706</updated>
+    </task>
+    <task id="LOCAL-00095" summary="MU115 Further fixes on yaml files">
+      <created>1547548139886</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1547548139886</updated>
+    </task>
+    <task id="LOCAL-00096" summary="MU115 Fixes on datanode">
+      <created>1547548399109</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1547548399109</updated>
+    </task>
+    <task id="LOCAL-00097" summary="MU115 Fixed datanode2 on yaml">
+      <created>1547548558371</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1547548558371</updated>
+    </task>
+    <task id="LOCAL-00098" summary="MU115 Further correction on identing on yaml files">
+      <created>1547548730698</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1547548730698</updated>
+    </task>
+    <task id="LOCAL-00099" summary="MU115 modifications on data directories">
+      <created>1547550177583</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1547550177583</updated>
+    </task>
+    <task id="LOCAL-00100" summary="MU115 added back the volumes directory and the conf to journal node.yaml">
+      <created>1547569630282</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1547569630282</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1588,7 +1516,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="269886000" />
+    <option name="totallyTimeSpent" value="283214000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1603,7 +1531,7 @@
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" id="Project" order="0" visible="true" weight="0.32108626" />
+      <window_info active="true" id="Project" order="0" visible="true" weight="0.32747602" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1616,7 +1544,7 @@
       <window_info anchor="bottom" id="GraphQL" order="0" weight="0.32891566" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.3253012" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49697885" weight="0.5762376" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49697885" weight="0.47326732" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4821782" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -1624,7 +1552,7 @@
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5007153" side_tool="true" weight="0.25301206" />
       <window_info anchor="bottom" id="SBT Console" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="OpenShift Origin" order="10" show_stripe_button="false" weight="0.32888147" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49928468" visible="true" weight="0.25148514" />
+      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49928468" weight="0.3048193" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32891566" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.24859393" />
       <window_info anchor="bottom" id="Java Enterprise" order="14" />
@@ -1635,7 +1563,7 @@
       <window_info anchor="right" id="Ant Build" order="1" show_stripe_button="false" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" weight="0.13662376" />
+      <window_info anchor="right" id="Maven Projects" order="4" visible="true" weight="0.10170394" />
       <window_info anchor="right" id="Properties" order="5" />
       <window_info anchor="right" id="Mongo Explorer" order="6" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="7" show_stripe_button="false" />
@@ -1730,15 +1658,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Changed versions across all Pom to use Snapshot" />
-    <MESSAGE value="Incremented the snapshot version to 1.3-SNAPSHOT" />
-    <MESSAGE value="Added distribution management" />
-    <MESSAGE value="Added SL4j depdencies to Flink Tests" />
-    <MESSAGE value="MU-112 added build version input to scripts and corrected trade-imdg dependencies" />
-    <MESSAGE value="MU-113 - Added BDD testing to Trade Injector Flink" />
-    <MESSAGE value="MU-113 - Major changes to BDD testing for Trade Flink Streamer" />
-    <MESSAGE value="Finalised testing with BDD" />
-    <MESSAGE value="Changed supporting readme to reflect actual deployment and changes" />
     <MESSAGE value="MU-114" />
     <MESSAGE value="MU-114 - More config files added" />
     <MESSAGE value="MU-114 Downgraded maven to maven2" />
@@ -1755,7 +1674,16 @@
     <MESSAGE value="MU115 Introduced Configmap to hdfs + Stateful Sets" />
     <MESSAGE value="MU115 Moved configmap to the correct place" />
     <MESSAGE value="MU115 Fixed kube version" />
-    <option name="LAST_COMMIT_MESSAGE" value="MU115 Fixed kube version" />
+    <MESSAGE value="MU115 namespace on cubeconfig + correction of version numbers on service" />
+    <MESSAGE value="MU115 Added template section under spec" />
+    <MESSAGE value="MU115 Fixed the template spec" />
+    <MESSAGE value="MU115 Further fixes on yaml files" />
+    <MESSAGE value="MU115 Fixes on datanode" />
+    <MESSAGE value="MU115 Fixed datanode2 on yaml" />
+    <MESSAGE value="MU115 Further correction on identing on yaml files" />
+    <MESSAGE value="MU115 modifications on data directories" />
+    <MESSAGE value="MU115 added back the volumes directory and the conf to journal node.yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="MU115 added back the volumes directory and the conf to journal node.yaml" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1799,41 +1727,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/HzPositionSink.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="24" column="67" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/TradeFlinkStreamer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/PositionAggregator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/test/java/com/mu/flink/streamer/test/PositionAggregatorTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="89" selection-start-line="89" selection-end-line="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tradeInjectorFlink/src/main/java/com/mu/flink/streamer/HzTradeSink.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trade-injector/src/main/resources/hazelcast-client.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -1914,21 +1807,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hbase/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="58" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hbase-hdfs/Dockerfile" />
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hbase/start-k8s-hbase.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trade-injector/manifests/trade-injector.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1963,9 +1842,6 @@
           <caret line="4" column="33" lean-forward="true" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="33" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kubernetes/setKubeIP.sh">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/kubernetes/deploy-stack.sh">
       <provider selected="true" editor-type-id="text-editor">
@@ -2053,24 +1929,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-base/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="4" column="25" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/docker-entrypoint.sh">
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/katcoda-prepare-hbase.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="43" lean-forward="true" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="43" />
+          <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -2081,61 +1943,119 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-journalnode/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-datanode/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/journalnode.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="114" column="48" selection-start-line="114" selection-start-column="48" selection-end-line="114" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/katcoda-prepare-hbase.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/datanode.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="33" lean-forward="true" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
-          <caret line="149" column="33" selection-start-line="149" selection-start-column="33" selection-end-line="149" selection-end-column="33" />
+        <state relative-caret-position="137">
+          <caret line="88" column="2" selection-start-line="88" selection-start-column="2" selection-end-line="88" selection-end-column="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode0.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        <state relative-caret-position="2">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1560">
+          <caret line="104" column="19" selection-start-line="104" selection-start-column="19" selection-end-line="104" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-journalnode/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/journalnode.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="83" column="26" selection-start-line="83" selection-start-column="26" selection-end-line="83" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-base/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/yaml/namenode1.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="13" lean-forward="true" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="255">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="24" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-datanode/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hadoop/hadoop-namenode/docker-entrypoint.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hbase/start-k8s-hbase.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hbase-hdfs/hbase/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="58" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/release.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="161" selection-start-line="23" selection-end-line="23" selection-end-column="161" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="52" column="27" selection-start-line="42" selection-start-column="1" selection-end-line="52" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kubernetes/setKubeIP.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kubernetes/run-hz-jet-cluster.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kubernetes/jobmanager-service.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kubernetes/jobmanager-controller.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
@@ -2228,6 +2148,7 @@
   </component>
   <component name="mavenExecuteGoalHistory">
     <option value="$PROJECT_DIR$" />
+    <option value="-P metrics pmd:pmd" />
     <option value="verify -Psurefire" />
     <option value="clean package" />
     <option value="verify -Pfailsafe" />
@@ -2247,6 +2168,5 @@
     <option value="clean compile package install -DskipTests" />
     <option value="clean compile package -DskipTests" />
     <option value="clean compile package" />
-    <option value="clean compile" />
   </component>
 </project>
