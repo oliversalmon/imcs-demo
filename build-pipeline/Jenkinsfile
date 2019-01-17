@@ -1,0 +1,20 @@
+node{
+    def mvnHome
+    stage ('Preparation'{
+        //Get the maven tool configured in the Global Configuration in Jenkins
+        mvnHome= tool 'Jenkins Maven'
+    }
+    stage ('Build'){
+        //run the maven build
+        if(isUnix()){
+            sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+        }else{
+            //code for windows
+        }
+
+    }
+    stage("Results"){
+        junit '**/target/surefire-reports/TEST-*.xml'
+        archive 'target/*.jar'
+    }
+}
