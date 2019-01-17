@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c3eb1be5-e707-4cf1-94bc-ca77a5717eac" name="Default" comment="MU115 namespace on cubeconfig + correction of version numbers on service">
+    <list default="true" id="c3eb1be5-e707-4cf1-94bc-ca77a5717eac" name="Default" comment="MU115 adding workspace">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -71,7 +71,7 @@
           <entry key="js" value="35" />
           <entry key="md" value="5061" />
           <entry key="sh" value="1433" />
-          <entry key="txt" value="3392" />
+          <entry key="txt" value="3408" />
           <entry key="xml" value="640" />
           <entry key="yaml" value="502" />
           <entry key="yml" value="16" />
@@ -84,7 +84,7 @@
           <entry key="JAVA" value="7369" />
           <entry key="JavaScript" value="35" />
           <entry key="Markdown" value="5061" />
-          <entry key="PLAIN_TEXT" value="5089" />
+          <entry key="PLAIN_TEXT" value="5105" />
           <entry key="XML" value="640" />
           <entry key="YAML" value="518" />
         </counts>
@@ -624,6 +624,11 @@
             <path>
               <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
               <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imcs-demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imcs-demo" type="462c0819:PsiDirectoryNode" />
               <item name="kubernetes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -653,7 +658,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/cache/target/docker/Dockerfile" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547573307798" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547732342350" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -1135,14 +1140,7 @@
       <workItem from="1547464883305" duration="6805000" />
       <workItem from="1547546479227" duration="7746000" />
       <workItem from="1547629149366" duration="2879000" />
-      <workItem from="1547715615423" duration="1376000" />
-    </task>
-    <task id="LOCAL-00052" summary="Still several fixes to get all the deployments to work">
-      <created>1545318769511</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1545318769511</updated>
+      <workItem from="1547715615423" duration="1514000" />
     </task>
     <task id="LOCAL-00053" summary="Removed security">
       <created>1545320310995</created>
@@ -1480,7 +1478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547569630282</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="MU115 adding workspace">
+      <created>1547732334441</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1547732334441</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1516,7 +1521,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="283214000" />
+    <option name="totallyTimeSpent" value="283352000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1529,7 +1534,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" id="Project" order="0" visible="true" weight="0.32747602" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -1658,7 +1662,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="MU-114" />
     <MESSAGE value="MU-114 - More config files added" />
     <MESSAGE value="MU-114 Downgraded maven to maven2" />
     <MESSAGE value="MU-114 reverted maven version" />
@@ -1683,7 +1686,8 @@
     <MESSAGE value="MU115 Further correction on identing on yaml files" />
     <MESSAGE value="MU115 modifications on data directories" />
     <MESSAGE value="MU115 added back the volumes directory and the conf to journal node.yaml" />
-    <option name="LAST_COMMIT_MESSAGE" value="MU115 added back the volumes directory and the conf to journal node.yaml" />
+    <MESSAGE value="MU115 adding workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="MU115 adding workspace" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
