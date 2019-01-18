@@ -191,6 +191,8 @@
                                 <goal>tag</goal>
                             </goals>
                             <configuration>
+                                <serverId>docker-hub</serverId>
+                                <registryUrl>https://hub.docker.com/</registryUrl>
                                 <image>${docker.image.prefix}/${docker.artifact.id}</image>
                                 <newName>
                                     ${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:${project.version}
@@ -205,6 +207,8 @@
                                 <goal>tag</goal>
                             </goals>
                             <configuration>
+                                <serverId>docker-hub</serverId>
+                                <registryUrl>https://hub.docker.com/</registryUrl>
                                 <image>${docker.image.prefix}/${docker.artifact.id}</image>
                                 <newName>${docker.repository}/${docker.image.prefix}/${docker.artifact.id}:latest
                                 </newName>
