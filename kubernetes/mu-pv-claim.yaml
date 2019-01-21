@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flink-pv-claim
+  namespace: mu-architecture-demo
+  labels:
+    app: flink
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "mu-storage"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

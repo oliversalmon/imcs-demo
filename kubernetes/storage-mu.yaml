@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: mu-storage
+  namespace: mu-architecture-demo
+provisioner: kubernetes.io/vsphere-volume
+parameters:
+  diskformat: zeroedthick
+  datastore: VSANDatastore

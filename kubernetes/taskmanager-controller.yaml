@@ -4,7 +4,7 @@ metadata:
   name: flink-taskmanager
   namespace: mu-architecture-demo
 spec:
-  replicas: 4
+  replicas: 2
   template:
     metadata:
       labels:
@@ -28,3 +28,16 @@ spec:
         env:
         - name: JOB_MANAGER_RPC_ADDRESS
           value: flink-jobmanager
+        volumeMounts:
+        - name: flink-taskmanager-persistent-storage
+          mountPath: /opt/flinkData
+        - name: flink-conf-volume
+          mountPath: /opt/flink/conf/flink-conf.yaml
+          subPath: flink-conf.yaml
+      volumes:
+      - name: flink-taskmanager-persistent-storage
+        persistentVolumeClaim:
+          claimName: flink-pv-claim
+      - name: flink-conf-volume
+        configMap:
+          name: flink-conf-v1
